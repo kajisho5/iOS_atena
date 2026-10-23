@@ -1,7 +1,9 @@
-# 宛名印刷 はがき・封筒 — 設計書 v0.1（Step 1: プロジェクト構成と画面遷移）
+# 宛名印刷 はがき・封筒 — 設計書 v0.2（Step 1: プロジェクト構成と画面遷移）
 
 > ステータス: **確認待ち**。この設計の承認後に ①宛先リストとCSV取り込み の実装へ進む。
 > 画面遷移図: [`screen-flow.svg`](./screen-flow.svg)
+>
+> v0.2 変更点: 画面の向き・iPad マルチタスク要件を追加（§4.3、S07/S09、§9、Q10）
 
 ---
 
@@ -137,6 +139,7 @@ iOS_atena/
 - `TabView` 3タブ: **宛先**（`person.2`） / **レイアウト**（`envelope`） / **設定**（`gearshape`）
 - iPad / Mac: 宛先タブ内を `NavigationSplitView`（サイドバー＝グループ、コンテンツ＝宛先一覧、詳細＝宛先詳細＋プレビュー）
 - iPhone: 同じ `NavigationSplitView` が自動で `NavigationStack` に折りたたまれる（HIG のサイドバー挙動に準拠）
+- 分割表示・縦積みの切替は**デバイス種別や向きではなく水平サイズクラス＋実際の表示領域で判定**する（§4.3）
 
 ### 4.2 画面一覧
 
@@ -148,15 +151,49 @@ iOS_atena/
 | S04 | 宛先編集 | Sheet（Form） | 氏名・連名・敬称・〒・住所・メモ・グループ |
 | S05 | 連絡先から取り込み | システムピッカー | `CNContactPickerViewController`（複数選択）→ 取り込み確認 |
 | S06 | CSV 取り込み | Sheet（3段階） | ①ファイル選択（`.fileImporter`）②列マッピング確認（先頭5行プレビュー、文字コード表示/切替）③結果（成功・スキップ・エラー行） |
-| S07 | 印刷プレビュー | Full-screen cover | 実寸比プレビュー（用紙枠・郵便番号枠）、一括時は前後ページ送り、はみ出し警告、二重印刷警告、「印刷」「PDF」ボタン |
+| S07 | 印刷プレビュー | Full-screen cover | 縦横比が正確なプレビュー（用紙枠・郵便番号枠）、一括時は前後ページ送り、はみ出し警告、二重印刷警告、「印刷」「PDF」ボタン。**iPad 横向きでは用紙全体を表示**（§4.3） |
 | S08 | AirPrint | システムUI | `UIPrintInteractionController`（iPad/Mac はポップオーバー） |
-| S09 | レイアウト | Tab（Form＋プレビュー） | 用紙 / 縦横 / フォント / 漢数字変換 / 差出人ON/OFF・選択。iPhone は上プレビュー＋下Form、iPad は左右分割 |
+| S09 | レイアウト | Tab（Form＋プレビュー） | 用紙 / 縦横 / フォント / 漢数字変換 / 差出人ON/OFF・選択。幅が compact なら上プレビュー＋下Form、regular なら左右分割 |
 | S10 | 設定 | Tab（Form） | 差出人プロフィール、印刷位置調整、Pro購入・**購入の復元**、CSVテンプレート書き出し、プライバシーポリシー・利用規約、バージョン |
 | S11 | 差出人一覧・編集 | Push / Sheet | 複数登録、並べ替え |
 | S12 | 印刷位置調整 | Push | 用紙ごとに上下左右 ±10mm（0.5mm刻み Stepper）、テスト印刷ボタン |
 | S13 | Pro（Paywall） | Sheet | 下記 §5 の文言、価格をそのまま表示した購入ボタン、購入の復元、閉じる |
 
-### 4.3 主要フロー
+### 4.3 画面の向き・iPad マルチタスク
+
+**要件**: iPhone は縦向き固定。iPad は回転と画面分割（Split View / Stage Manager）に対応し、レイアウトが崩れないこと。印刷プレビューは iPad 横向きで用紙全体が見えること。
+
+| 項目 | 設定・実装 |
+|---|---|
+| iPhone の向き | `UISupportedInterfaceOrientations~iphone` = Portrait のみ（XcodeGen では `INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone`） |
+| iPad の向き | `UISupportedInterfaceOrientations~ipad` = 4方向すべて（Portrait / UpsideDown / LandscapeLeft / LandscapeRight） |
+| マルチタスク | `UIRequiresFullScreen` は**設定しない**（設定すると iPad の画面分割から外れるため） |
+| Mac（Designed for iPad） | ウインドウは自由にリサイズされる前提。iPad と同じレイアウト規則で対応 |
+| レイアウト判定 | `@Environment(\.horizontalSizeClass)` と `GeometryReader` の実寸で判定。`UIDevice.orientation` や `userInterfaceIdiom` によるレイアウト分岐は**使わない** |
+
+**HIG との関係（確認済み）**: HIG「Layout」は「サイズクラスでレイアウトを決め、デバイス種別や向きで決めない」と定めている。また「アプリの向きを固定する場合でも、インターフェースがサイズ変更に正しく対応することが重要」とも書かれており、向きの固定自体は禁止されていない。iPhone を縦向きに固定する方針は HIG と矛盾しない。ただしレイアウトはサイズクラスで組み、固定されている向きに依存しない作りにする。
+- 出典: https://developer.apple.com/design/human-interface-guidelines/layout
+- 補足（一次情報）: WWDC26「Modernize your UIKit app」では「iOS 27 ではサポートする向きはシステムへの“希望”として扱われ、リサイズ可能な環境では無視される」と説明されている。リサイズ可能な環境とは、Mac の iPhone ミラーリングや、iPhone 用アプリを iPad で動かす場合を指す。本アプリはユニバーサルアプリで、iPad では iPad 用レイアウトで動く。ただし iPhone ミラーリングでは縦向き固定が効かない可能性がある。サイズクラス基準で組むことで、この場合も崩れないようにする（https://developer.apple.com/videos/play/wwdc2026/278/）
+- 補足: iPadOS 26 以降は、画面分割が「ウインドウ化されたアプリ」（タイル配置・自由リサイズ）として提供される（HIG「Multitasking」）。iOS 17〜18 の Split View / Slide Over / Stage Manager と合わせて、任意のウインドウサイズで崩れないことを要件とする
+
+**画面ごとの可変レイアウト**
+
+| 画面 | 幅 compact（iPhone、iPad の狭い分割） | 幅 regular（iPad 全画面・広い分割、Mac） |
+|---|---|---|
+| 宛先（S01〜S03） | NavigationStack（自動で折りたたみ） | 3カラム表示。幅が足りなければ2カラムに自動で落とす（`NavigationSplitView` の標準挙動） |
+| S07 印刷プレビュー | 上: 用紙（アスペクトフィット）／下: 操作バー（`safeAreaInset(edge: .bottom)`） | **左: 用紙（アスペクトフィット）／右: サイドパネル（固定幅 320pt）**。ページ送り・警告・宛先情報・「印刷」「PDF」を置く |
+| S09 レイアウト | 上: プレビュー（高さ上限あり）／下: Form | 左: プレビュー／右: Form |
+| S10〜S13 | Form / Sheet（標準） | 同左。Sheet は `.presentationSizing`（iOS 18+）／iOS 17 は標準のフォームシート |
+
+**S07 で「用紙全体が見える」ことを保証する計算**
+- 用紙領域 = 表示領域 −（Safe Area ＋ 余白 16pt ×2 ＋ サイドパネル幅 or 下部バー高）
+- 縮尺 = min(用紙領域幅 / 用紙幅mm, 用紙領域高 / 用紙高mm)。縦横どちらにも収まる倍率を採るので、どの用紙・どの画面サイズでも全体が必ず表示される
+- 試算（推測。正確な表示領域は機種と表示状態で変わる）: iPad 11インチ横向き（1194×834pt）で、ナビゲーションバー等を除いた高さを約 740pt とする。はがき（148mm）は約 5.0pt/mm、角形2号（332mm）は約 2.2pt/mm で全体が収まる
+- ピンチで拡大、ダブルタップで全体表示に戻る。回転・リサイズ時は全体表示にリセット
+
+**崩れの検証方法**: この環境では Simulator を起動できない。そのため CI（macOS）で、主要画面を代表サイズで `ImageRenderer` 描画し、PNG を CI の成果物として保存する。代表サイズは iPhone 縦、iPad 縦・横、分割の 1/3・1/2・2/3 幅相当、Mac の小さいウインドウ。画像を目視で確認でき、あわせてはみ出し判定のテストを回す。分割時の幅は機種ごとに異なるため、代表値として扱う
+
+### 4.4 主要フロー
 
 1. **1件印刷**: S02 → S03 →「印刷」→ S07 → S08 → 完了で `PrintRecord` 作成、成功回数 +1
 2. **グループ一括印刷**: S01 でグループ選択 → S02 ツールバー「一括印刷」→ 未印刷のみ/全件 を選択 → S07 → S08（全ページを1ジョブで送信）→ 完了で全件に `PrintRecord`
@@ -255,6 +292,7 @@ iOS_atena/
 
 - **本作業環境は Linux コンテナで、Xcode / iOS SDK が存在しない**（`xcodebuild` `swift` コマンドなしを確認済み）。この環境ではiOSアプリのビルドを実行できない
 - 対策（推奨）: GitHub Actions の macOS ランナーで `xcodegen generate` → `xcodebuild build test`（iOS Simulator 宛先）を push ごとに実行し、**CI が緑になったことを「ビルドが通った」の根拠にする**
+- 画面の向き・分割表示の検証は §4.3 の代表サイズ描画で行う（実機の最終確認はユーザー側で必要）
 - `.icon`（Liquid Glass）バンドルは Xcode 26 以降が必要（fresnel README 記載）。CI で使う Xcode のバージョンはランナーイメージの提供状況を①着手時に確認する
 
 ---
@@ -283,6 +321,7 @@ iOS_atena/
 | Q7 | CSV重複 | A: 氏名＋郵便番号一致を「重複の可能性」として既定でスキップ / B: すべて取り込む | **A**（スキップ対象はマッピング画面で確認・変更可） |
 | Q8 | iCloud バックアップ | A: 端末バックアップ対象のまま / B: バックアップから除外 | **A**（機種変更時の住所録消失を防ぐ。端末バックアップは開発者によるデータ収集に当たらない） |
 | Q9 | 高精度SVGデザイン | A: 承認後、①着手前に主要画面のSVGを提示して再度確認 / B: SVGは省略し本書で実装開始 | **A**（ご指定の開発手順に沿う） |
+| Q10 | 「実寸に近いプレビュー」の解釈 | A: 縦横比と配置を正確に保った縮小表示＋ピンチ拡大（既定は用紙全体を表示） / B: 物理的な等倍表示 | **A**（iOS には画面の物理解像度（ppi）を取得する公開APIがなく、等倍表示には機種別の値を自前で持つ必要がある［推測を含む］。等倍表示では iPad 横向きで用紙全体が見える要件とも両立しない） |
 
 ---
 
@@ -291,5 +330,6 @@ iOS_atena/
 - 郵便番号枠の各枠寸法・間隔（図のみ記載）
 - ¥800 が App Store の日本円価格ポイントとして選択可能か（App Store Connect で確認が必要）
 - Designed for iPad での AirPrint 動作
+- 分割表示時の実際の幅（機種ごとに異なる。代表値で検証）
 - 角形2号に対応する AirPrint 用紙サイズを各プリンタが提示するか
 - CI で利用可能な Xcode バージョン

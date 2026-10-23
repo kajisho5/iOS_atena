@@ -28,8 +28,8 @@
   </defs>
 
   <rect width="1680" height="1040" fill="#FAFAFC"/>
-  <text x="40" y="52" class="title">宛名印刷 はがき・封筒 — 画面遷移図 v0.1</text>
-  <text x="40" y="76" class="sub">TabView 3タブ構成 / iPad・Mac は宛先タブを NavigationSplitView（iPhone では NavigationStack に自動で折りたたみ）</text>
+  <text x="40" y="52" class="title">宛名印刷 はがき・封筒 — 画面遷移図 v0.2</text>
+  <text x="40" y="76" class="sub">TabView 3タブ構成 / iPad・Mac は宛先タブを NavigationSplitView（compact 幅では NavigationStack に自動で折りたたみ）／ iPhone 縦固定・iPad 全方向＋画面分割対応</text>
 
   <!-- Root -->
   <rect x="40" y="100" width="1600" height="44" rx="10" fill="#E5E5EA"/>
@@ -110,8 +110,8 @@
   <!-- S07 -->
   <rect x="320" y="750" width="320" height="230" rx="12" class="card"/>
   <text x="336" y="774" class="id">S07</text><text x="372" y="774" class="name">印刷プレビュー</text>
-  <text x="336" y="792" class="kind">fullScreenCover</text>
-  <text x="336" y="818" class="item">・実寸比プレビュー（用紙枠・〒枠＝表示のみ）</text>
+  <text x="336" y="792" class="kind">fullScreenCover ／ regular幅: 左に用紙・右にパネル</text>
+  <text x="336" y="818" class="item">・用紙全体をフィット表示（〒枠＝表示のみ）</text>
   <text x="336" y="838" class="item">・一括時: ページ送り（n / N）</text>
   <text x="336" y="858" class="item">・はみ出し警告 / 二重印刷警告</text>
   <text x="336" y="878" class="item">・一括時:「未印刷のみ」/「全件」</text>
@@ -136,7 +136,7 @@
   <!-- S09 -->
   <rect x="900" y="190" width="340" height="290" rx="12" class="card"/>
   <text x="916" y="214" class="id">S09</text><text x="952" y="214" class="name">レイアウト</text>
-  <text x="916" y="232" class="kind">iPhone: 上プレビュー＋下Form / iPad: 左右分割</text>
+  <text x="916" y="232" class="kind">compact幅: 上プレビュー＋下Form / regular幅: 左右分割</text>
   <rect x="916" y="246" width="96" height="142" rx="2" fill="#FFFFFF" stroke="#1C1C1E" stroke-width="1"/>
   <g fill="none" stroke="#FF3B30" stroke-width="0.8">
     <rect x="958" y="257" width="6" height="8"/><rect x="966" y="257" width="6" height="8"/><rect x="974" y="257" width="6" height="8"/>
