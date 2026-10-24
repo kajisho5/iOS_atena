@@ -1,9 +1,10 @@
-# 宛名印刷 はがき・封筒 — 設計書 v0.2（Step 1: プロジェクト構成と画面遷移）
+# 宛名印刷 はがき・封筒 — 設計書 v0.3（Step 1: プロジェクト構成と画面遷移）
 
 > ステータス: **確認待ち**。この設計の承認後に ①宛先リストとCSV取り込み の実装へ進む。
 > 画面遷移図: [`screen-flow.svg`](./screen-flow.svg)
 >
 > v0.2 変更点: 画面の向き・iPad マルチタスク要件を追加（§4.3、S07/S09、§9、Q10）
+> v0.3 変更点: Q1〜Q10 を全て A で確定（§11）。ふりがな欄を追加（Q5=A）。標準対応要件（§13）を追加。新規確認事項 Q11・Q12
 
 ---
 
@@ -48,6 +49,7 @@ iOS_atena/
 │   │   ├── RootView.swift           # TabView（宛先 / レイアウト / 設定）
 │   │   └── AppConstants.swift       # 差し替え定数（商品ID・URL・無料上限など）
 │   ├── Models/                      # SwiftData @Model と値型
+│   │   ├── Schema/                  # SchemaV1 + SchemaMigrationPlan（§13.7）
 │   │   ├── Recipient.swift
 │   │   ├── RecipientGroup.swift
 │   │   ├── PrintRecord.swift
@@ -77,11 +79,13 @@ iOS_atena/
 │   └── Resources/
 │       ├── Assets.xcassets
 │       ├── AppIcon.icon/            # fresnel で作成（⑤で追加）
+│       ├── Localizable.xcstrings    # UI 文字列（§13.4）
+│       ├── InfoPlist.xcstrings      # 権限用途説明などの文言
 │       ├── PrivacyInfo.xcprivacy
 │       └── Products.storekit        # ローカル StoreKit テスト用設定
 ├── AtenaPrintTests/                 # CSV・漢数字・自動縮小・用紙座標のユニットテスト
 ├── .github/workflows/build.yml      # macOS ランナーでビルド＋テスト（§9）
-├── docs/                            # 設計書・SVG
+├── docs/                            # 設計書・SVG（design/ に画面デザイン）
 ├── marketing/                       # デモモック・App Store 文案（⑤）
 └── README.md
 ```
@@ -95,6 +99,7 @@ iOS_atena/
 ```swift
 @Model final class Recipient {
     var name: String              // 氏名
+    var nameKana: String          // ふりがな（任意。並び替え用。Q5=A）
     var jointNames: [String]      // 連名（0〜2件を想定）
     var honorific: String         // 敬称（"様" 既定）
     var postalCode: String        // 数字7桁のみ保持（ハイフン除去）
@@ -127,6 +132,8 @@ iOS_atena/
 - **印刷済みの判定**: グループ画面では「そのグループで印刷記録があるか」、全件画面では「いずれかの印刷記録があるか」で表示。翌年は新グループ（年賀状2027）を作れば未印刷から始められる。記録の手動リセットも可能にする。
 - **LayoutSettings**（`Codable` を `@AppStorage` に JSON 保存）: 用紙種別 / 縦横 / フォント / 漢数字変換 ON/OFF / 差出人印刷 ON/OFF と選択中の差出人 / **用紙種別ごとの** 上下左右オフセット(mm)。オフセットはプリンタの給紙経路が用紙で変わるため用紙別に保持する。
 - 敬称プリセット: 様 / 殿 / 先生 / 御中 / 行 ＋ 自由入力。
+- 並び順: ふりがな（未入力なら氏名）の昇順 / 登録順 / 郵便番号順 を切替。
+- **スキーマ版管理**: 初版から `VersionedSchema`（`SchemaV1`）と `SchemaMigrationPlan` を定義し、アップデートでのモデル変更はマイグレーションで行う（§13.7）。
 
 ---
 
@@ -148,7 +155,7 @@ iOS_atena/
 | S01 | グループ一覧（サイドバー） | Split sidebar | すべて / 未印刷 / 各グループ、グループ追加・名称変更・並べ替え |
 | S02 | 宛先一覧 | List | 検索（`.searchable`）、印刷済みバッジ、スワイプ削除、選択モード、`+` メニュー（手入力 / 連絡先から / CSVから） |
 | S03 | 宛先詳細 | Push | 宛名面サムネイル、印刷履歴、「この宛先を印刷」 |
-| S04 | 宛先編集 | Sheet（Form） | 氏名・連名・敬称・〒・住所・メモ・グループ |
+| S04 | 宛先編集 | Sheet（Form） | 氏名・ふりがな・連名・敬称・〒・住所・建物名・メモ・グループ |
 | S05 | 連絡先から取り込み | システムピッカー | `CNContactPickerViewController`（複数選択）→ 取り込み確認 |
 | S06 | CSV 取り込み | Sheet（3段階） | ①ファイル選択（`.fileImporter`）②列マッピング確認（先頭5行プレビュー、文字コード表示/切替）③結果（成功・スキップ・エラー行） |
 | S07 | 印刷プレビュー | Full-screen cover | 縦横比が正確なプレビュー（用紙枠・郵便番号枠）、一括時は前後ページ送り、はみ出し警告、二重印刷警告、「印刷」「PDF」ボタン。**iPad 横向きでは用紙全体を表示**（§4.3） |
@@ -274,16 +281,19 @@ iOS_atena/
 - 1行目をヘッダーとして列名から自動推定（「氏名」「名前」「連名」「郵便番号」「〒」「住所」「メモ」「備考」など同義語辞書）。ヘッダーなしCSVはトグルで切替
 - マッピング確認画面: 各アプリ項目 ← CSV列 を `Picker` で選択、先頭5行のプレビュー、取り込み先グループ選択
 - バリデーション: 氏名が空の行はスキップ。郵便番号は数字7桁に正規化（ハイフン・全角数字・〒記号を除去）、不正値は取り込むが警告
-- テンプレートCSV（`ShareLink` で書き出し）: UTF-8 BOM付き、列 = `氏名,連名,郵便番号,住所,メモ` + 記入例1行
+- 認識する列: 仕様の5列（氏名 / 連名 / 郵便番号 / 住所 / メモ）＋任意列（ふりがな / 住所2 / 敬称）。任意列はマッピング画面で「使わない」を選べる
+- 重複: 氏名＋郵便番号が既存と一致する行は「重複の可能性」として既定でスキップ（Q7=A、行ごとに変更可）
+- ファイルサイズ上限: `FileHandle.read(upToCount:)` で 5MB まで読み、超過時はエラー表示（ファイルのメタデータ API を使わないため、必須理由APIの追加申告が不要）
+- テンプレートCSV（`ShareLink` で書き出し）: UTF-8 BOM付き、列 = `氏名,連名,郵便番号,住所,メモ` + 記入例1行（仕様どおり5列。任意列は README に記載）
 
 ---
 
 ## 8. プライバシー
 
 - App Privacy: 「データを収集しない」となる構成（第三者SDKなし、通信は StoreKit のみ）
-- `PrivacyInfo.xcprivacy`: `NSPrivacyTracking = false`、収集データなし、Required Reason API は `UserDefaults`（`CA92.1`）を宣言
+- `PrivacyInfo.xcprivacy`: 詳細は §13.6
 - `NSContactsUsageDescription`: 「宛名印刷のために連絡先へアクセスします。連絡先の内容が外部に送信されることはありません」
-- `CNContactPickerViewController` はアウトプロセスで動作し、アプリに連絡先全体へのアクセス許可を求めない（Apple ドキュメント記載の仕様として認識しているが、本セッションでは原文を取得できていない → ①実装時に再確認）。用途説明文は仕様どおり Info.plist に入れる
+- `CNContactPickerViewController` は権限ダイアログを出さない（**確認済み**。Apple 公式ドキュメント: “The app using contact picker view does not need access to the user’s contacts and the user will not be prompted for “grant permission” access.” https://developer.apple.com/documentation/contactsui/cncontactpickerviewcontroller）。用途説明文は仕様どおり Info.plist（`InfoPlist.xcstrings`）に入れる。権限の扱いは Q11
 - ATT（`NSUserTrackingUsageDescription`）は入れない
 
 ---
@@ -310,6 +320,17 @@ iOS_atena/
 
 ## 11. 確認事項（選択肢と推奨案）
 
+**確定（v0.3）: Q1〜Q10 はすべて A を採用**（ユーザー回答「最初で」）。Q5 は推奨 B ではなく A（ふりがな欄を追加）で確定。
+
+### 新規確認事項
+
+| # | 論点 | 選択肢 | 推奨 |
+|---|---|---|---|
+| Q11 | 連絡先取り込み方式（権限拒否時導線の要否に影響） | A: `CNContactPickerViewController`（権限ダイアログなし。拒否が起きないので拒否時導線は不要） / B: `CNContactStore` で全連絡先を読み、アプリ内の一覧から選ぶ（権限ダイアログあり。拒否時は設定アプリへ誘導する画面を用意） | **A**（アクセス範囲が最小で、仕様の「端末内のみ」の原則に最も合う。大量登録は CSV で対応できる） |
+| Q12 | ユーザー自身によるバックアップ手段 | A: 宛先を CSV で書き出す機能を追加（無料）。iCloud バックアップを使っていない人も機種変更で失わない / B: 追加しない（iCloud／PC へのバックアップに任せる） | **A**（「データが消えない」要件の保険。ただし仕様外の機能追加のため確認） |
+
+### 確定済み（v0.2 までの確認事項）
+
 | # | 論点 | 選択肢 | 推奨 |
 |---|---|---|---|
 | Q1 | リポジトリ | A: 仕様どおり新規パブリック `atena-print` を作成 / B: 本セッションに用意された `kajisho5/iOS_atena` を使う | **B**（本セッションの GitHub 権限は `iOS_atena` に限定されている。名称は後から GitHub 上で変更可能） |
@@ -331,5 +352,90 @@ iOS_atena/
 - ¥800 が App Store の日本円価格ポイントとして選択可能か（App Store Connect で確認が必要）
 - Designed for iPad での AirPrint 動作
 - 分割表示時の実際の幅（機種ごとに異なる。代表値で検証）
+- Apple 純正フレームワーク（SwiftData 等）の内部で呼ばれる必須理由APIがアプリ側の申告対象かどうか（申告はアプリのコードが直接呼ぶ API に必要、という理解。推測）
 - 角形2号に対応する AirPrint 用紙サイズを各プリンタが提示するか
 - CI で利用可能な Xcode バージョン
+
+---
+
+## 13. 標準対応（必須要件）
+
+### 13.1 ダークモード
+- アプリ固有の色はすべて `Assets.xcassets` の Color Set で定義する。各色に Any / Dark と、HIG「Color」の指示に従い「コントラストを上げる」用の値を用意する（Light・Dark・High Contrast Light・High Contrast Dark の4値）
+- それ以外は SwiftUI のシステム色（`.primary` / `Color(.systemBackground)` / `.tint` など）を使う。コード内に RGB 値は直書きしない
+- 定義する色（案）:
+
+| 名前 | 用途 |
+|---|---|
+| `AccentColor` | アプリのアクセント色（藍系） |
+| `PaperBackground` | 用紙プレビューの紙色。両モードで白に近い値。ダーク時は周囲を暗くし、紙だけ浮かせる |
+| `PaperInk` | プレビュー内の文字（墨色） |
+| `PostalFrame` | 郵便番号枠の赤（表示専用、印刷しない） |
+| `PreviewGuide` | 用紙枠・余白ガイド |
+| `WarningFill` | はみ出し警告の背景 |
+
+- 印刷・PDF 出力は外観モードに関係なく常に黒文字・白紙で描画する（`AddressRenderer` は外観に依存しない色を使う）
+- 確認: CI で主要画面を Light / Dark の両方で画像化し、成果物として保存する（§4.3 の代表サイズ描画を流用）
+
+### 13.2 Dynamic Type
+- 文字はすべて標準テキストスタイル（`.body` / `.headline` など）で指定し、ポイント数を固定しない。独自の寸法は `@ScaledMetric` を使う
+- `dynamicTypeSize.isAccessibilitySize` のとき:
+  - 一覧の行は横並びから縦積みに切り替える（`AnyLayout(HStackLayout)` ⇄ `VStackLayout`）
+  - 印刷プレビューの操作パネルはスクロール可能にし、ボタンを全幅で縦に並べる
+  - 課金画面はスクロール可能にし、購入ボタンを画面下に固定（`safeAreaInset`）
+- 文字を省略（「…」）してはいけない箇所: 氏名・敬称・価格・注意文。行数制限を付けない
+- 用紙プレビュー内の文字は印刷物の縮小図なので Dynamic Type の対象外（§10）。代わりにピンチで拡大でき、VoiceOver で読み上げる
+- 確認: CI で `.accessibility5`（最大）と `.large`（標準）で画像化する
+
+### 13.3 VoiceOver・コントラスト
+- アイコンだけのボタン（＋、選択、ページ送り、共有など）には `accessibilityLabel` を必ず付ける。日本語の文言は String Catalog で管理
+- 用紙プレビュー: 全体を1要素にまとめ、ラベルを「はがき、縦書き。宛先 〒100-0001 東京都… 山田太郎 様」のような要約にする。はみ出しがあれば「警告: 住所が枠からはみ出しています」を付け加える
+- 印刷済みや警告は色だけで伝えない（アイコンと文字を必ず併記する）
+- 一括印刷のページ送りは `accessibilityAdjustableAction` で、スワイプ上下でページを移動できるようにする
+- コントラスト: HIG「Accessibility」が指針とする WCAG AA の値を満たす（17pt 以下は 4.5:1、18pt 以上・太字は 3:1）。独自色は Light・Dark の両方で比率を計算し、表にして README に載せる
+  - 出典: https://developer.apple.com/design/human-interface-guidelines/accessibility
+- 確認: Xcode の Accessibility Inspector の Audit を使う（ユーザーの Mac で実施）。CI では UI テストに `XCUIApplication().performAccessibilityAudit()`（iOS 17 以降の XCTest API）を組み込む
+
+### 13.4 String Catalogs
+- UI 文字列は `Localizable.xcstrings`、Info.plist の文言（連絡先の用途説明など）は `InfoPlist.xcstrings` で管理する。開発言語は `ja`
+- キーは意味を表す英語にする（例: `recipients.empty.title`）。コードに日本語の文字列リテラルを書かない。日本語の文言は catalog 側だけに置く（コードの識別子は英語、という要件とも合う）
+- 書式付きの文字列（件数など）は catalog 内の書式指定と複数形バリエーションで扱う
+- CI で「catalog にあるがコードで使われていない」「コードにあるが catalog にない」キーをテストで検出する
+
+### 13.5 権限拒否時の導線・空状態
+- 権限: Q11=A の場合、アプリが権限を求める場面はない。連絡先はピッカー、CSV は `.fileImporter`（ユーザーが選んだファイルだけ）、印刷は OS の印刷画面。B を選んだ場合は、拒否されたとき・制限付きアクセスのときに説明と「設定を開く」ボタン（`UIApplication.openSettingsURLString`）を出す画面を加える
+- 空状態は `ContentUnavailableView`（iOS 17 以降の標準）で統一する
+
+| 状況 | 表示 | 次の操作 |
+|---|---|---|
+| 宛先が0件 | 「宛先がありません」 | 手入力 / 連絡先から / CSVから |
+| 検索結果が0件 | 標準の `ContentUnavailableView.search` | — |
+| グループが空 | 「このグループに宛先はありません」 | 宛先を追加 |
+| 未印刷が0件 | 「すべて印刷済みです」 | — |
+| 差出人が0件（差出人印刷 ON） | プレビューに「差出人が未登録です」 | 差出人を登録 |
+| CSV に有効な行がない | 原因（文字コード / 列の対応 / 空ファイル）を表示 | 文字コードを切り替える / 列の対応を見直す |
+| 購入情報を取得できない（オフライン等） | 「価格を取得できませんでした」 | 再試行 |
+
+### 13.6 プライバシーマニフェスト
+`PrivacyInfo.xcprivacy`:
+
+| キー | 値 |
+|---|---|
+| `NSPrivacyTracking` | `false` |
+| `NSPrivacyTrackingDomains` | 空 |
+| `NSPrivacyCollectedDataTypes` | 空（データを収集しない） |
+| `NSPrivacyAccessedAPITypes` | `NSPrivacyAccessedAPICategoryUserDefaults` に理由 `CA92.1` |
+
+- `CA92.1` の定義（確認済み）: 自分のアプリ（同じ App Group）だけが読み書きできる UserDefaults の情報にアクセスする場合の理由（https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitypereasons）
+- ファイルのタイムスタンプ・空き容量・起動時刻などの API はアプリのコードで使わない（必要になった時点で申告を追加する）。§12 の未確認事項も参照
+
+### 13.7 データの保全（iCloud バックアップ・アップデート・機種変更）
+- SwiftData のストアは既定の場所（Application Support）に置き、`isExcludedFromBackup` は設定しない。端末の iCloud バックアップと PC へのバックアップの対象になり、機種変更（バックアップからの復元・クイックスタート）で引き継がれる
+- CloudKit 同期は使わない（`ModelConfiguration(cloudKitDatabase: .none)`）。「端末内のみ」の原則を守り、iCloud への保存はユーザー自身のバックアップだけにする
+- アップデート対策:
+  - 初版から `VersionedSchema` と `SchemaMigrationPlan` を用意する。プロパティの追加は既定値付きの軽量マイグレーション、それ以外は独自のマイグレーションで行う
+  - ストアのファイル名と場所を固定する（`ModelConfiguration` で名前を明示）
+  - ストアを開けなかったとき、**ファイルを削除して作り直す処理は書かない**。エラー画面で原因を表示し、データを残したままにする
+  - CI のテストで、旧スキーマで作ったストアを新スキーマで開き、件数と内容が保たれることを確かめる（スキーマを変更するときから）
+- 設定（LayoutSettings 等）は UserDefaults に保存され、こちらもバックアップ対象
+- 購入状態は StoreKit が管理し、端末内には保存しない（機種変更後は「購入の復元」か自動の同期で戻る）
