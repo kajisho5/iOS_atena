@@ -58,6 +58,30 @@ python3 tools/check_strings.py   # String Catalog とコードのキーの整合
 - Linux: `AtenaCore` のテストと、String Catalog のキー整合チェック
 - macOS（`macos-26` ランナー）: iOS シミュレータでのビルドとテスト。実フォントで描いた宛名面の PNG を `snapshots` という成果物に保存する
 
+### TestFlight への配信（GitHub Actions）
+
+Runway のほかに、`.github/workflows/testflight.yml` からも TestFlight に配信できる。手動実行のみ（push では動かない）。App Store Connect API キーを使い、Xcode のクラウド署名で署名してアップロードする。
+
+初回の設定:
+
+1. App Store Connect → ユーザとアクセス → 統合 → App Store Connect API（チームキー）で API キーを作る。アクセスは **Admin**（クラウド署名の配布用証明書は Admin 権限でないと使えないため）。`.p8` は作成直後に1回だけダウンロードできる。
+2. GitHub のリポジトリ → Settings → Secrets and variables → Actions → New repository secret で、次の4つを登録する。
+
+| 名前 | 値 |
+|---|---|
+| `ASC_KEY_ID` | API キーの「キーID」 |
+| `ASC_ISSUER_ID` | API キー一覧の上にある「Issuer ID」 |
+| `ASC_KEY_P8` | ダウンロードした `AuthKey_XXXXXXXXXX.p8` をテキストエディタで開いた全文（`-----BEGIN PRIVATE KEY-----` から `-----END PRIVATE KEY-----` まで） |
+| `APPLE_TEAM_ID` | Apple Developer → Membership details の Team ID（10文字） |
+
+配信のしかた:
+
+1. GitHub の Actions タブ → 左の「TestFlight」→ Run workflow。ブランチは `main` を選ぶ。
+2. `build_number` は空なら実行回数の番号になる。Runway などで同じバージョンにもっと大きいビルド番号を上げていた場合は、それより大きい数を入れる。
+3. 成功すると、App Store Connect の処理が終わったあと TestFlight にビルドが表示される。
+
+`.p8` ファイルはリポジトリにコミットしない（`.gitignore` で除外済み）。ワークフローは実行中だけ一時フォルダにキーを書き出し、最後に削除する。
+
 ## 操作のしかた（iPhone / iPad）
 
 - iPhone では、主な操作（宛先を追加、一括印刷、この宛先を印刷、取り込む、印刷）を画面の下にまとめている。
