@@ -39,11 +39,6 @@ jobs:
         run: |
           xcodebuild -version
           sw_vers
-      - name: Regenerate Xcode project (must match the committed one)
-        run: |
-          brew install xcodegen
-          xcodegen generate
-          git status --short
       - name: Pick a simulator
         id: sim
         run: |
@@ -84,6 +79,12 @@ jobs:
           set -o pipefail
           xcodebuild build -project AtenaPrint.xcodeproj -scheme AtenaPrint \
             -destination "generic/platform=iOS Simulator" CODE_SIGNING_ALLOWED=NO | tail -5
+      - name: Compare committed project with XcodeGen output
+        if: always()
+        run: |
+          brew install xcodegen > /dev/null
+          xcodegen generate
+          git diff --stat -- AtenaPrint.xcodeproj AtenaPrint/Info.plist || true
       - name: Upload snapshots
         if: always()
         uses: actions/upload-artifact@v4

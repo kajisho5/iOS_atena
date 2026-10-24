@@ -46,7 +46,8 @@ final class PrintService: NSObject, UIPrintInteractionControllerDelegate {
     }
 }
 
-final class AddressPageRenderer: UIPrintPageRenderer {
+/// `UIPrintPageRenderer` is not main-actor isolated; the printing system calls it on its own schedule.
+nonisolated final class AddressPageRenderer: UIPrintPageRenderer {
     private let pages: [LayoutResult]
     private let font: AddressFont
     private let offset: PrintOffset
