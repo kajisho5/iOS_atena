@@ -67,9 +67,23 @@ public enum CSVTextDecoder {
 /// RFC 4180 CSV parser (comma separated, double-quote escaping, CRLF/LF/CR line breaks,
 /// line breaks inside quoted fields).
 public enum CSVParser {
+    /// A parsed row with the 1-based line in the source text where it starts.
+    public struct Row: Equatable, Sendable {
+        public var line: Int
+        public var fields: [String]
+    }
+
     public static func parse(_ text: String) -> [[String]] {
-        var rows: [[String]] = []
+        parseRows(text).map(\.fields)
+    }
+
+    /// Parses rows and keeps their starting line numbers (blank lines and line breaks inside quoted
+    /// fields make these differ from the row index).
+    public static func parseRows(_ text: String) -> [Row] {
+        var rows: [Row] = []
         var row: [String] = []
+        var line = 1
+        var rowStart = 1
         var field = String()
         var inQuotes = false
         var iterator = Array(text.unicodeScalars)[...]
@@ -82,7 +96,7 @@ public enum CSVParser {
         }
         func endRow() {
             endField()
-            rows.append(row)
+            rows.append(Row(line: rowStart, fields: row))
             row = []
         }
 
@@ -96,6 +110,7 @@ public enum CSVParser {
                         inQuotes = false
                     }
                 } else {
+                    if scalar == "\n" || (scalar == "\r" && iterator.first != "\n") { line += 1 }
                     field.unicodeScalars.append(scalar)
                 }
                 continue
@@ -109,8 +124,12 @@ public enum CSVParser {
             case "\r":
                 if iterator.first == "\n" { iterator.removeFirst() }
                 endRow()
+                line += 1
+                rowStart = line
             case "\n":
                 endRow()
+                line += 1
+                rowStart = line
             default:
                 field.unicodeScalars.append(scalar)
             }
@@ -119,14 +138,14 @@ public enum CSVParser {
             endRow()
         }
         // Drop blank lines (a single empty field) such as a trailing newline in the middle of a file.
-        return rows.filter { !($0.count == 1 && $0[0].isEmpty) }
+        return rows.filter { !($0.fields.count == 1 && $0.fields[0].isEmpty) }
     }
 }
 
 /// CSV writer producing Excel-friendly output (UTF-8 with BOM, CRLF line endings).
 public enum CSVWriter {
     /// Leading characters that spreadsheet apps may evaluate as a formula.
-    static let formulaTriggers: Set<Character> = ["=", "+", "@", "\t", "\r"]
+    static let formulaTriggers: Set<Character> = ["=", "+", "-", "@", "\t", "\r"]
 
     public static func string(from rows: [[String]]) -> String {
         rows.map { $0.map(escape).joined(separator: ",") }.joined(separator: "\r\n") + "\r\n"

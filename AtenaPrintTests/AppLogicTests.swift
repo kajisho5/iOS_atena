@@ -7,6 +7,12 @@ import Testing
 
 @MainActor
 @Suite struct AppLogicTests {
+    @Test func pdfFileNamesNeverBecomePaths() {
+        #expect(PDFExporter.safeFileName("2026/年賀状.pdf") == "2026-年賀状.pdf")
+        #expect(PDFExporter.safeFileName("a:b\\c.pdf") == "a-b-c.pdf")
+        #expect(!PDFExporter.safeFileName("../x.pdf").contains("/"))
+    }
+
     @Test func freeLimitMatchesCore() {
         #expect(AppConstants.freeRecipientLimit == FreeTier.recipientLimit)
     }

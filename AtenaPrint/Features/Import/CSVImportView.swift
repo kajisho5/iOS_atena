@@ -17,6 +17,7 @@ struct CSVImportView: View {
 
     @State private var encoding: CSVEncoding = .utf8
     @State private var rows: [[String]] = []
+    @State private var lineNumbers: [Int] = []
     @State private var decodeFailed = false
     @State private var hasHeader = true
     @State private var mapping = ColumnMapping()
@@ -269,7 +270,9 @@ struct CSVImportView: View {
     private func decode() {
         do {
             let text = try CSVTextDecoder.decode(source.data, as: encoding)
-            rows = CSVParser.parse(text)
+            let parsed = CSVParser.parseRows(text)
+            rows = parsed.map(\.fields)
+            lineNumbers = parsed.map(\.line)
             decodeFailed = false
         } catch {
             rows = []
@@ -281,7 +284,8 @@ struct CSVImportView: View {
 
     private func replan() {
         let existing = (try? modelContext.fetch(FetchDescriptor<Recipient>())) ?? []
-        candidates = ImportPlanner.plan(rows: rows, hasHeader: hasHeader, mapping: mapping, existingKeys: Set(existing.map(\.duplicateKey)))
+        candidates = ImportPlanner.plan(rows: rows, hasHeader: hasHeader, mapping: mapping, existingKeys: Set(existing.map(\.duplicateKey)),
+                                         lineNumbers: lineNumbers)
     }
 
     // MARK: - Import

@@ -88,7 +88,27 @@ struct SenderEditorView: View {
     @State private var address1 = ""
     @State private var address2 = ""
     @State private var didLoad = false
+    @State private var original = Snapshot()
+    @State private var isConfirmingDiscard = false
     @FocusState private var focusedField: Field?
+
+    /// Field values when the editor opened, to tell whether the user changed anything.
+    private struct Snapshot: Equatable {
+        var label = ""
+        var name = ""
+        var jointNames: [String] = []
+        var postalCode = ""
+        var address1 = ""
+        var address2 = ""
+    }
+
+    private var current: Snapshot {
+        Snapshot(label: label, name: name, jointNames: jointNames, postalCode: postalCode, address1: address1, address2: address2)
+    }
+
+    private var hasChanges: Bool {
+        current != original
+    }
 
     private enum Field: Hashable {
         case label
@@ -160,16 +180,26 @@ struct SenderEditorView: View {
             .formKeyboardSupport(showsNext: focusedField != .address2, onNext: { focusNextField() }, onDone: { focusedField = nil })
             .navigationTitle(sender == nil ? Text("senders.title.new") : Text("senders.title.edit"))
             .navigationBarTitleDisplayMode(.inline)
+            .interactiveDismissDisabled(hasChanges)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("common.cancel") { dismiss() }
-                        .keyboardShortcut(.cancelAction)
+                    Button("common.cancel") {
+                        if hasChanges {
+                            isConfirmingDiscard = true
+                        } else {
+                            dismiss()
+                        }
+                    }
+                    .keyboardShortcut(.cancelAction)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("common.save") { save() }
                         .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                         .keyboardShortcut("s", modifiers: .command)
                 }
+            }
+            .confirmationDialog("editor.discard.title", isPresented: $isConfirmingDiscard, titleVisibility: .visible) {
+                Button("editor.discard.confirm", role: .destructive) { dismiss() }
             }
             .onAppear(perform: load)
         }
@@ -185,6 +215,7 @@ struct SenderEditorView: View {
         postalCode = sender.postalCode
         address1 = sender.address1
         address2 = sender.address2
+        original = current
     }
 
     private func save() {

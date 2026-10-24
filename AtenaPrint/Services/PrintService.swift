@@ -99,9 +99,18 @@ enum PDFExporter {
     static func writeTemporaryFile(_ data: Data, fileName: String) throws -> URL {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("PDFExport", isDirectory: true)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        let url = directory.appendingPathComponent(fileName)
+        let url = directory.appendingPathComponent(safeFileName(fileName))
         try data.write(to: url, options: .atomic)
         return url
+    }
+
+    /// A group name such as "2026/年賀状" must not become a path: replace path separators and
+    /// characters that are not allowed in file names.
+    static func safeFileName(_ name: String) -> String {
+        let forbidden = CharacterSet(charactersIn: "/\\:").union(.newlines).union(.controlCharacters)
+        let cleaned = String(name.unicodeScalars.map { forbidden.contains($0) ? "-" : Character($0) })
+            .trimmingCharacters(in: .whitespaces)
+        return cleaned.isEmpty || cleaned.hasPrefix(".") ? "AtenaPrint" + cleaned : cleaned
     }
 }
 

@@ -149,6 +149,12 @@ struct RecipientListView: View {
         }
         .overlay { emptyState }
         .searchable(text: $searchText, prompt: Text("recipients.search.prompt"))
+        // In regular width the same list view is reused for every scope: reset the filter and search,
+        // otherwise e.g. "印刷済み" carried into the 未印刷 scope (where the picker is hidden) shows nothing.
+        .onChange(of: scope) {
+            filter = .all
+            searchText = ""
+        }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.large)
         .safeAreaInset(edge: .bottom) {
@@ -283,6 +289,8 @@ struct RecipientListView: View {
 private struct EmptyAddActions: View {
     let group: RecipientGroup?
     @Environment(RecipientAddFlow.self) private var flow
+    @Environment(StoreService.self) private var store
+    @Query private var recipients: [Recipient]
 
     var body: some View {
         VStack(spacing: 12) {
@@ -293,7 +301,12 @@ private struct EmptyAddActions: View {
             .buttonStyle(.borderedProminent)
             Button("add.contacts") {
                 flow.targetGroup = group
-                flow.isPickingContacts = true
+                // Same pre-check as the + menu: tell a free user at the limit before opening the picker.
+                if FreeTier.remainingSlots(currentCount: recipients.count, isPro: store.isPro) == 0 {
+                    flow.message = FlowMessage(title: "limit.title", body: String(localized: "limit.message \(AppConstants.freeRecipientLimit)"), offersPro: true)
+                } else {
+                    flow.isPickingContacts = true
+                }
             }
             .buttonStyle(.bordered)
             Button("add.csv") {

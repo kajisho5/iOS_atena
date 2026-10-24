@@ -169,12 +169,15 @@ public enum ImportPlanner {
     ///   - hasHeader: Whether the first row is a header (skipped).
     ///   - mapping: Field to column mapping.
     ///   - existingKeys: Duplicate keys of recipients that already exist.
-    public static func plan(rows: [[String]], hasHeader: Bool, mapping: ColumnMapping, existingKeys: Set<String>) -> [ImportCandidate] {
+    ///   - lineNumbers: Source line of each row (from `CSVParser.parseRows`); row positions are used when nil.
+    public static func plan(rows: [[String]], hasHeader: Bool, mapping: ColumnMapping, existingKeys: Set<String>,
+                            lineNumbers: [Int]? = nil) -> [ImportCandidate] {
         var seen = existingKeys
         var candidates: [ImportCandidate] = []
         let dataRows = hasHeader ? Array(rows.dropFirst()) : rows
         for (offset, row) in dataRows.enumerated() {
-            let lineNumber = offset + (hasHeader ? 2 : 1)
+            let rowIndex = offset + (hasHeader ? 1 : 0)
+            let lineNumber = lineNumbers.flatMap { $0.indices.contains(rowIndex) ? $0[rowIndex] : nil } ?? rowIndex + 1
             func value(_ field: RecipientField) -> String {
                 guard let index = mapping[field], row.indices.contains(index) else { return "" }
                 return TextNormalization.trimmed(CSVWriter.unescapeFormulaGuard(row[index]))

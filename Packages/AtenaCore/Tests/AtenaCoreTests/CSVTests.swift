@@ -58,4 +58,16 @@ import Testing
         #expect(plan.count == 1)
         #expect(plan[0].draft == drafts[0])
     }
+
+    @Test func rowsKeepTheirSourceLineNumbers() {
+        let rows = CSVParser.parseRows("氏名\n\n山田\n\"a\",\"x\ny\"\n佐藤\r\n鈴木")
+        #expect(rows.map(\.line) == [1, 3, 4, 6, 7])
+        #expect(rows[2].fields == ["a", "x\ny"])
+    }
+
+    @Test func formulaGuardCoversLeadingMinus() {
+        let text = CSVWriter.string(from: [["-1+1"]])
+        #expect(text == "'-1+1\r\n")
+        #expect(CSVWriter.unescapeFormulaGuard("'-1+1") == "-1+1")
+    }
 }
