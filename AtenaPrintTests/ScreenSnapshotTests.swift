@@ -101,13 +101,6 @@ private final class BundleToken {}
                      view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
                 Shot(name: "ipad-portrait-preview", size: portrait, regularWidth: true, view: wrap(PrintPreviewView(request: printRequest))),
                 Shot(name: "ipad-landscape-preview-dark", size: landscape, style: .dark, regularWidth: true, view: wrap(PrintPreviewView(request: printRequest))),
-                // iPhone Duo inner display, approximated on iPad: the Duo simulator boots folded, simctl cannot unfold it,
-                // and a window on the folded scene inherits the outer display's side bar. Apple's 2670×1878 px at the
-                // outer display's measured @3x → 890×626 pt, regular width.
-                Shot(name: "duo-inner-recipients", size: CGSize(width: 890, height: 626), regularWidth: true, scale: 3,
-                     view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
-                Shot(name: "duo-inner-preview", size: CGSize(width: 890, height: 626), regularWidth: true, scale: 3,
-                     view: wrap(PrintPreviewView(request: printRequest))),
                 // Split View / windowed widths (approximate): one third, half, two thirds.
                 Shot(name: "ipad-split-third", size: CGSize(width: 375, height: landscape.height), regularWidth: false,
                      view: wrap(RootView(initialScope: .group(sample.group)))),

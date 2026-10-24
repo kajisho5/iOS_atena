@@ -71,11 +71,12 @@ def ipad(screen: pathlib.Path, width: int) -> str:
 
 
 def duo_open(screen: pathlib.Path, width: int) -> str:
-    """iPhone Duo unfolded (164.6 × 117.8 mm body, inner display in landscape) with the hinge crease."""
-    height = width * 117.8 / 164.6
-    bezel = width * 0.022
+    """iPhone Duo unfolded (inner display in landscape) at the screenshot's aspect ratio, with the hinge crease."""
+    bezel = width * 0.018
     inner_w = width - bezel * 2
-    inner_h = height - bezel * 2
+    image_w, image_h = png_size(screen)
+    inner_h = inner_w * image_h / image_w
+    height = inner_h + bezel * 2
     return f"""
 <div style="position:relative;width:{width}px;height:{height}px;border-radius:{width*0.05}px;background:#1C1C1E;
   box-shadow:0 40px 90px rgba(0,0,0,.4),inset 0 0 0 {width*0.004}px #4A4A4E">
