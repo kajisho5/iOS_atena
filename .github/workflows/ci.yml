@@ -146,40 +146,13 @@ jobs:
           ')
           echo "udid=$UDID" >> "$GITHUB_OUTPUT"
           xcrun simctl list devices | grep "$UDID"
-      # Xcode 27.1 has no supported command to fold or unfold the simulator (only Device Hub's hinge control).
-      # duoctl (MIT, https://github.com/skarol/duoctl) sends the same hinge event; it is used in CI only,
-      # pinned to a reviewed commit, and never shipped in the app. Like duoctl's CI example, the hinge is
-      # set right after a fresh boot, before xcodebuild runs.
-      - name: Fetch duoctl and boot the simulator
-        run: |
-          git init -q "$RUNNER_TEMP/duoctl"
-          git -C "$RUNNER_TEMP/duoctl" fetch -q --depth 1 https://github.com/skarol/duoctl efd5e3d62fd85f555057b429deafcc9c81123454
-          git -C "$RUNNER_TEMP/duoctl" checkout -q FETCH_HEAD
-          xcrun simctl boot "${{ steps.sim.outputs.udid }}"
-          xcrun simctl bootstatus "${{ steps.sim.outputs.udid }}" -b
-          # duoctl reads the active display through devicectl. On a headless runner no display was active,
-          # so open the simulator's host app (Device Hub / Simulator, whichever this Xcode ships) to attach one.
-          apps=$(find /Applications/Xcode_27.1.app -maxdepth 6 -type d \( -iname "Simulator.app" -o -iname "Device Hub.app" \) -not -path "*/Frameworks/*" 2>/dev/null || true)
-          echo "host apps: ${apps:-none found}"
-          while IFS= read -r app; do
-            [ -n "$app" ] && open -a "$app" --args -CurrentDeviceUDID "${{ steps.sim.outputs.udid }}" && echo "opened $app"
-          done <<< "$apps"
-          for i in $(seq 1 30); do
-            active=$(xcrun devicectl device info displays -d "${{ steps.sim.outputs.udid }}" --json-output - 2>/dev/null \
-              | python3 -c 'import json,sys; d=json.load(sys.stdin)["result"]["displays"]; print(sum(1 for x in d if x.get("active")))' 2>/dev/null)
-            echo "active displays: ${active:-?}"
-            [ "${active:-0}" -gt 0 ] && break
-            sleep 5
-          done
-          xcrun devicectl device info displays -d "${{ steps.sim.outputs.udid }}" 2>&1 | head -30
-      - name: Build and capture (unfolded, inner display)
+      # The simulator boots folded. Xcode 27.1 has no supported command to unfold it, so only the
+      # outer display is captured; the inner display is checked on device via TestFlight.
+      - name: Build and capture (folded, outer display)
         env:
-          DUOCTL_UDID: ${{ steps.sim.outputs.udid }}
           TEST_RUNNER_SNAPSHOT_DIR: ${{ github.workspace }}/snapshots-duo
           TEST_RUNNER_SNAPSHOT_PROFILE: duo
         run: |
-          "$RUNNER_TEMP/duoctl/bin/duoctl" open
-          "$RUNNER_TEMP/duoctl/bin/duoctl" state
           set +e
           xcodebuild test \
             -project AtenaPrint.xcodeproj \
@@ -191,27 +164,6 @@ jobs:
           status=$?
           grep -E "error:|warning: .*(deprecat|isolat|Sendable)|Test (Suite|Case|run)|✔|✘|\*\* " xcodebuild-duo.log | sort -u | head -200
           cat snapshots-duo/diagnostics-duo-*.txt 2>/dev/null
-          exit $status
-      - name: Capture (folded, outer display)
-        env:
-          DUOCTL_UDID: ${{ steps.sim.outputs.udid }}
-          TEST_RUNNER_SNAPSHOT_DIR: ${{ github.workspace }}/snapshots-duo
-          TEST_RUNNER_SNAPSHOT_PROFILE: duo
-        run: |
-          xcrun simctl bootstatus "${{ steps.sim.outputs.udid }}" -b
-          "$RUNNER_TEMP/duoctl/bin/duoctl" close || echo "duoctl close failed; the simulator may already be folded"
-          set +e
-          xcodebuild test-without-building \
-            -project AtenaPrint.xcodeproj \
-            -scheme AtenaPrint \
-            -destination "id=${{ steps.sim.outputs.udid }}" \
-            -derivedDataPath build/DerivedData \
-            -only-testing:AtenaPrintTests/ScreenSnapshotTests \
-            CODE_SIGNING_ALLOWED=NO > xcodebuild-duo-outer.log 2>&1
-          status=$?
-          grep -E "error:|Test (Suite|Case|run)|✔|✘|\*\* " xcodebuild-duo-outer.log | sort -u | head -100
-          cat snapshots-duo/diagnostics-duo-*.txt 2>/dev/null
-          ls snapshots-duo
           exit $status
       - name: Upload snapshots
         if: always()
