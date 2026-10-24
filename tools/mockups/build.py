@@ -168,7 +168,7 @@ def main() -> None:
     # iPhone Duo (foldable): unfolded inner display + folded outer display.
     if (src / "screen-duo-inner-recipients.png").exists() and (src / "screen-duo-outer-list.png").exists():
         body = duo_open(src / "screen-duo-inner-recipients.png", 1500) + duo_closed(src / "screen-duo-outer-list.png", 520)
-        pages["iphone-duo"] = (2560, 1600, page(2560, 1600, body, "iPhone Duo の大きな画面にも", "開けば一覧と詳細を並べて、閉じればボタンは右側に", 76))
+        pages["iphone-duo"] = (2560, 1600, page(2560, 1600, body, "iPhone Duo の大きな画面にも", "開けば一覧と詳細を並べて表示", 76))
     if (src / "screen-duo-inner-preview.png").exists():
         pages["iphone-duo-preview"] = (2560, 1600, page(2560, 1600, duo_open(src / "screen-duo-inner-preview.png", 1700),
                                                         "開いて、宛名面をそのまま確認", "iPhone Duo の内側の画面で用紙全体を表示", 76))
