@@ -7,10 +7,18 @@ Usage: python3 tools/mockups/build.py <snapshots-dir> <out-dir>
 """
 import base64
 import pathlib
+import struct
 import sys
 
 FONT = "'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans CJK JP',sans-serif"
 BG = "linear-gradient(160deg,#2F66B8 0%,#173E73 100%)"
+
+
+def png_size(path: pathlib.Path) -> tuple[int, int]:
+    """Width and height from the PNG IHDR chunk."""
+    with path.open("rb") as f:
+        header = f.read(24)
+    return struct.unpack(">II", header[16:24])
 
 
 def data_uri(path: pathlib.Path) -> str:
@@ -51,7 +59,8 @@ def iphone(screen: pathlib.Path, width: int, dark=False, tilt=0) -> str:
 def ipad(screen: pathlib.Path, width: int) -> str:
     bezel = width * 0.022
     inner_w = width - bezel * 2
-    inner_h = inner_w * 820 / 1180
+    image_w, image_h = png_size(screen)
+    inner_h = inner_w * image_h / image_w
     return f"""
 <div style="position:relative;width:{width}px;height:{inner_h + bezel*2}px;border-radius:{width*0.035}px;background:#1C1C1E;
   box-shadow:0 40px 90px rgba(0,0,0,.35),inset 0 0 0 {width*0.004}px #4A4A4E">
@@ -63,7 +72,8 @@ def ipad(screen: pathlib.Path, width: int) -> str:
 
 def mac_window(screen: pathlib.Path, width: int) -> str:
     bar = width * 0.028
-    inner_h = width * 820 / 1180
+    image_w, image_h = png_size(screen)
+    inner_h = width * image_h / image_w
     return f"""
 <div style="width:{width}px;border-radius:{width*0.012}px;overflow:hidden;background:#F2F2F7;box-shadow:0 50px 100px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.25)">
   <div style="height:{bar}px;background:#E8E8ED;display:flex;align-items:center;gap:{bar*0.3}px;padding-left:{bar*0.5}px;border-bottom:1px solid #D1D1D6">
@@ -83,7 +93,7 @@ body{{background:{BG};font-family:{FONT};color:#fff;display:flex;flex-direction:
 h1{{margin:0;font-size:{title_size}px;font-weight:800;letter-spacing:.02em;text-align:center}}
 p{{margin:{title_size*0.3}px 0 0;font-size:{title_size*0.45}px;font-weight:500;opacity:.9;text-align:center}}
 </style></head><body>
-<div style="padding-top:{height*0.06}px">
+<div style="padding:{height*0.05}px {width*0.06}px 0">
 <h1>{title}</h1><p>{subtitle}</p></div>
 <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:{width*0.04}px;width:100%">{body}</div>
 </body></html>"""
@@ -103,16 +113,16 @@ def main() -> None:
     ]
     for name, file, title, subtitle in iphone_shots:
         if (src / file).exists():
-            pages[name] = (1290, 2796, page(1290, 2796, iphone(src / file, 1000), title, subtitle, 92))
+            pages[name] = (1290, 2796, page(1290, 2796, iphone(src / file, 980), title, subtitle, 76))
     # iPad 13" landscape (2752 x 2064).
     if (src / "screen-ipad-landscape-preview.png").exists():
-        pages["ipad-1"] = (2752, 2064, page(2752, 2064, ipad(src / "screen-ipad-landscape-preview.png", 2300),
+        pages["ipad-1"] = (2752, 2064, page(2752, 2064, ipad(src / "screen-ipad-landscape-preview.png", 2100),
                                             "iPad の大きな画面で、用紙全体を確認", "横向き・画面分割にも対応", 100))
     if (src / "screen-ipad-landscape-recipients.png").exists():
-        pages["ipad-2"] = (2752, 2064, page(2752, 2064, ipad(src / "screen-ipad-landscape-recipients.png", 2300),
+        pages["ipad-2"] = (2752, 2064, page(2752, 2064, ipad(src / "screen-ipad-landscape-recipients.png", 2100),
                                             "宛先・グループ・プレビューを一画面で", "印刷済みの記録で出し忘れを防止", 100))
         # Mac (Designed for iPad) window on a desktop, 2880 x 1800.
-        pages["mac-1"] = (2880, 1800, page(2880, 1800, mac_window(src / "screen-ipad-landscape-recipients.png", 2200),
+        pages["mac-1"] = (2880, 1800, page(2880, 1800, mac_window(src / "screen-ipad-landscape-recipients.png", 1700),
                                            "Mac でもそのまま使える", "Designed for iPad で動作（Apple シリコン搭載 Mac）", 84))
     # iPhone Duo: two phones side by side (2560 x 1600).
     if (src / "screen-iphone-list.png").exists() and (src / "screen-iphone-preview.png").exists():
