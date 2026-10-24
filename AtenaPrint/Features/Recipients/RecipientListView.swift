@@ -149,6 +149,7 @@ struct RecipientListView: View {
         .overlay { emptyState }
         .searchable(text: $searchText, prompt: Text("recipients.search.prompt"))
         .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
                 Button {

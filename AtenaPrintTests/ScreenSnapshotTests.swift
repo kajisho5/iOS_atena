@@ -1,4 +1,5 @@
 import AtenaCore
+import StoreKit
 import StoreKitTest
 import SwiftData
 import SwiftUI
@@ -25,15 +26,31 @@ private final class BundleToken {}
         guard let directory = ProcessInfo.processInfo.environment["SNAPSHOT_DIR"] else { return }
         try FileManager.default.createDirectory(atPath: directory, withIntermediateDirectories: true)
 
+        var diagnostics: [String] = []
         var session: SKTestSession?
-        if let url = Bundle(for: BundleToken.self).url(forResource: "Products", withExtension: "storekit") {
-            session = try SKTestSession(contentsOf: url)
-            session?.disableDialogs = true
-            session?.clearTransactions()
+        let configURL = Bundle(for: BundleToken.self).url(forResource: "Products", withExtension: "storekit")
+        diagnostics.append("storekit file: \(configURL?.path ?? "not found")")
+        if let configURL {
+            do {
+                session = try SKTestSession(contentsOf: configURL)
+                session?.disableDialogs = true
+                session?.clearTransactions()
+                diagnostics.append("session created")
+            } catch {
+                diagnostics.append("session error: \(error)")
+            }
+        }
+        do {
+            let products = try await Product.products(for: [AppConstants.proProductID])
+            diagnostics.append("products: \(products.map { "\($0.id) \($0.displayPrice)" })")
+        } catch {
+            diagnostics.append("products error: \(error)")
         }
         let store = StoreService()
         await store.loadProduct()
-        print("snapshot: storekit session=\(session != nil) product=\(store.product?.displayPrice ?? "nil") state=\(store.loadState)")
+        diagnostics.append("store product: \(store.product?.displayPrice ?? "nil") state: \(store.loadState)")
+        let idiomName = UIDevice.current.userInterfaceIdiom == .pad ? "ipad" : "iphone"
+        try diagnostics.joined(separator: "\n").write(toFile: directory + "/diagnostics-\(idiomName).txt", atomically: true, encoding: .utf8)
 
         let defaults = try #require(UserDefaults(suiteName: "snapshots-\(UUID().uuidString)"))
         let layoutStore = LayoutStore(defaults: defaults)
