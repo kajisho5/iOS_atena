@@ -19,6 +19,11 @@ struct RecipientsRootView: View {
     @State private var selectedRecipient: Recipient?
     @State private var addFlow = RecipientAddFlow()
 
+    init(initialScope: RecipientScope? = nil, initialRecipient: Recipient? = nil) {
+        _scope = State(initialValue: initialScope)
+        _selectedRecipient = State(initialValue: initialRecipient)
+    }
+
     var body: some View {
         NavigationSplitView {
             GroupSidebarView(selection: $scope)

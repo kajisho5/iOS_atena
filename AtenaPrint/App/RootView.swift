@@ -9,12 +9,20 @@ enum AppTab: Hashable {
 
 struct RootView: View {
     @Environment(\.requestReview) private var requestReview
-    @State private var selectedTab: AppTab = .recipients
+    @State private var selectedTab: AppTab
     @State private var printRequest: PrintRequest?
+    private let initialScope: RecipientScope?
+    private let initialRecipient: Recipient?
+
+    init(initialTab: AppTab = .recipients, initialScope: RecipientScope? = nil, initialRecipient: Recipient? = nil) {
+        _selectedTab = State(initialValue: initialTab)
+        self.initialScope = initialScope
+        self.initialRecipient = initialRecipient
+    }
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            RecipientsRootView()
+            RecipientsRootView(initialScope: initialScope, initialRecipient: initialRecipient)
                 .tabItem { Label("tab.recipients", systemImage: "person.2") }
                 .tag(AppTab.recipients)
             LayoutSettingsView()

@@ -72,11 +72,11 @@ struct SettingsView: View {
 
                 Section {
                     ShareLink(item: CSVFile(data: CSVWriter.data(from: CSVTemplate.templateRows()), fileName: String(localized: "csv.template.fileName")),
-                              preview: SharePreview(Text("settings.csvTemplate"))) {
+                              preview: SharePreview("settings.csvTemplate")) {
                         Label("settings.csvTemplate", systemImage: "square.and.arrow.up")
                     }
                     ShareLink(item: CSVFile(data: CSVWriter.data(from: CSVTemplate.exportRows(recipients.map(\.draft))), fileName: String(localized: "csv.export.fileName")),
-                              preview: SharePreview(Text("settings.csvExport"))) {
+                              preview: SharePreview("settings.csvExport")) {
                         Label("settings.csvExport", systemImage: "tray.and.arrow.up")
                     }
                     .disabled(recipients.isEmpty)

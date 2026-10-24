@@ -25,6 +25,7 @@
 		5F761BC01E857746C988CB18 /* AddressRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3ADBEF237B410C0754BBB8 /* AddressRenderer.swift */; };
 		60D6A89C957343E33FEE9BE9 /* PrintOffsetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EEA24384BAFE5FF8D9727C /* PrintOffsetView.swift */; };
 		6367723B82A6E302AA13B177 /* GroupSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B6594795DD0F42B17B969 /* GroupSidebarView.swift */; };
+		6DEA13F47C5AB3BB8AAE6E99 /* ScreenSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDDD3CBCBEF1DEE2BE0F248 /* ScreenSnapshotTests.swift */; };
 		71C1B09FCF3B5E267D5FFD46 /* RecipientListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F712B2862B8A687BF6AA53E /* RecipientListView.swift */; };
 		74C858C9AAE33BF6CE679CED /* RecipientEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5749B0F065EE16C131E7 /* RecipientEditorView.swift */; };
 		7562474676A63ECB2CE32EEC /* RecipientPrintSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B425397814F88BBABA9E5F4 /* RecipientPrintSelectionView.swift */; };
@@ -38,6 +39,7 @@
 		95C68C63AC019036CD35794D /* SenderProfilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA62A24A38A83A73CA40DB /* SenderProfilesView.swift */; };
 		9BE6011A058C858CF545E8B5 /* AtenaPrintApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DD641DF63E58BC778FF503 /* AtenaPrintApp.swift */; };
 		A271E64EC59318E83C08ABC2 /* DataStoreErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFB071A35BE8700691F2F53 /* DataStoreErrorView.swift */; };
+		A941A0C2535345F005A74ED0 /* Products.storekit in Resources */ = {isa = PBXBuildFile; fileRef = EC6DC353F4B736884C7995E0 /* Products.storekit */; };
 		ACE85876CE809B7F7DF146A4 /* RecipientAddFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BECB2A18E6728B17F480FB6 /* RecipientAddFlow.swift */; };
 		B9A0027E89610447C37B55B1 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952FE61AEC434C1B5617CF4B /* AppConstants.swift */; };
 		CE17F37DF2784AF2A218A01C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24F000B56D47157A4C169601 /* Assets.xcassets */; };
@@ -103,6 +105,7 @@
 		BCFB071A35BE8700691F2F53 /* DataStoreErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreErrorView.swift; sourceTree = "<group>"; };
 		C25A217BD372B0AB98CE6A25 /* LayoutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSettingsView.swift; sourceTree = "<group>"; };
 		C87B6594795DD0F42B17B969 /* GroupSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSidebarView.swift; sourceTree = "<group>"; };
+		CDDDD3CBCBEF1DEE2BE0F248 /* ScreenSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSnapshotTests.swift; sourceTree = "<group>"; };
 		CEE26FE4B4860FBF6574BA42 /* CoreTextMeasurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTextMeasurer.swift; sourceTree = "<group>"; };
 		D5BE105C10CE172372FDDC96 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		DCFD1E143EF2DD67129D2E41 /* ContactPickerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPickerPresenter.swift; sourceTree = "<group>"; };
@@ -204,6 +207,7 @@
 			children = (
 				A762799BD3A0A6420871746D /* AppLogicTests.swift */,
 				9068A3D6342E255238215A2A /* RenderingSnapshotTests.swift */,
+				CDDDD3CBCBEF1DEE2BE0F248 /* ScreenSnapshotTests.swift */,
 			);
 			path = AtenaPrintTests;
 			sourceTree = "<group>";
@@ -355,6 +359,7 @@
 			buildConfigurationList = D5B255DD4FDD3157CD90FEB6 /* Build configuration list for PBXNativeTarget "AtenaPrintTests" */;
 			buildPhases = (
 				9F0468D1200C614515BBE498 /* Sources */,
+				ADC3914393ADF85A99305195 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -419,6 +424,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADC3914393ADF85A99305195 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A941A0C2535345F005A74ED0 /* Products.storekit in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -472,6 +485,7 @@
 			files = (
 				E3CBB67AF0073B3A32F0ADA1 /* AppLogicTests.swift in Sources */,
 				10C3B0496E21C1D6ACFAEAE0 /* RenderingSnapshotTests.swift in Sources */,
+				6DEA13F47C5AB3BB8AAE6E99 /* ScreenSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

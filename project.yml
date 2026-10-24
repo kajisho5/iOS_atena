@@ -72,6 +72,8 @@ targets:
     platform: iOS
     sources:
       - path: AtenaPrintTests
+      - path: AtenaPrint/Resources/Products.storekit
+        buildPhase: resources
     dependencies:
       - target: AtenaPrint
     settings:
