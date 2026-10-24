@@ -2,6 +2,7 @@
 
 > ステータス: **確認待ち**。この設計の承認後に ①宛先リストとCSV取り込み の実装へ進む。
 > 画面遷移図: [`screen-flow.svg`](./screen-flow.svg)
+> 画面デザイン（Q9）: [`design/01-iphone-core-light.svg`](./design/01-iphone-core-light.svg) ・ [`design/02-iphone-states.svg`](./design/02-iphone-states.svg) ・ [`design/03-ipad-landscape.svg`](./design/03-ipad-landscape.svg)（生成スクリプト: `tools/gen_design_svgs.py`）
 >
 > v0.2 変更点: 画面の向き・iPad マルチタスク要件を追加（§4.3、S07/S09、§9、Q10）
 > v0.3 変更点: Q1〜Q10 を全て A で確定（§11）。ふりがな欄を追加（Q5=A）。標準対応要件（§13）を追加。新規確認事項 Q11・Q12
@@ -373,6 +374,22 @@ iOS_atena/
 | `PostalFrame` | 郵便番号枠の赤（表示専用、印刷しない） |
 | `PreviewGuide` | 用紙枠・余白ガイド |
 | `WarningFill` | はみ出し警告の背景 |
+| `SecondaryText` | 補助テキスト（住所の要約・件数など）。下記コントラストの理由で追加 |
+| `SuccessText` / `WarningText` | 「印刷済み」「はみ出し」表示の文字色 |
+
+- **システム色の `secondaryLabel` について（計算値）**: ライトモードでは rgba(60,60,67,0.6) で、白背景上の実効色は #8A8A8E 相当、コントラスト比は約 3.44:1。17pt 以下の本文に必要な 4.5:1 に届かない。住所など意味を持つ補助テキストには `SecondaryText` を使う。罫線・プレースホルダーなど装飾的な要素はシステム色のままにする
+- 色の値（案）とコントラスト比（WCAG の式で計算）:
+
+| 色 | Light | 比率（背景） | Dark | 比率（背景） |
+|---|---|---|---|---|
+| AccentColor | #24569B | 7.29（白） / 6.54（#F2F2F7） | #8DB3EC | 7.93（#1C1C1E） / 9.79（黒） |
+| ボタン文字（Accent 上） | #FFFFFF | 7.29 | #000000 | 9.79 |
+| SecondaryText | #5E5E63 | 6.45（白） / 5.78（#F2F2F7） | #AEAEB2 | 7.69（#1C1C1E） / 9.50（黒） |
+| SuccessText | #1E7B34 | 5.33（白） | #5BD37A | 8.95（#1C1C1E） |
+| WarningText | #B04A00 | 5.49（白） | #FFB35C | 9.60（#1C1C1E） |
+| PaperInk / PaperBackground | #1A1A1A / #FFFFFF | 17.40 | 同左（紙は白のまま） | 17.40 |
+
+- 「コントラストを上げる」用の値は、実装時に上の値より比率が高くなるよう定める
 
 - 印刷・PDF 出力は外観モードに関係なく常に黒文字・白紙で描画する（`AddressRenderer` は外観に依存しない色を使う）
 - 確認: CI で主要画面を Light / Dark の両方で画像化し、成果物として保存する（§4.3 の代表サイズ描画を流用）
