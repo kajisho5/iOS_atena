@@ -110,7 +110,7 @@ def side_column(w, h, t, tools=(), tabs=True, active=0, camera=True):
     if camera:
         p.append(f'<rect x="{cx-15}" y="14" width="30" height="30" rx="15" fill="#000000"/>')
         p.append(T(cx, 66, "9:41", 15, t["label"], 600, "middle"))
-        y = 112
+        y = 120
     else:
         p.append(T(cx, 34, "9:41", 15, t["label"], 600, "middle"))
         y = 82
@@ -171,7 +171,7 @@ def rows(x, y, wdt, t, n=5, sel=None, trunc=20, fold_ok=False):
                  + T(x + 18 + 17 * len(name.replace(" ", "")) + (5 if " " in name else 0) + 6, cy + 30, hon, 13, t["label"], 400, bg=bg))
         a = addr if len(addr) <= trunc else addr[:trunc] + "…"
         p.append(T(x + 18, cy + 54, a, 15, t["sec"], 400, bg=bg))
-        if printed and wdt > 300:
+        if printed and wdt >= 300:
             p.append(badge(x + wdt - 34, cy + 31, printed, t, bg))
         p.append(sym("chevron.forward", x + wdt - 18, cy + 36, t["sec"], 1.8).replace('stroke-width="1.8"', 'stroke-width="1.8" stroke-opacity="0.6"'))
         if i < n - 1:
@@ -180,8 +180,10 @@ def rows(x, y, wdt, t, n=5, sel=None, trunc=20, fold_ok=False):
     return "".join(p)
 
 
-def paper(x, y, w, t, name=("山田", "太郎"), addr="東京都中央区見本町一―一三―三", sender=True, shadow=True):
-    """Postcard (100×148) with 7 postal boxes and vertical text. Paper stays white in dark mode."""
+def paper(x, y, w, t, name=("山田", "太郎"), addr="東京都中央区見本町一―一三―三", code="1040061",
+          joint="花子", building="サンプルハイツ二〇三", sender=True, shadow=True):
+    """Postcard (100×148) with 7 postal boxes and vertical text: address (2 columns), name with the
+    joint name next to it (honorifics aligned), sender at the lower left. Paper stays white in dark mode."""
     h = w * 1.48
     p = []
     if shadow:
@@ -193,7 +195,6 @@ def paper(x, y, w, t, name=("山田", "太郎"), addr="東京都中央区見本�
     for k, off in enumerate(bx):
         p.append(f'<rect x="{left+off*s:g}" y="{y+12*s:g}" width="{5.7*s:g}" height="{8*s:g}" fill="none" '
                  f'stroke="{t["postal"]}" stroke-width="{max(0.8, 0.35*s):g}"/>')
-    code = "1040061"
     for k, ch in enumerate(code):
         p.append(T(left + (bx[k] + 2.85) * s, y + 18.4 * s, ch, max(11, round(5 * s)), t["ink"], 400, "middle",
                    bg=t["paper"], font=MINCHO))
@@ -201,21 +202,39 @@ def paper(x, y, w, t, name=("山田", "太郎"), addr="東京都中央区見本�
     ax = x + w - 14 * s
     for k, ch in enumerate(addr):
         p.append(T(ax, y + 30 * s + k * a_size * 1.02, ch, a_size, t["ink"], 400, "middle", bg=t["paper"], font=MINCHO))
+    if building:
+        for k, ch in enumerate(building):
+            p.append(T(ax - a_size * 1.3, y + 42 * s + k * a_size * 1.02, ch, a_size, t["ink"], 400, "middle",
+                       bg=t["paper"], font=MINCHO))
     n_size = max(14, round(10 * s))
-    nx = x + w / 2 + 4 * s
+    step = n_size * 1.12
+    nx = x + w / 2 + (6 * s if joint else 4 * s)
     k = 0
     for part in name:
         for ch in part:
-            p.append(T(nx, y + 44 * s + k * n_size * 1.12, ch, n_size, t["ink"], 400, "middle", bg=t["paper"], font=MINCHO))
+            p.append(T(nx, y + 44 * s + k * step, ch, n_size, t["ink"], 400, "middle", bg=t["paper"], font=MINCHO))
             k += 1
         k += 0.4
-    p.append(T(nx, y + 44 * s + (k + 0.3) * n_size * 1.12, "様", n_size, t["ink"], 400, "middle", bg=t["paper"], font=MINCHO))
-    if sender and s >= 2.2:
+    hon_y = y + 44 * s + (k + 0.3) * step
+    p.append(T(nx, hon_y, "様", n_size, t["ink"], 400, "middle", bg=t["paper"], font=MINCHO))
+    if joint:
+        jx = nx - n_size * 1.3
+        for j, ch in enumerate(joint):
+            p.append(T(jx, hon_y - (len(joint) + 0.3 - j) * step, ch, n_size, t["ink"], 400, "middle",
+                       bg=t["paper"], font=MINCHO))
+        p.append(T(jx, hon_y, "様", n_size, t["ink"], 400, "middle", bg=t["paper"], font=MINCHO))
+    if sender and s >= 1.9:
         sz = 11
         sx = x + 12 * s
+        for k2, ch in enumerate("東京都見本区見本町二―五"):
+            p.append(T(sx + sz * 1.2, y + h - 80 * s + k2 * sz * 1.02, ch, sz, t["ink"], 400, "middle", bg=t["paper"], font=MINCHO))
         for k2, ch in enumerate("田中一郎"):
-            p.append(T(sx, y + h - 46 * s + k2 * sz * 1.1, ch, sz, t["ink"], 400, "middle", bg=t["paper"], font=MINCHO))
+            p.append(T(sx, y + h - 40 * s + k2 * sz * 1.1, ch, sz, t["ink"], 400, "middle", bg=t["paper"], font=MINCHO))
     return "".join(p)
+
+
+AOKI = dict(name=("青木", "健"), addr="東京都渋谷区見本町二―三―一", code="1500001", joint=None, building=None)
+WARNING = "2026年12月1日に印刷済みの宛先です"
 
 
 def bottom_bar(x0, x1, h, t, buttons, regular=False):
@@ -244,8 +263,8 @@ def bottom_bar(x0, x1, h, t, buttons, regular=False):
     return "".join(p)
 
 
-def _btn(x, y, bw, label, prominent, icon, t, bh=52):
-    fill = t["accent"] if prominent else t["seg"]
+def _btn(x, y, bw, label, prominent, icon, t, bh=52, plain=None):
+    fill = t["accent"] if prominent else (plain or t["seg"])
     fg = t["on_accent"] if prominent else t["accent"]
     tw = 17 * len(label) + (28 if icon else 0)
     sx = x + bw / 2 - tw / 2
@@ -291,21 +310,25 @@ def outer_empty(theme):
 
 
 def outer_ax5(theme):
-    """Largest text size (AX5): rows wrap, the summary and badge move to their own lines,
-    the two bottom buttons stack (ViewThatFits). Bars keep their size."""
+    """Largest text size (AX5): the title wraps, the summary stays (own lines), the address wraps in
+    full, the badge moves to its own line, the two bottom buttons stack (ViewThatFits). Search and the
+    segmented control scroll above (out of view here). Bars keep their size."""
     t = THEMES[theme]
     w, h = OUTER
     cw = w - SIDE
     b = [side_column(w, h, t, tools=[("chevron.backward", None), ("ellipsis", None)])]
-    b.append(T(20, 70, "年賀状", 60, t["label"], 700))
-    b.append(T(20, 134, "2026", 60, t["label"], 700))
-    b.append(f'<rect x="16" y="156" width="{cw-24}" height="236" rx="22" fill="{t["cell"]}"/>')
-    b.append(T(32, 214, "青木 健 様", 53, t["label"], 600, bg=t["cell"]))
-    b.append(T(32, 274, "〒150-0001", 49, t["sec"], 400, bg=t["cell"]))
-    b.append(T(32, 330, "東京都渋谷区…", 49, t["sec"], 400, bg=t["cell"]))
-    b.append(T(32, 376, "印刷済み 12/1", 30, t["success"], 600, bg=t["cell"]))
+    b.append(T(20, 64, "年賀状", 60, t["label"], 700))
+    b.append(T(20, 126, "2026", 60, t["label"], 700))
+    b.append(T(20, 176, "5件・未印刷3件", 49, t["sec"]))
+    b.append(f'<rect x="16" y="196" width="{cw-24}" height="420" rx="22" fill="{t["cell"]}"/>')
+    lines = [("青木 健 様", 53, t["label"], 600), ("〒150-0001", 49, t["sec"], 400), ("東京都渋谷区", 49, t["sec"], 400),
+             ("見本町2-3-1", 49, t["sec"], 400)]
+    y = 252
+    for text, size, col, wt in lines:
+        b.append(T(32, y, text, size, col, wt, bg=t["cell"]))
+        y += 58
     bar_top = h - BOTTOM - 140
-    b.append(f'<rect x="0" y="{bar_top}" width="{cw}" height="{140+BOTTOM}" fill="{t["bg"]}" fill-opacity="0.92"/>'
+    b.append(f'<rect x="0" y="{bar_top}" width="{cw}" height="{140+BOTTOM}" fill="{t["bg"]}" fill-opacity="0.96"/>'
              f'<rect x="0" y="{bar_top}" width="{cw}" height="0.5" fill="{t["sep"]}"/>')
     b.append(_btn(16, bar_top + 10, cw - 32, "一括印刷", True, "printer", t, 58))
     b.append(_btn(16, bar_top + 78, cw - 32, "宛先を追加", False, "plus", t, 58))
@@ -340,16 +363,16 @@ def outer_preview(theme):
     b.append(T(cw / 2, 40, "印刷プレビュー", 17, t["label"], 600, "middle", bg=t["preview"]))
     b.append(T(cw / 2, 60, "はがき・縦書き", 13, t["sec"], 400, "middle", bg=t["preview"]))
     b.append(f'<rect x="16" y="76" width="{cw-32}" height="40" rx="14" fill="{t["warn_fill"]}"/>')
-    b.append(T(30, 102, "12月1日に印刷済みの宛先です", 15, t["warn"], 600, bg=t["warn_fill"]))
+    b.append(T(30, 102, WARNING, 15, t["warn"], 600, bg=t["warn_fill"]))
     pw = 196
-    b.append(paper(cw / 2 - pw / 2, 128, pw, t, name=("青木", "健"), addr="東京都渋谷区見本町二―三―一"))
+    b.append(paper(cw / 2 - pw / 2, 128, pw, t, **AOKI))
     py = 128 + pw * 1.48 + 16
     b.append(glass_btn(cw / 2 - 70, py + 22, t) + sym("chevron.backward", cw / 2 - 70, py + 22, t["sec"]))
     b.append(T(cw / 2, py + 29, "1 / 5", 17, t["label"], 600, "middle", bg=t["preview"]))
     b.append(glass_btn(cw / 2 + 70, py + 22, t) + sym("chevron.forward", cw / 2 + 70, py + 22, t["accent"]))
     by = h - BOTTOM - 120
     b.append(_btn(16, by, cw - 32, "5件を印刷", True, "printer", t))
-    b.append(_btn(16, by + 62, cw - 32, "PDFで書き出す（Pro）", False, "square.and.arrow.up", t))
+    b.append(_btn(16, by + 62, cw - 32, "PDFで書き出す（Pro）", False, "square.and.arrow.up", t, plain=t["cell"]))
     return svg(w, h, t["preview"], "".join(b))
 
 
@@ -373,11 +396,12 @@ def outer_editor(theme):
         b.append(T(30, y + 48, val, 17, t["label"], 400, bg=f))
         if i == 2:
             b.append(f'<rect x="{30+17*len(val)*0.6:g}" y="{y+31}" width="2" height="22" fill="{t["accent"]}"/>')
+    b.append(T(20, 366, "下へスクロール：連名・敬称・建物名・メモ・グループ", 13, t["sec"], 400, bg=s))
     kb_top = h - 252
     acc = kb_top - 48
     b.append(f'<rect x="0" y="{acc}" width="{cw}" height="48" fill="{t["field"]}"/>')
     b.append(T(20, acc + 30, "次へ", 17, t["accent"], 400, bg=t["field"]))
-    b.append(T(cw - 20, acc + 30, "完了", 17, t["accent"], 600, "end", bg=t["field"]))
+    b.append(T(cw - 20, acc + 30, "キーボードを閉じる", 17, t["accent"], 600, "end", bg=t["field"]))
     b.append(f'<rect x="0" y="{kb_top}" width="{cw}" height="{h-kb_top}" fill="{t["kb"]}"/>')
     b.append(T(cw / 2, kb_top + 120, "（システムのキーボード・数字）", 15, t["label"], 400, "middle", bg=t["kb"]))
     return svg(w, h, s, "".join(b))
@@ -404,8 +428,9 @@ def outer_paywall(theme):
         b.append(T(60, y, line, 17, t["label"], 400, bg=f))
     b.append(_btn(16, 322, cw - 32, "¥800 で購入", True, None, t))
     b.append(T(cw / 2, 410, "購入を復元", 17, t["accent"], 400, "middle", bg=s))
-    b.append(T(cw / 2, 446, "利用規約・プライバシーポリシー", 15, t["accent"], 400, "middle", bg=s))
-    b.append(T(cw / 2, 482, "価格は App Store の表示に従います", 13, t["sec"], 400, "middle", bg=s))
+    b.append(T(cw / 2, 454, "利用規約", 17, t["accent"], 400, "middle", bg=s))
+    b.append(T(cw / 2, 498, "プライバシーポリシー", 17, t["accent"], 400, "middle", bg=s))
+    b.append(T(cw / 2, 540, "価格は App Store の表示に従います", 13, t["sec"], 400, "middle", bg=s))
     return svg(w, h, s, "".join(b))
 
 
@@ -429,19 +454,24 @@ def inner_l_recipients(theme, folded=False):
     b.append(sym("sidebar.left", 34, 36, t["label"]) + sym("ellipsis", lw - 8, 36, t["label"]))
     b.append(T(24, 96, "年賀状2026", 28, t["label"], 700, bg=t["cell"]))
     b.append(T(24, 122, "5件・未印刷 3件", 15, t["sec"], 400, bg=t["cell"]))
-    b.append(segmented(20, 136, lw - 8, t, size=13 if folded else 15).replace(f'fill="{t["seg"]}"', f'fill="{t["seg"]}"'))
-    b.append(rows(16, 184, lw, t, n=5, sel=4, trunc=14 if folded else 15, fold_ok=True)
+    b.append(T(lw + 8, 122, "無料版：あと5件", 15, t["sec"], 400, "end", bg=t["cell"]))
+    b.append(f'<rect x="20" y="134" width="{lw-8:g}" height="36" rx="18" fill="{t["seg"]}"/>'
+             + sym("magnifyingglass", 40, 152, t["sec"], 2) + T(56, 158, "氏名・住所で検索", 17, t["sec"], 400, bg=t["seg"]))
+    b.append(segmented(20, 180, lw - 8, t, size=13 if folded else 15))
+    b.append(rows(16, 224, lw, t, n=5, sel=4, trunc=14 if folded else 15, fold_ok=True)
              .replace(f'fill="{t["cell"]}"/>', f'fill="{t["cell"]}" fill-opacity="0"/>', 1))
     b.append(bottom_bar(8, lw + 24, h, t, [("追加", False, "plus"), ("一括印刷", True, "printer")])
              .replace(f'fill="{t["bg"]}" fill-opacity="0.92"', f'fill="{t["cell"]}" fill-opacity="0.96"'))
     # Detail pane.
     b.append(T(dx + 8, 62, "山田 太郎 様", 28, t["label"], 700))
-    pw = min(220, dw - 40)
-    b.append(paper(dx + dw / 2 - pw / 2, 84, pw, t))
-    cy0 = 84 + pw * 1.48 + 18
-    b.append(f'<rect x="{dx+8}" y="{cy0:g}" width="{dw-16:g}" height="84" rx="20" fill="{t["cell"]}"/>')
-    b.append(T(dx + 26, cy0 + 32, "〒104-0061", 17, t["label"], 400, bg=t["cell"]))
-    b.append(T(dx + 26, cy0 + 60, "東京都中央区見本町1-13-3", 17, t["label"], 400, bg=t["cell"]))
+    b.append(T(dx + 8, 84, "連名：花子 様", 15, t["sec"]))
+    pw = min(210, dw - 40)
+    b.append(paper(dx + dw / 2 - pw / 2, 96, pw, t))
+    cy0 = 96 + pw * 1.48 + 14
+    b.append(f'<rect x="{dx+8}" y="{cy0:g}" width="{dw-16:g}" height="96" rx="20" fill="{t["cell"]}"/>')
+    b.append(T(dx + 26, cy0 + 30, "〒104-0061", 17, t["label"], 400, bg=t["cell"]))
+    b.append(T(dx + 26, cy0 + 56, "東京都中央区見本町1-13-3", 17, t["label"], 400, bg=t["cell"]))
+    b.append(T(dx + 26, cy0 + 80, "サンプルハイツ203", 15, t["sec"], 400, bg=t["cell"]))
     b.append(bottom_bar(dx, w - SIDE, h, t, [("この宛先を印刷", True, "printer")], regular=True))
     return svg(w, h, t["bg"], "".join(b))
 
@@ -456,7 +486,7 @@ def inner_l_preview(theme, folded=False):
     b.append(T(split / 2, 36, "印刷プレビュー", 17, t["label"], 600, "middle", bg=t["preview"]))
     b.append(T(split / 2, 56, "はがき・縦書き", 13, t["sec"], 400, "middle", bg=t["preview"]))
     pw = min(380, (h - 100) / 1.48, split - 40)
-    b.append(paper(split / 2 - pw / 2, 74, pw, t, name=("青木", "健"), addr="東京都渋谷区見本町二―三―一"))
+    b.append(paper(split / 2 - pw / 2, 74, pw, t, **AOKI))
     x0 = px + 20
     x1 = w - SIDE - 16
     pane = t["bg"]
@@ -466,8 +496,8 @@ def inner_l_preview(theme, folded=False):
     b.append(T(x0, 130, "青木 健 様", 22, t["label"], 700))
     b.append(T(x0, 156, "〒150-0001 東京都渋谷区見本町2-3-1", 13 if folded else 15, t["sec"]))
     b.append(f'<rect x="{x0}" y="174" width="{x1-x0:g}" height="60" rx="14" fill="{t["warn_fill"]}"/>')
-    b.append(T(x0 + 14, 200, "2026年12月1日に", 15, t["warn"], 600, bg=t["warn_fill"]))
-    b.append(T(x0 + 14, 222, "印刷済みの宛先です", 15, t["warn"], 600, bg=t["warn_fill"]))
+    b.append(T(x0 + 14, 200, WARNING[:11], 15, t["warn"], 600, bg=t["warn_fill"]))
+    b.append(T(x0 + 14, 222, WARNING[11:], 15, t["warn"], 600, bg=t["warn_fill"]))
     b.append(T(x0, 268, "用紙", 13, t["sec"], 600))
     b.append(T(x0, 292, "はがき（100×148mm）", 17, t["label"]))
     b.append(_btn(x0, 320, x1 - x0, "5件を印刷", True, "printer", t))
@@ -493,17 +523,23 @@ def inner_p_recipients(theme):
         cx = tx + 44 + i * 86
         b.append(T(cx, 80, lab, 15, t["accent"] if i == 0 else t["label"], 600 if i == 0 else 400, "middle",
                    bg=on_bg if i == 0 else t["glass"]))
-    lw = 300
+    lw = 320
     b.append(glass_btn(38, 132, t) + sym("sidebar.left", 38, 132, t["label"]))
-    b.append(glass_btn(w - 38, 132, t) + sym("pencil", w - 38, 132, t["accent"]))
+    b.append(glass_btn(w - 38, 132, t) + sym("ellipsis", w - 38, 132, t["label"]))
+    b.append(glass_btn(w - 92, 132, t) + sym("pencil", w - 92, 132, t["accent"]))
     b.append(T(20, 196, "年賀状2026", 28, t["label"], 700))
     b.append(T(20, 222, "5件・未印刷 3件", 15, t["sec"]))
-    b.append(rows(16, 240, lw, t, n=5, sel=4, trunc=15, fold_ok=True))
+    b.append(T(lw + 16, 222, "無料版：あと5件", 15, t["sec"], 400, "end"))
+    b.append(f'<rect x="16" y="234" width="{lw}" height="36" rx="18" fill="{t["seg"]}"/>'
+             + sym("magnifyingglass", 36, 252, t["sec"], 2) + T(52, 258, "氏名・住所で検索", 17, t["sec"], 400, bg=t["seg"]))
+    b.append(segmented(16, 280, lw, t))
+    b.append(rows(16, 326, lw, t, n=5, sel=4, trunc=15, fold_ok=True))
     dx = lw + 32
     b.append(T(dx, 196, "山田 太郎 様", 28, t["label"], 700))
-    pw = 160
-    assert 216 + pw * 1.48 < h / 2 - FOLD  # postcard stays above the fold band
-    b.append(paper(dx + (w - dx - 16) / 2 - pw / 2, 216, pw, t))
+    b.append(T(dx, 222, "連名：花子 様", 15, t["sec"]))
+    pw = 150
+    assert 238 + pw * 1.48 < h / 2 - FOLD  # postcard stays above the fold band
+    b.append(paper(dx + (w - dx - 16) / 2 - pw / 2, 238, pw, t))
     b.append(bottom_bar(0, lw + 32, h, t, [("追加", False, "plus"), ("一括印刷", True, "printer")]))
     b.append(bottom_bar(lw + 32, w, h, t, [("この宛先を印刷", True, "printer")], regular=True))
     return svg(w, h, t["bg"], "".join(b))
