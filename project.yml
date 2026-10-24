@@ -1,0 +1,99 @@
+name: AtenaPrint
+options:
+  bundleIdPrefix: com.seventhwell
+  developmentLanguage: ja
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    DEAD_CODE_STRIPPING: YES
+packages:
+  AtenaCore:
+    path: Packages/AtenaCore
+targets:
+  AtenaPrint:
+    type: application
+    platform: iOS
+    sources:
+      - path: AtenaPrint
+        excludes:
+          - "Resources/Products.storekit"
+      - path: AtenaPrint/Resources/Products.storekit
+        buildPhase: none
+    dependencies:
+      - package: AtenaCore
+    info:
+      path: AtenaPrint/Info.plist
+      properties:
+        CFBundleDisplayName: 宛名印刷
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: ja
+        ITSAppUsesNonExemptEncryption: false
+        LSRequiresIPhoneOS: true
+        UILaunchScreen: {}
+        UIApplicationSupportsIndirectInputEvents: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true
+        UISupportedInterfaceOrientations~iphone:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSContactsUsageDescription: 宛名印刷のために連絡先へアクセスします。連絡先の内容が外部に送信されることはありません
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.seventhwell.AtenaPrint
+        PRODUCT_NAME: AtenaPrint
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SUPPORTS_MACCATALYST: NO
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: YES
+        SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOLS: NO
+        ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: NO
+        SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+        SWIFT_APPROACHABLE_CONCURRENCY: YES
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
+  AtenaPrintTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: AtenaPrintTests
+      - path: AtenaPrint/Resources/Products.storekit
+        buildPhase: resources
+    dependencies:
+      - target: AtenaPrint
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.seventhwell.AtenaPrintTests
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+        SWIFT_APPROACHABLE_CONCURRENCY: YES
+schemes:
+  AtenaPrint:
+    build:
+      targets:
+        AtenaPrint: all
+        AtenaPrintTests: [test]
+    run:
+      config: Debug
+      storeKitConfiguration: AtenaPrint/Resources/Products.storekit
+    test:
+      config: Debug
+      gatherCoverageData: false
+      targets:
+        - AtenaPrintTests
+        - package: AtenaCore/AtenaCoreTests

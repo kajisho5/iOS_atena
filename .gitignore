@@ -1,0 +1,21 @@
+# Xcode
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+.DS_Store
+
+# SwiftPM
+.build/
+.swiftpm/
+Packages/*/.build/
+Packages/*/Package.resolved
+
+# Secrets (never commit)
+*.p12
+*.mobileprovision
+*.cer
+*.p8
+.env
+Secrets.xcconfig

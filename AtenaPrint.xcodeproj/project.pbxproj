@@ -1,0 +1,777 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02D75F340537528E71844394 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0833846227601B6E04128B /* SettingsView.swift */; };
+		0545F4E62F4F6F809D78F948 /* AtenaCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3E3A6CEB18AE2BD96E04F213 /* AtenaCore */; };
+		07F165286C45CEFD1AFBC1BC /* VerticalGlyphs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17814BE06352CEFF43EF671B /* VerticalGlyphs.swift */; };
+		0AFC4323DB2C19353F16CCBA /* PrintService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC8F2D790690F7868FA7E7F /* PrintService.swift */; };
+		0B7A0D200C243683DC98BC6B /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 780732B18D55F6E26275FADA /* AppIcon.icon */; };
+		0F3BDB406C5424F0EB4B7340 /* AddressSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A13EA5A0B6721C0B469B88 /* AddressSheetView.swift */; };
+		10C3B0496E21C1D6ACFAEAE0 /* RenderingSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9068A3D6342E255238215A2A /* RenderingSnapshotTests.swift */; };
+		1B825E3045576994609F4482 /* LayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE62579CFBF7E80D1A560D15 /* LayoutSettings.swift */; };
+		30A8816C94E5556A59CFEDCB /* AddressFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9BF1D4DBE9E0DB364A0F95 /* AddressFont.swift */; };
+		34E6FB96A28FD7DF6F52DAE2 /* SenderProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640BB184A433F186A75D7F29 /* SenderProfile.swift */; };
+		350D270A073398F303360D75 /* PrintRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D660069F1499937712C6275 /* PrintRecord.swift */; };
+		376DBD851525A542F94FD3CF /* Recipient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85140795E8999451C83BCC3D /* Recipient.swift */; };
+		44E7FEB42CE2D38AEC794E7A /* RecipientRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA8BA291A85B95477077B2F /* RecipientRowView.swift */; };
+		4E14774D81D3A326B135A2A8 /* SchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2213F777E3EC5619795808 /* SchemaV1.swift */; };
+		5202AB30B3E56716716B7C14 /* PrintPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987154CD767C7FDDAE215843 /* PrintPreviewView.swift */; };
+		5F761BC01E857746C988CB18 /* AddressRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3ADBEF237B410C0754BBB8 /* AddressRenderer.swift */; };
+		60D6A89C957343E33FEE9BE9 /* PrintOffsetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EEA24384BAFE5FF8D9727C /* PrintOffsetView.swift */; };
+		6367723B82A6E302AA13B177 /* GroupSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87B6594795DD0F42B17B969 /* GroupSidebarView.swift */; };
+		6D96E042D02B7C2714ADAAE0 /* BottomActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B51759354CF4A3DABE27E49 /* BottomActionBar.swift */; };
+		6DEA13F47C5AB3BB8AAE6E99 /* ScreenSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDDD3CBCBEF1DEE2BE0F248 /* ScreenSnapshotTests.swift */; };
+		71C1B09FCF3B5E267D5FFD46 /* RecipientListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F712B2862B8A687BF6AA53E /* RecipientListView.swift */; };
+		74C858C9AAE33BF6CE679CED /* RecipientEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5749B0F065EE16C131E7 /* RecipientEditorView.swift */; };
+		7562474676A63ECB2CE32EEC /* RecipientPrintSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B425397814F88BBABA9E5F4 /* RecipientPrintSelectionView.swift */; };
+		77DE00777F0B65AF4B04A6A7 /* RecipientDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7DC6A3C1EA095154810724 /* RecipientDetailView.swift */; };
+		826080C824205579ED61974F /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED75A6B321B8EE0541F491FB /* AppColors.swift */; };
+		8338697835C45AC82FBF6BFE /* RecipientsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4678CF54586DAAA728715C /* RecipientsRootView.swift */; };
+		8A9A2B29214D731468EC5AD8 /* CSVImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33279F4D08F21B69BBCC13 /* CSVImportView.swift */; };
+		8EE5A2C84BF35020D797C214 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 50878A51B6505F401DECDCA6 /* InfoPlist.xcstrings */; };
+		8F926EFC152FCA7D31C4BD5F /* ContactPickerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFD1E143EF2DD67129D2E41 /* ContactPickerPresenter.swift */; };
+		95A66C2FE441EACAA8081943 /* RecipientGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60A05831B8DF2F0CE6FAF1 /* RecipientGroup.swift */; };
+		95C68C63AC019036CD35794D /* SenderProfilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA62A24A38A83A73CA40DB /* SenderProfilesView.swift */; };
+		9BE6011A058C858CF545E8B5 /* AtenaPrintApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DD641DF63E58BC778FF503 /* AtenaPrintApp.swift */; };
+		A271E64EC59318E83C08ABC2 /* DataStoreErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFB071A35BE8700691F2F53 /* DataStoreErrorView.swift */; };
+		A941A0C2535345F005A74ED0 /* Products.storekit in Resources */ = {isa = PBXBuildFile; fileRef = EC6DC353F4B736884C7995E0 /* Products.storekit */; };
+		ACE85876CE809B7F7DF146A4 /* RecipientAddFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BECB2A18E6728B17F480FB6 /* RecipientAddFlow.swift */; };
+		B9A0027E89610447C37B55B1 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952FE61AEC434C1B5617CF4B /* AppConstants.swift */; };
+		CE17F37DF2784AF2A218A01C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24F000B56D47157A4C169601 /* Assets.xcassets */; };
+		CF175AE98653403EF7E3EA8E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9E92B08FAD8330DC7D9D7821 /* PrivacyInfo.xcprivacy */; };
+		D40103C702584125F9C6927F /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BE105C10CE172372FDDC96 /* ActivityView.swift */; };
+		D826B2C64C6ED46A840E02A4 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AB19D941CA0F65486ECC22 /* RootView.swift */; };
+		D9932CCAAAD971A33CADB0BB /* CoreTextMeasurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE26FE4B4860FBF6574BA42 /* CoreTextMeasurer.swift */; };
+		E34D176B3B7DF89A0E4D6893 /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A245F41042A4150F2A97F5 /* StoreService.swift */; };
+		E3CBB67AF0073B3A32F0ADA1 /* AppLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A762799BD3A0A6420871746D /* AppLogicTests.swift */; };
+		E6C414F1891848A9B91E63A3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EBAC8123CF6AD9B6E503C139 /* Localizable.xcstrings */; };
+		EB0A9D5237A9A739598B7D6B /* PrintRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A2AE3DEFD9AF77B72C3C2 /* PrintRequest.swift */; };
+		ED4EB24A8770AB940A04C04A /* LayoutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25A217BD372B0AB98CE6A25 /* LayoutSettingsView.swift */; };
+		F2A019CC995F24703AB214BF /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C7358B40915D967AB7D053 /* PaywallView.swift */; };
+		FAB2D44DC7B5EAE7A2D7DB22 /* AddressComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076292DB7EAA3D5AD1B7494F /* AddressComposer.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A62F785A02D8D4BDF625A4DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 62E6D1E0F9B153FDEBE9FF17 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3497C9E7E9DAB1FBA1AFBA8F;
+			remoteInfo = AtenaPrint;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		076292DB7EAA3D5AD1B7494F /* AddressComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressComposer.swift; sourceTree = "<group>"; };
+		0F712B2862B8A687BF6AA53E /* RecipientListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientListView.swift; sourceTree = "<group>"; };
+		12AB19D941CA0F65486ECC22 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		17814BE06352CEFF43EF671B /* VerticalGlyphs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalGlyphs.swift; sourceTree = "<group>"; };
+		1C33279F4D08F21B69BBCC13 /* CSVImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVImportView.swift; sourceTree = "<group>"; };
+		24F000B56D47157A4C169601 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		29C7358B40915D967AB7D053 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		2B425397814F88BBABA9E5F4 /* RecipientPrintSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientPrintSelectionView.swift; sourceTree = "<group>"; };
+		2D660069F1499937712C6275 /* PrintRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintRecord.swift; sourceTree = "<group>"; };
+		2F60A05831B8DF2F0CE6FAF1 /* RecipientGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientGroup.swift; sourceTree = "<group>"; };
+		3E2213F777E3EC5619795808 /* SchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaV1.swift; sourceTree = "<group>"; };
+		3E7DC6A3C1EA095154810724 /* RecipientDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientDetailView.swift; sourceTree = "<group>"; };
+		47A13EA5A0B6721C0B469B88 /* AddressSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSheetView.swift; sourceTree = "<group>"; };
+		4A4A2AE3DEFD9AF77B72C3C2 /* PrintRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintRequest.swift; sourceTree = "<group>"; };
+		4CEC16D8538E0FA2F0DB49E8 /* AtenaPrintTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AtenaPrintTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F0833846227601B6E04128B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		50878A51B6505F401DECDCA6 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		55EA5749B0F065EE16C131E7 /* RecipientEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientEditorView.swift; sourceTree = "<group>"; };
+		62EEA24384BAFE5FF8D9727C /* PrintOffsetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintOffsetView.swift; sourceTree = "<group>"; };
+		640BB184A433F186A75D7F29 /* SenderProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderProfile.swift; sourceTree = "<group>"; };
+		6DC8F2D790690F7868FA7E7F /* PrintService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintService.swift; sourceTree = "<group>"; };
+		780732B18D55F6E26275FADA /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		85140795E8999451C83BCC3D /* Recipient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipient.swift; sourceTree = "<group>"; };
+		87CA62A24A38A83A73CA40DB /* SenderProfilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderProfilesView.swift; sourceTree = "<group>"; };
+		89A245F41042A4150F2A97F5 /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
+		8CA8BA291A85B95477077B2F /* RecipientRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientRowView.swift; sourceTree = "<group>"; };
+		9068A3D6342E255238215A2A /* RenderingSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderingSnapshotTests.swift; sourceTree = "<group>"; };
+		952FE61AEC434C1B5617CF4B /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		95DD641DF63E58BC778FF503 /* AtenaPrintApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtenaPrintApp.swift; sourceTree = "<group>"; };
+		987154CD767C7FDDAE215843 /* PrintPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintPreviewView.swift; sourceTree = "<group>"; };
+		9A4678CF54586DAAA728715C /* RecipientsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientsRootView.swift; sourceTree = "<group>"; };
+		9B51759354CF4A3DABE27E49 /* BottomActionBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomActionBar.swift; sourceTree = "<group>"; };
+		9BECB2A18E6728B17F480FB6 /* RecipientAddFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientAddFlow.swift; sourceTree = "<group>"; };
+		9E92B08FAD8330DC7D9D7821 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A762799BD3A0A6420871746D /* AppLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogicTests.swift; sourceTree = "<group>"; };
+		AD015F35E775980558D68983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BCFB071A35BE8700691F2F53 /* DataStoreErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreErrorView.swift; sourceTree = "<group>"; };
+		C25A217BD372B0AB98CE6A25 /* LayoutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSettingsView.swift; sourceTree = "<group>"; };
+		C87B6594795DD0F42B17B969 /* GroupSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSidebarView.swift; sourceTree = "<group>"; };
+		CDDDD3CBCBEF1DEE2BE0F248 /* ScreenSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSnapshotTests.swift; sourceTree = "<group>"; };
+		CEE26FE4B4860FBF6574BA42 /* CoreTextMeasurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTextMeasurer.swift; sourceTree = "<group>"; };
+		D5BE105C10CE172372FDDC96 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		DCFD1E143EF2DD67129D2E41 /* ContactPickerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPickerPresenter.swift; sourceTree = "<group>"; };
+		E6C722901DB634207E8D2594 /* AtenaCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AtenaCore; path = Packages/AtenaCore; sourceTree = SOURCE_ROOT; };
+		EB9BF1D4DBE9E0DB364A0F95 /* AddressFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressFont.swift; sourceTree = "<group>"; };
+		EBAC8123CF6AD9B6E503C139 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		EC3ADBEF237B410C0754BBB8 /* AddressRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRenderer.swift; sourceTree = "<group>"; };
+		EC6DC353F4B736884C7995E0 /* Products.storekit */ = {isa = PBXFileReference; path = Products.storekit; sourceTree = "<group>"; };
+		ED75A6B321B8EE0541F491FB /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		F08A930903AD35007356C20A /* AtenaPrint.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AtenaPrint.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE62579CFBF7E80D1A560D15 /* LayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSettings.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6D5994C3F21DA270BAE51E4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0545F4E62F4F6F809D78F948 /* AtenaCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0E038E01CC8597B9649411F3 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				076292DB7EAA3D5AD1B7494F /* AddressComposer.swift */,
+				EB9BF1D4DBE9E0DB364A0F95 /* AddressFont.swift */,
+				EC3ADBEF237B410C0754BBB8 /* AddressRenderer.swift */,
+				CEE26FE4B4860FBF6574BA42 /* CoreTextMeasurer.swift */,
+				17814BE06352CEFF43EF671B /* VerticalGlyphs.swift */,
+			);
+			path = Rendering;
+			sourceTree = "<group>";
+		};
+		1DF4987D778F27D835737FC4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6DC8F2D790690F7868FA7E7F /* PrintService.swift */,
+				89A245F41042A4150F2A97F5 /* StoreService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		27EB0626683DD6FC0DC4371A /* AtenaPrint */ = {
+			isa = PBXGroup;
+			children = (
+				77D3E071F442C280A919FCA0 /* App */,
+				7919D560B338FAA5FA34D6FC /* Features */,
+				CCCAE63345E039A7D9C7E61E /* Models */,
+				0E038E01CC8597B9649411F3 /* Rendering */,
+				77A105EE5918DED56638C76D /* Resources */,
+				1DF4987D778F27D835737FC4 /* Services */,
+				AD015F35E775980558D68983 /* Info.plist */,
+			);
+			path = AtenaPrint;
+			sourceTree = "<group>";
+		};
+		3409137163C18024AC52C971 /* Print */ = {
+			isa = PBXGroup;
+			children = (
+				987154CD767C7FDDAE215843 /* PrintPreviewView.swift */,
+				4A4A2AE3DEFD9AF77B72C3C2 /* PrintRequest.swift */,
+			);
+			path = Print;
+			sourceTree = "<group>";
+		};
+		3FA8C4995A1D816D06CC77A3 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				29C7358B40915D967AB7D053 /* PaywallView.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		556109D2456D0DE65E5EC0C7 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				47A13EA5A0B6721C0B469B88 /* AddressSheetView.swift */,
+				C25A217BD372B0AB98CE6A25 /* LayoutSettingsView.swift */,
+				62EEA24384BAFE5FF8D9727C /* PrintOffsetView.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		60D9CF6A98FD1429CFD221B5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				87CA62A24A38A83A73CA40DB /* SenderProfilesView.swift */,
+				4F0833846227601B6E04128B /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		69381BC0AB9C64492AB2B111 /* AtenaPrintTests */ = {
+			isa = PBXGroup;
+			children = (
+				A762799BD3A0A6420871746D /* AppLogicTests.swift */,
+				9068A3D6342E255238215A2A /* RenderingSnapshotTests.swift */,
+				CDDDD3CBCBEF1DEE2BE0F248 /* ScreenSnapshotTests.swift */,
+			);
+			path = AtenaPrintTests;
+			sourceTree = "<group>";
+		};
+		77A105EE5918DED56638C76D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				780732B18D55F6E26275FADA /* AppIcon.icon */,
+				24F000B56D47157A4C169601 /* Assets.xcassets */,
+				50878A51B6505F401DECDCA6 /* InfoPlist.xcstrings */,
+				EBAC8123CF6AD9B6E503C139 /* Localizable.xcstrings */,
+				9E92B08FAD8330DC7D9D7821 /* PrivacyInfo.xcprivacy */,
+				EC6DC353F4B736884C7995E0 /* Products.storekit */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		77D3E071F442C280A919FCA0 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				952FE61AEC434C1B5617CF4B /* AppConstants.swift */,
+				95DD641DF63E58BC778FF503 /* AtenaPrintApp.swift */,
+				BCFB071A35BE8700691F2F53 /* DataStoreErrorView.swift */,
+				12AB19D941CA0F65486ECC22 /* RootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		7919D560B338FAA5FA34D6FC /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				BD0EF51C29A31ADA72B3058D /* Common */,
+				E771BCFE99A7899BE1C19D04 /* Import */,
+				556109D2456D0DE65E5EC0C7 /* Layout */,
+				3409137163C18024AC52C971 /* Print */,
+				D304B8772D4D16B123F5E39E /* Recipients */,
+				60D9CF6A98FD1429CFD221B5 /* Settings */,
+				3FA8C4995A1D816D06CC77A3 /* Store */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		A0B53B5F2D68E2A367334734 = {
+			isa = PBXGroup;
+			children = (
+				27EB0626683DD6FC0DC4371A /* AtenaPrint */,
+				69381BC0AB9C64492AB2B111 /* AtenaPrintTests */,
+				BF39EA92BB0644533AD0030C /* Packages */,
+				CA917F3ADED3A89D92AB95FE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BD0EF51C29A31ADA72B3058D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D5BE105C10CE172372FDDC96 /* ActivityView.swift */,
+				ED75A6B321B8EE0541F491FB /* AppColors.swift */,
+				9B51759354CF4A3DABE27E49 /* BottomActionBar.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		BF39EA92BB0644533AD0030C /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				E6C722901DB634207E8D2594 /* AtenaCore */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		CA917F3ADED3A89D92AB95FE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F08A930903AD35007356C20A /* AtenaPrint.app */,
+				4CEC16D8538E0FA2F0DB49E8 /* AtenaPrintTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CCCAE63345E039A7D9C7E61E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D3BFA0C9E2482098DB3F6E64 /* Schema */,
+				FE62579CFBF7E80D1A560D15 /* LayoutSettings.swift */,
+				2D660069F1499937712C6275 /* PrintRecord.swift */,
+				85140795E8999451C83BCC3D /* Recipient.swift */,
+				2F60A05831B8DF2F0CE6FAF1 /* RecipientGroup.swift */,
+				640BB184A433F186A75D7F29 /* SenderProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D304B8772D4D16B123F5E39E /* Recipients */ = {
+			isa = PBXGroup;
+			children = (
+				C87B6594795DD0F42B17B969 /* GroupSidebarView.swift */,
+				9BECB2A18E6728B17F480FB6 /* RecipientAddFlow.swift */,
+				3E7DC6A3C1EA095154810724 /* RecipientDetailView.swift */,
+				55EA5749B0F065EE16C131E7 /* RecipientEditorView.swift */,
+				0F712B2862B8A687BF6AA53E /* RecipientListView.swift */,
+				2B425397814F88BBABA9E5F4 /* RecipientPrintSelectionView.swift */,
+				8CA8BA291A85B95477077B2F /* RecipientRowView.swift */,
+				9A4678CF54586DAAA728715C /* RecipientsRootView.swift */,
+			);
+			path = Recipients;
+			sourceTree = "<group>";
+		};
+		D3BFA0C9E2482098DB3F6E64 /* Schema */ = {
+			isa = PBXGroup;
+			children = (
+				3E2213F777E3EC5619795808 /* SchemaV1.swift */,
+			);
+			path = Schema;
+			sourceTree = "<group>";
+		};
+		E771BCFE99A7899BE1C19D04 /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				DCFD1E143EF2DD67129D2E41 /* ContactPickerPresenter.swift */,
+				1C33279F4D08F21B69BBCC13 /* CSVImportView.swift */,
+			);
+			path = Import;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3497C9E7E9DAB1FBA1AFBA8F /* AtenaPrint */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4B52AFBEB8109081B6996F06 /* Build configuration list for PBXNativeTarget "AtenaPrint" */;
+			buildPhases = (
+				2F6BBD8F8F04B2F6F52ADD04 /* Sources */,
+				4F5BC607AFA666E56BA64744 /* Resources */,
+				6D5994C3F21DA270BAE51E4E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AtenaPrint;
+			packageProductDependencies = (
+				3E3A6CEB18AE2BD96E04F213 /* AtenaCore */,
+			);
+			productName = AtenaPrint;
+			productReference = F08A930903AD35007356C20A /* AtenaPrint.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3D93E2827A7A92D4095FEFF7 /* AtenaPrintTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5B255DD4FDD3157CD90FEB6 /* Build configuration list for PBXNativeTarget "AtenaPrintTests" */;
+			buildPhases = (
+				9F0468D1200C614515BBE498 /* Sources */,
+				ADC3914393ADF85A99305195 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2E4258F96448D83C9E44BCAB /* PBXTargetDependency */,
+			);
+			name = AtenaPrintTests;
+			packageProductDependencies = (
+			);
+			productName = AtenaPrintTests;
+			productReference = 4CEC16D8538E0FA2F0DB49E8 /* AtenaPrintTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		62E6D1E0F9B153FDEBE9FF17 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					3497C9E7E9DAB1FBA1AFBA8F = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 8E62C537CB71D922372986EC /* Build configuration list for PBXProject "AtenaPrint" */;
+			developmentRegion = ja;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				ja,
+			);
+			mainGroup = A0B53B5F2D68E2A367334734;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1014986FCB7D95DC944110A3 /* XCLocalSwiftPackageReference "Packages/AtenaCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = CA917F3ADED3A89D92AB95FE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3497C9E7E9DAB1FBA1AFBA8F /* AtenaPrint */,
+				3D93E2827A7A92D4095FEFF7 /* AtenaPrintTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4F5BC607AFA666E56BA64744 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B7A0D200C243683DC98BC6B /* AppIcon.icon in Resources */,
+				CE17F37DF2784AF2A218A01C /* Assets.xcassets in Resources */,
+				8EE5A2C84BF35020D797C214 /* InfoPlist.xcstrings in Resources */,
+				E6C414F1891848A9B91E63A3 /* Localizable.xcstrings in Resources */,
+				CF175AE98653403EF7E3EA8E /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC3914393ADF85A99305195 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A941A0C2535345F005A74ED0 /* Products.storekit in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2F6BBD8F8F04B2F6F52ADD04 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D40103C702584125F9C6927F /* ActivityView.swift in Sources */,
+				FAB2D44DC7B5EAE7A2D7DB22 /* AddressComposer.swift in Sources */,
+				30A8816C94E5556A59CFEDCB /* AddressFont.swift in Sources */,
+				5F761BC01E857746C988CB18 /* AddressRenderer.swift in Sources */,
+				0F3BDB406C5424F0EB4B7340 /* AddressSheetView.swift in Sources */,
+				826080C824205579ED61974F /* AppColors.swift in Sources */,
+				B9A0027E89610447C37B55B1 /* AppConstants.swift in Sources */,
+				9BE6011A058C858CF545E8B5 /* AtenaPrintApp.swift in Sources */,
+				6D96E042D02B7C2714ADAAE0 /* BottomActionBar.swift in Sources */,
+				8A9A2B29214D731468EC5AD8 /* CSVImportView.swift in Sources */,
+				8F926EFC152FCA7D31C4BD5F /* ContactPickerPresenter.swift in Sources */,
+				D9932CCAAAD971A33CADB0BB /* CoreTextMeasurer.swift in Sources */,
+				A271E64EC59318E83C08ABC2 /* DataStoreErrorView.swift in Sources */,
+				6367723B82A6E302AA13B177 /* GroupSidebarView.swift in Sources */,
+				1B825E3045576994609F4482 /* LayoutSettings.swift in Sources */,
+				ED4EB24A8770AB940A04C04A /* LayoutSettingsView.swift in Sources */,
+				F2A019CC995F24703AB214BF /* PaywallView.swift in Sources */,
+				60D6A89C957343E33FEE9BE9 /* PrintOffsetView.swift in Sources */,
+				5202AB30B3E56716716B7C14 /* PrintPreviewView.swift in Sources */,
+				350D270A073398F303360D75 /* PrintRecord.swift in Sources */,
+				EB0A9D5237A9A739598B7D6B /* PrintRequest.swift in Sources */,
+				0AFC4323DB2C19353F16CCBA /* PrintService.swift in Sources */,
+				376DBD851525A542F94FD3CF /* Recipient.swift in Sources */,
+				ACE85876CE809B7F7DF146A4 /* RecipientAddFlow.swift in Sources */,
+				77DE00777F0B65AF4B04A6A7 /* RecipientDetailView.swift in Sources */,
+				74C858C9AAE33BF6CE679CED /* RecipientEditorView.swift in Sources */,
+				95A66C2FE441EACAA8081943 /* RecipientGroup.swift in Sources */,
+				71C1B09FCF3B5E267D5FFD46 /* RecipientListView.swift in Sources */,
+				7562474676A63ECB2CE32EEC /* RecipientPrintSelectionView.swift in Sources */,
+				44E7FEB42CE2D38AEC794E7A /* RecipientRowView.swift in Sources */,
+				8338697835C45AC82FBF6BFE /* RecipientsRootView.swift in Sources */,
+				D826B2C64C6ED46A840E02A4 /* RootView.swift in Sources */,
+				4E14774D81D3A326B135A2A8 /* SchemaV1.swift in Sources */,
+				34E6FB96A28FD7DF6F52DAE2 /* SenderProfile.swift in Sources */,
+				95C68C63AC019036CD35794D /* SenderProfilesView.swift in Sources */,
+				02D75F340537528E71844394 /* SettingsView.swift in Sources */,
+				E34D176B3B7DF89A0E4D6893 /* StoreService.swift in Sources */,
+				07F165286C45CEFD1AFBC1BC /* VerticalGlyphs.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F0468D1200C614515BBE498 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3CBB67AF0073B3A32F0ADA1 /* AppLogicTests.swift in Sources */,
+				10C3B0496E21C1D6ACFAEAE0 /* RenderingSnapshotTests.swift in Sources */,
+				6DEA13F47C5AB3BB8AAE6E99 /* ScreenSnapshotTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2E4258F96448D83C9E44BCAB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3497C9E7E9DAB1FBA1AFBA8F /* AtenaPrint */;
+			targetProxy = A62F785A02D8D4BDF625A4DB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		00C8C1E00CE9DA88BC0A1345 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOLS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = AtenaPrint/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.seventhwell.AtenaPrint;
+				PRODUCT_NAME = AtenaPrint;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0FC52A61B8B3F95D0722D1D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.seventhwell.AtenaPrintTests;
+				SDKROOT = iphoneos;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AtenaPrint.app/AtenaPrint";
+			};
+			name = Release;
+		};
+		4868316086AAA6A671E5A408 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		899AB98D5A3964DC45D8A235 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		8DA08C937DC98DB2A269D237 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOLS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = AtenaPrint/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.seventhwell.AtenaPrint;
+				PRODUCT_NAME = AtenaPrint;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FD74F0D930ACFDD5636CBCD8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.seventhwell.AtenaPrintTests;
+				SDKROOT = iphoneos;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AtenaPrint.app/AtenaPrint";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4B52AFBEB8109081B6996F06 /* Build configuration list for PBXNativeTarget "AtenaPrint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00C8C1E00CE9DA88BC0A1345 /* Debug */,
+				8DA08C937DC98DB2A269D237 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8E62C537CB71D922372986EC /* Build configuration list for PBXProject "AtenaPrint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				899AB98D5A3964DC45D8A235 /* Debug */,
+				4868316086AAA6A671E5A408 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D5B255DD4FDD3157CD90FEB6 /* Build configuration list for PBXNativeTarget "AtenaPrintTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD74F0D930ACFDD5636CBCD8 /* Debug */,
+				0FC52A61B8B3F95D0722D1D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		1014986FCB7D95DC944110A3 /* XCLocalSwiftPackageReference "Packages/AtenaCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/AtenaCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3E3A6CEB18AE2BD96E04F213 /* AtenaCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AtenaCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 62E6D1E0F9B153FDEBE9FF17 /* Project object */;
+}
