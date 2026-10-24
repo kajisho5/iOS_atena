@@ -19,6 +19,7 @@ private final class BundleToken {}
         var style: UIUserInterfaceStyle = .light
         var dynamicType: DynamicTypeSize = .large
         var regularWidth: Bool? = nil
+        var scale: CGFloat = 2
         let view: AnyView
     }
 
@@ -87,6 +88,14 @@ private final class BundleToken {}
                      view: wrap(PrintPreviewView(request: printRequest))),
                 Shot(name: "ipad-split-twothirds", size: CGSize(width: landscape.width * 2 / 3, height: landscape.height), regularWidth: true,
                      view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
+                // iPhone Duo (foldable). Points assume @3x: inner 2670×1878 px (open, landscape) → 890×626 pt,
+                // outer 1398×2034 px → 466×678 pt. The scale factor is an assumption, not an Apple-published value.
+                Shot(name: "duo-inner-recipients", size: CGSize(width: 890, height: 626), regularWidth: true, scale: 3,
+                     view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
+                Shot(name: "duo-inner-preview", size: CGSize(width: 890, height: 626), regularWidth: true, scale: 3,
+                     view: wrap(PrintPreviewView(request: printRequest))),
+                Shot(name: "duo-outer-list", size: CGSize(width: 466, height: 678), regularWidth: false, scale: 3,
+                     view: wrap(RootView(initialScope: .group(sample.group)))),
             ]
         } else {
             let csv = CSVImportSource(data: CSVWriter.data(from: SampleData.csvRows), fileName: "住所録.csv")
@@ -135,7 +144,7 @@ private final class BundleToken {}
             window.layoutIfNeeded()
         }
         let format = UIGraphicsImageRendererFormat()
-        format.scale = 2
+        format.scale = shot.scale
         let image = UIGraphicsImageRenderer(bounds: window.bounds, format: format).image { _ in
             _ = window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
         }

@@ -70,6 +70,40 @@ def ipad(screen: pathlib.Path, width: int) -> str:
 </div>"""
 
 
+def duo_open(screen: pathlib.Path, width: int) -> str:
+    """iPhone Duo unfolded (164.6 × 117.8 mm body, inner display in landscape) with the hinge crease."""
+    height = width * 117.8 / 164.6
+    bezel = width * 0.022
+    inner_w = width - bezel * 2
+    inner_h = height - bezel * 2
+    return f"""
+<div style="position:relative;width:{width}px;height:{height}px;border-radius:{width*0.05}px;background:#1C1C1E;
+  box-shadow:0 40px 90px rgba(0,0,0,.4),inset 0 0 0 {width*0.004}px #4A4A4E">
+  <div style="position:absolute;left:{bezel}px;top:{bezel}px;width:{inner_w}px;height:{inner_h}px;border-radius:{width*0.034}px;overflow:hidden;background:#fff">
+    <img src="{data_uri(screen)}" style="width:100%;height:100%;object-fit:cover;display:block">
+    <div style="position:absolute;left:50%;top:0;width:{width*0.012}px;height:100%;margin-left:{-width*0.006}px;
+      background:linear-gradient(90deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.07) 45%,rgba(255,255,255,.10) 55%,rgba(0,0,0,0) 100%)"></div>
+  </div>
+</div>"""
+
+
+def duo_closed(screen: pathlib.Path, width: int) -> str:
+    """iPhone Duo folded (84.1 × 117.8 mm body) showing the outer display."""
+    height = width * 117.8 / 84.1
+    bezel = width * 0.04
+    inner_w = width - bezel * 2
+    inner_h = height - bezel * 2
+    scale = inner_w / 466
+    return f"""
+<div style="position:relative;width:{width}px;height:{height}px;border-radius:{width*0.12}px;background:#1C1C1E;
+  box-shadow:0 40px 80px rgba(0,0,0,.35),inset 0 0 0 {width*0.008}px #4A4A4E">
+  <div style="position:absolute;left:{bezel}px;top:{bezel}px;width:{inner_w}px;height:{inner_h}px;border-radius:{width*0.09}px;overflow:hidden;background:#fff">
+    <img src="{data_uri(screen)}" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block">
+    <div style="position:absolute;left:50%;top:{11*scale}px;width:{120*scale}px;height:{35*scale}px;margin-left:{-60*scale}px;border-radius:{18*scale}px;background:#000"></div>
+  </div>
+</div>"""
+
+
 def mac_window(screen: pathlib.Path, width: int) -> str:
     bar = width * 0.028
     image_w, image_h = png_size(screen)
@@ -127,10 +161,17 @@ def main() -> None:
     # iPhone Duo: two phones side by side (2560 x 1600).
     if (src / "screen-iphone-list.png").exists() and (src / "screen-iphone-preview.png").exists():
         duo = iphone(src / "screen-iphone-list.png", 560, tilt=-4) + iphone(src / "screen-iphone-preview.png", 560, tilt=4)
-        pages["iphone-duo"] = (2560, 1600, page(2560, 1600, duo, "宛名印刷 はがき・封筒", "広告なし・買い切り・CSV一括取り込み", 76))
+        pages["iphone-pair"] = (2560, 1600, page(2560, 1600, duo, "宛名印刷 はがき・封筒", "広告なし・買い切り・CSV一括取り込み", 76))
     if (src / "screen-iphone-list-dark.png").exists() and (src / "screen-iphone-preview-dark.png").exists():
         duo = iphone(src / "screen-iphone-list-dark.png", 560, dark=True, tilt=-4) + iphone(src / "screen-iphone-preview-dark.png", 560, dark=True, tilt=4)
-        pages["iphone-duo-dark"] = (2560, 1600, page(2560, 1600, duo, "ダークモードにも対応", "宛名面の紙色はそのままで見やすく", 76))
+        pages["iphone-pair-dark"] = (2560, 1600, page(2560, 1600, duo, "ダークモードにも対応", "宛名面の紙色はそのままで見やすく", 76))
+    # iPhone Duo (foldable): unfolded inner display + folded outer display.
+    if (src / "screen-duo-inner-recipients.png").exists() and (src / "screen-duo-outer-list.png").exists():
+        body = duo_open(src / "screen-duo-inner-recipients.png", 1500) + duo_closed(src / "screen-duo-outer-list.png", 520)
+        pages["iphone-duo"] = (2560, 1600, page(2560, 1600, body, "iPhone Duo の大きな画面にも", "開けば一覧と詳細を並べて、閉じればいつもの iPhone の画面で", 76))
+    if (src / "screen-duo-inner-preview.png").exists():
+        pages["iphone-duo-preview"] = (2560, 1600, page(2560, 1600, duo_open(src / "screen-duo-inner-preview.png", 1700),
+                                                        "開いて、宛名面をそのまま確認", "iPhone Duo の内側の画面で用紙全体を表示", 76))
     for name, (w, h, html) in pages.items():
         (out / f"{name}.html").write_text(html, encoding="utf-8")
         (out / f"{name}.size").write_text(f"{w}x{h}")
