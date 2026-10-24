@@ -6,7 +6,7 @@
 - 設計書: [docs/DESIGN.md](docs/DESIGN.md)
 - 画面遷移図: [docs/screen-flow.svg](docs/screen-flow.svg)
 - 画面デザイン: [docs/design/](docs/design/)
-- アプリアイコン: [docs/icon/](docs/icon/)（元データは `AtenaPrint/Resources/AppIcon.icon`）
+- アプリアイコン: [docs/icon/](docs/icon/)（元データは [design/icon/](design/icon/)。`design/icon/build.sh` が fresnel で `AtenaPrint/Resources/AppIcon.icon` を作り、厳密な検査と書き出しまで行う）
 - デモモック: [marketing/mockups/](marketing/mockups/)
 - App Store 掲載文の下書き: [marketing/AppStore.md](marketing/AppStore.md)
 

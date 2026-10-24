@@ -29,7 +29,13 @@
         {
           "glass" : true,
           "image-name" : "postcard.svg",
-          "name" : "Postcard"
+          "name" : "Postcard",
+          "opacity-specializations" : [
+            {
+              "appearance" : "tinted",
+              "value" : 0.9
+            }
+          ]
         }
       ],
       "name" : "Card",
