@@ -5,6 +5,7 @@
 > 画面デザイン（Q9）: [`design/01-iphone-core-light.svg`](./design/01-iphone-core-light.svg) ・ [`design/02-iphone-states.svg`](./design/02-iphone-states.svg) ・ [`design/03-ipad-landscape.svg`](./design/03-ipad-landscape.svg)（生成スクリプト: `tools/gen_design_svgs.py`）
 >
 > v0.2 変更点: 画面の向き・iPad マルチタスク要件を追加（§4.3、S07/S09、§9、Q10）
+> v0.8 変更点: iPhone Duo を Apple の開発者向け案内に合わせて見直し（§13.12）
 > v0.7 変更点: iPhone Duo（折りたたみ）への対応方針と確認事項を追加（§13.12）
 > v0.6 変更点: 標準対応 §13.8〜13.11（キーボード・起動画面・下部の主要操作・シートの一貫性・iPad のポインタとキーボード）を追加
 > v0.5 変更点: CSV取り込みを無料版でも使えるようにした（宛先の合計10件まで）。購入前に取り込み結果を確認できるようにするため（ユーザー指示）
@@ -514,8 +515,17 @@ iOS_atena/
 | 前の宛先 ／ 次の宛先（印刷プレビュー） | ← ／ → |
 | 取り込む ／ プレビュー（確定） | Return（⌘Return） |
 
-### 13.12 iPhone Duo（折りたたみ）（v0.7）
-- 仕様（Apple 公式）: 内側 7.6インチ 1878×2670 px、外側 5.4インチ 1398×2034 px。開くと本体は横長（164.6×117.8 mm）。出典: https://www.apple.com/iphone-duo/specs/
-- レイアウトはサイズクラスと表示領域で切り替えているため（§4.3）、内側の画面では幅 regular の分割表示、外側の画面では iPhone と同じ表示になる想定。
-- 画面キャプチャは @3x を仮定したポイント（内側 890×626 pt、外側 466×678 pt）で撮影している。**倍率は Apple の公表値ではなく推測**。
-- **要確認（TestFlight の実機で）**: iPhone は縦向き固定にしているが、内側の画面は横長。iOS 27 では向きの指定は「希望」として扱われ、リサイズ可能な環境では無視される（WWDC26）。iPhone Duo の内側の画面がこれに当たるかは未確認。横長で表示されない場合は、iPhone の向きの設定を見直す。
+### 13.12 iPhone Duo（折りたたみ）（v0.8）
+Apple の開発者向け案内に沿って対応する。出典: Tech Talk「Prepare your app for iPhone Duo」https://developer.apple.com/videos/play/tech-talks/111461/ 、「Design for iPhone Duo」https://developer.apple.com/videos/play/tech-talks/111466/ 、HIG「Designing for iPhone Duo」https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo
+
+| Apple の案内 | このアプリでの対応 |
+|---|---|
+| 外側の画面は横 compact、内側の画面は縦横 regular。レイアウトはサイズクラスで判断し、端末の種類（Idiom）や画面の向きで判断しない | `horizontalSizeClass` だけで切り替えている。`userInterfaceIdiom`・向き・`UIScreen.main` はアプリのコードで使っていない |
+| 内側の画面は、アプリが指定した対応向きを無視する。外側の画面は通常の iPhone と同じく対応向きに従う | iPhone は縦向き固定のまま（ユーザー指示）。内側の画面では横長の regular レイアウト（iPad と同じ分割表示）になる |
+| 折り目付近（カーブの部分）に操作できる部品を置かない。スクロールする内容は置いてよい。標準のシート・アラート・メニュー・ツールバーは自動で避ける | 標準部品を使う。独自の下部ボタン（`BottomActionBar`）は、幅 regular のときは画面全幅に伸ばさず右端にまとめ、折り目にかからないようにした |
+| 固定幅や特定の画面サイズに合わせた数値を使わない。レイアウトマージンと安全領域を使う | 固定幅は使っていない（用紙プレビューは表示領域に合わせて拡縮） |
+| iOS 27.1 SDK でビルドすると画面の端まで使い、ナビゲーションやツールバーのボタンは縦の帯に並ぶ。独自のバーは `ReservedRegion`（SwiftUI）で領域を確保できる | CI に Xcode 27.1 と iPhone Duo シミュレータで撮影するジョブを追加した。独自の下部バーへの `ReservedRegion` の適用は、シミュレータの撮影結果を見て判断する |
+| `UIScreen.main` は2画面の端末ではあいまいなので使わない | アプリでは未使用 |
+
+- 画面キャプチャは iPhone Duo シミュレータの実際の画面サイズ・倍率・サイズクラスで撮る（以前の版の @3x の推測値は廃止）。
+- **要確認（TestFlight の実機で）**: 開閉時のレイアウトの切り替え、半開き（本のように持つ・テーブルに置く）での折り目の回避、外側の画面で縦の帯に並ぶボタンと独自の下部バーの重なり。

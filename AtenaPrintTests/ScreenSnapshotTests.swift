@@ -71,7 +71,27 @@ private final class BundleToken {}
         let printRequest = PrintRequest(recipients: sample.group.recipients.sorted { $0.sortKey < $1.sortKey }, group: sample.group)
 
         var shots: [Shot] = []
-        if isPad {
+        if ProcessInfo.processInfo.environment["SNAPSHOT_PROFILE"] == "duo" {
+            // iPhone Duo simulator: capture whichever display is active at its real size, scale and traits
+            // (no size class overrides), as Apple's iPhone Duo guidance asks layouts to follow the system.
+            let scene = try #require(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+            let bounds = scene.coordinateSpace.bounds.size
+            let traits = scene.traitCollection
+            let display = traits.horizontalSizeClass == .regular ? "inner" : "outer"
+            try [
+                "scene bounds: \(bounds)",
+                "screen bounds: \(scene.screen.bounds.size) scale: \(scene.screen.scale)",
+                "size classes: h=\(traits.horizontalSizeClass.rawValue) v=\(traits.verticalSizeClass.rawValue)",
+                "safe area: \(scene.keyWindow?.safeAreaInsets ?? .zero)",
+                "orientation: \(scene.effectiveGeometry.interfaceOrientation.rawValue)",
+            ].joined(separator: "\n").write(toFile: directory + "/diagnostics-duo-\(display).txt", atomically: true, encoding: .utf8)
+            shots += [
+                Shot(name: "duo-\(display)-recipients", size: bounds, scale: scene.screen.scale,
+                     view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
+                Shot(name: "duo-\(display)-list", size: bounds, scale: scene.screen.scale, view: wrap(RootView(initialScope: .group(sample.group)))),
+                Shot(name: "duo-\(display)-preview", size: bounds, scale: scene.screen.scale, view: wrap(PrintPreviewView(request: printRequest))),
+            ]
+        } else if isPad {
             shots += [
                 Shot(name: "ipad-landscape-recipients", size: landscape, regularWidth: true,
                      view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
@@ -88,15 +108,6 @@ private final class BundleToken {}
                      view: wrap(PrintPreviewView(request: printRequest))),
                 Shot(name: "ipad-split-twothirds", size: CGSize(width: landscape.width * 2 / 3, height: landscape.height), regularWidth: true,
                      view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
-                // iPhone Duo (foldable). Points assume @3x: inner 2670×1878 px (open, landscape) → 890×626 pt,
-                // outer 1398×2034 px → 466×678 pt. The scale factor is an assumption, not an Apple-published value.
-                Shot(name: "duo-inner-recipients", size: CGSize(width: 890, height: 626), regularWidth: true, scale: 3,
-                     view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
-                Shot(name: "duo-inner-preview", size: CGSize(width: 890, height: 626), regularWidth: true, scale: 3,
-                     view: wrap(PrintPreviewView(request: printRequest))),
-                // Outer screen shows the print preview: in this harness the large title of a pushed list overlaps the back button.
-                Shot(name: "duo-outer-preview", size: CGSize(width: 466, height: 678), regularWidth: false, scale: 3,
-                     view: wrap(PrintPreviewView(request: printRequest))),
             ]
         } else {
             let csv = CSVImportSource(data: CSVWriter.data(from: SampleData.csvRows), fileName: "住所録.csv")

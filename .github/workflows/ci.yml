@@ -118,3 +118,55 @@ jobs:
           name: snapshots
           path: snapshots
           if-no-files-found: ignore
+
+  iphone-duo:
+    # Apple's iPhone Duo guidance: build with the iOS 27.1 SDK and check on the iPhone Duo simulator.
+    name: Screen snapshots (iPhone Duo simulator, Xcode 27.1)
+    runs-on: xcode-27
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 27.1
+        run: |
+          sudo xcode-select -s /Applications/Xcode_27.1.app
+          xcodebuild -version
+          sw_vers
+      - name: Find the iPhone Duo simulator
+        id: sim
+        run: |
+          xcrun simctl help | grep -iE "fold|posture|display|hinge" || echo "no fold-related simctl command found"
+          UDID=$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]
+          for runtime in sorted((r for r in devices if "iOS" in r), reverse=True):
+              for d in devices[runtime]:
+                  if d["name"] == "iPhone Duo" and d.get("isAvailable"):
+                      print(d["udid"]); sys.exit(0)
+          sys.exit("iPhone Duo simulator not found")
+          ')
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          xcrun simctl list devices | grep "$UDID"
+      - name: Build and capture
+        env:
+          TEST_RUNNER_SNAPSHOT_DIR: ${{ github.workspace }}/snapshots-duo
+          TEST_RUNNER_SNAPSHOT_PROFILE: duo
+        run: |
+          set +e
+          xcodebuild test \
+            -project AtenaPrint.xcodeproj \
+            -scheme AtenaPrint \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath build/DerivedData \
+            -only-testing:AtenaPrintTests/ScreenSnapshotTests \
+            CODE_SIGNING_ALLOWED=NO > xcodebuild-duo.log 2>&1
+          status=$?
+          grep -E "error:|warning: .*(deprecat|isolat|Sendable)|Test (Suite|Case|run)|✔|✘|\*\* " xcodebuild-duo.log | sort -u | head -200
+          cat snapshots-duo/diagnostics-duo-*.txt 2>/dev/null
+          exit $status
+      - name: Upload snapshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshots-duo
+          path: snapshots-duo
+          if-no-files-found: ignore
