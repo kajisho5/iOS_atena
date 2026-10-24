@@ -91,7 +91,7 @@ def page(width: int, height: int, body: str, title: str, subtitle: str, title_si
 html,body{{margin:0;width:{width}px;height:{height}px;overflow:hidden}}
 body{{background:{BG};font-family:{FONT};color:#fff;display:flex;flex-direction:column;align-items:center}}
 h1{{margin:0;font-size:{title_size}px;font-weight:800;letter-spacing:.02em;text-align:center}}
-p{{margin:{title_size*0.3}px 0 0;font-size:{title_size*0.45}px;font-weight:500;opacity:.9;text-align:center}}
+p{{margin:{title_size*0.3}px 0 0;font-size:{title_size*0.55}px;font-weight:500;opacity:.9;text-align:center}}
 </style></head><body>
 <div style="padding:{height*0.05}px {width*0.06}px 0">
 <h1>{title}</h1><p>{subtitle}</p></div>
