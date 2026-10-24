@@ -72,96 +72,11 @@ struct RecipientEditorView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("editor.section.name") {
-                    TextField("editor.name", text: $draft.name, prompt: Text("editor.name.prompt"))
-                        .textContentType(.name)
-                        .focused($focusedField, equals: .name)
-                        .submitLabel(.next)
-                    TextField("editor.nameKana", text: $draft.nameKana, prompt: Text("editor.nameKana.prompt"))
-                        .focused($focusedField, equals: .nameKana)
-                        .submitLabel(.next)
-                    Picker("editor.honorific", selection: honorificChoice) {
-                        ForEach(Honorific.presets, id: \.self) { preset in
-                            Text(verbatim: preset).tag(Optional(preset))
-                        }
-                        Text("editor.honorific.custom").tag(String?.none)
-                    }
-                    if usesCustomHonorific {
-                        TextField("editor.honorific.customField", text: $draft.honorific)
-                            .focused($focusedField, equals: .honorific)
-                            .submitLabel(.next)
-                    }
-                }
-
-                Section {
-                    ForEach(draft.jointNames.indices, id: \.self) { index in
-                        TextField("editor.jointName \(index + 1)", text: jointNameBinding(index))
-                            .focused($focusedField, equals: .jointName(index))
-                            .submitLabel(.next)
-                    }
-                    .onDelete { offsets in
-                        draft.jointNames.remove(atOffsets: offsets)
-                    }
-                    Button {
-                        draft.jointNames.append("")
-                        focusedField = .jointName(draft.jointNames.count - 1)
-                    } label: {
-                        Label("editor.jointNames.add", systemImage: "plus")
-                    }
-                } header: {
-                    Text("editor.jointNames")
-                } footer: {
-                    Text("editor.jointNames.footer")
-                }
-
-                Section {
-                    TextField("editor.postalCode", text: $draft.postalCode, prompt: Text(verbatim: "1040061"))
-                        .keyboardType(.numberPad)
-                        .textContentType(.postalCode)
-                        .focused($focusedField, equals: .postalCode)
-                    TextField("editor.address1", text: $draft.address1, prompt: Text("editor.address1.prompt"))
-                        .textContentType(.fullStreetAddress)
-                        .focused($focusedField, equals: .address1)
-                        .submitLabel(.next)
-                    TextField("editor.address2", text: $draft.address2, prompt: Text("editor.address2.prompt"))
-                        .focused($focusedField, equals: .address2)
-                        .submitLabel(.next)
-                } header: {
-                    Text("editor.section.address")
-                } footer: {
-                    if postalCodeIsInvalid {
-                        Label("editor.postalCode.invalid", systemImage: "exclamationmark.triangle.fill")
-                            .foregroundStyle(Color.warningText)
-                    }
-                }
-
-                Section("editor.memo") {
-                    TextField("editor.memo", text: $draft.memo, prompt: Text("editor.memo.prompt"), axis: .vertical)
-                        .focused($focusedField, equals: .memo)
-                }
-
-                if !groups.isEmpty {
-                    Section("editor.groups") {
-                        ForEach(groups) { group in
-                            Button {
-                                toggle(group)
-                            } label: {
-                                HStack {
-                                    Text(verbatim: group.name)
-                                        .foregroundStyle(Color.primary)
-                                    Spacer()
-                                    if selectedGroupIDs.contains(group.persistentModelID) {
-                                        Image(systemName: "checkmark")
-                                            .foregroundStyle(.tint)
-                                            .accessibilityHidden(true)
-                                    }
-                                }
-                                .contentShape(Rectangle())
-                            }
-                            .accessibilityAddTraits(selectedGroupIDs.contains(group.persistentModelID) ? .isSelected : [])
-                        }
-                    }
-                }
+                nameSection
+                jointNamesSection
+                addressSection
+                memoSection
+                groupsSection
             }
             .onSubmit(focusNextField)
             .formKeyboardSupport(onNext: focusedField == .memo ? nil : focusNextField, onDone: { focusedField = nil })
@@ -193,6 +108,108 @@ struct RecipientEditorView: View {
                 PaywallView(reason: .recipientLimit)
             }
             .onAppear(perform: load)
+        }
+    }
+
+    private var nameSection: some View {
+        Section("editor.section.name") {
+            TextField("editor.name", text: $draft.name, prompt: Text("editor.name.prompt"))
+                .textContentType(.name)
+                .focused($focusedField, equals: .name)
+                .submitLabel(.next)
+            TextField("editor.nameKana", text: $draft.nameKana, prompt: Text("editor.nameKana.prompt"))
+                .focused($focusedField, equals: .nameKana)
+                .submitLabel(.next)
+            Picker("editor.honorific", selection: honorificChoice) {
+                ForEach(Honorific.presets, id: \.self) { preset in
+                    Text(verbatim: preset).tag(Optional(preset))
+                }
+                Text("editor.honorific.custom").tag(String?.none)
+            }
+            if usesCustomHonorific {
+                TextField("editor.honorific.customField", text: $draft.honorific)
+                    .focused($focusedField, equals: .honorific)
+                    .submitLabel(.next)
+            }
+        }
+    }
+
+    private var jointNamesSection: some View {
+        Section {
+            ForEach(draft.jointNames.indices, id: \.self) { index in
+                TextField("editor.jointName \(index + 1)", text: jointNameBinding(index))
+                    .focused($focusedField, equals: .jointName(index))
+                    .submitLabel(.next)
+            }
+            .onDelete { offsets in
+                draft.jointNames.remove(atOffsets: offsets)
+            }
+            Button {
+                draft.jointNames.append("")
+                focusedField = .jointName(draft.jointNames.count - 1)
+            } label: {
+                Label("editor.jointNames.add", systemImage: "plus")
+            }
+        } header: {
+            Text("editor.jointNames")
+        } footer: {
+            Text("editor.jointNames.footer")
+        }
+    }
+
+    private var addressSection: some View {
+        Section {
+            TextField("editor.postalCode", text: $draft.postalCode, prompt: Text(verbatim: "1040061"))
+                .keyboardType(.numberPad)
+                .textContentType(.postalCode)
+                .focused($focusedField, equals: .postalCode)
+            TextField("editor.address1", text: $draft.address1, prompt: Text("editor.address1.prompt"))
+                .textContentType(.fullStreetAddress)
+                .focused($focusedField, equals: .address1)
+                .submitLabel(.next)
+            TextField("editor.address2", text: $draft.address2, prompt: Text("editor.address2.prompt"))
+                .focused($focusedField, equals: .address2)
+                .submitLabel(.next)
+        } header: {
+            Text("editor.section.address")
+        } footer: {
+            if postalCodeIsInvalid {
+                Label("editor.postalCode.invalid", systemImage: "exclamationmark.triangle.fill")
+                    .foregroundStyle(Color.warningText)
+            }
+        }
+    }
+
+    private var memoSection: some View {
+        Section("editor.memo") {
+            TextField("editor.memo", text: $draft.memo, prompt: Text("editor.memo.prompt"), axis: .vertical)
+                .focused($focusedField, equals: .memo)
+        }
+    }
+
+    @ViewBuilder
+    private var groupsSection: some View {
+        if !groups.isEmpty {
+            Section("editor.groups") {
+                ForEach(groups) { group in
+                    Button {
+                        toggle(group)
+                    } label: {
+                        HStack {
+                            Text(verbatim: group.name)
+                                .foregroundStyle(Color.primary)
+                            Spacer()
+                            if selectedGroupIDs.contains(group.persistentModelID) {
+                                Image(systemName: "checkmark")
+                                    .foregroundStyle(.tint)
+                                    .accessibilityHidden(true)
+                            }
+                        }
+                        .contentShape(Rectangle())
+                    }
+                    .accessibilityAddTraits(selectedGroupIDs.contains(group.persistentModelID) ? .isSelected : [])
+                }
+            }
         }
     }
 
