@@ -159,10 +159,11 @@ jobs:
           xcrun simctl bootstatus "${{ steps.sim.outputs.udid }}" -b
           # duoctl reads the active display through devicectl. On a headless runner no display was active,
           # so open the simulator's host app (Device Hub / Simulator, whichever this Xcode ships) to attach one.
-          ls "$(xcode-select -p)/Applications"
-          for app in "$(xcode-select -p)/Applications/"*.app; do
-            case "$app" in *Simulator*|*Device*) open -a "$app" --args -CurrentDeviceUDID "${{ steps.sim.outputs.udid }}" && echo "opened $app";; esac
-          done
+          apps=$(find /Applications/Xcode_27.1.app -maxdepth 6 -type d \( -iname "Simulator.app" -o -iname "Device Hub.app" \) -not -path "*/Frameworks/*" 2>/dev/null || true)
+          echo "host apps: ${apps:-none found}"
+          while IFS= read -r app; do
+            [ -n "$app" ] && open -a "$app" --args -CurrentDeviceUDID "${{ steps.sim.outputs.udid }}" && echo "opened $app"
+          done <<< "$apps"
           for i in $(seq 1 30); do
             active=$(xcrun devicectl device info displays -d "${{ steps.sim.outputs.udid }}" --json-output - 2>/dev/null \
               | python3 -c 'import json,sys; d=json.load(sys.stdin)["result"]["displays"]; print(sum(1 for x in d if x.get("active")))' 2>/dev/null)
