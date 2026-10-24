@@ -156,8 +156,8 @@ struct SenderEditorView: View {
                         .submitLabel(.done)
                 }
             }
-            .onSubmit(focusNextField)
-            .formKeyboardSupport(onNext: focusedField == .address2 ? nil : focusNextField, onDone: { focusedField = nil })
+            .onSubmit { focusNextField() }
+            .formKeyboardSupport(showsNext: focusedField != .address2, onNext: { focusNextField() }, onDone: { focusedField = nil })
             .navigationTitle(sender == nil ? Text("senders.title.new") : Text("senders.title.edit"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

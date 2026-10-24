@@ -78,8 +78,8 @@ struct RecipientEditorView: View {
                 memoSection
                 groupsSection
             }
-            .onSubmit(focusNextField)
-            .formKeyboardSupport(onNext: focusedField == .memo ? nil : focusNextField, onDone: { focusedField = nil })
+            .onSubmit { focusNextField() }
+            .formKeyboardSupport(showsNext: focusedField != .memo, onNext: { focusNextField() }, onDone: { focusedField = nil })
             .navigationTitle(isNew ? Text("editor.title.new") : Text("editor.title.edit"))
             .navigationBarTitleDisplayMode(.inline)
             .interactiveDismissDisabled(hasChanges)

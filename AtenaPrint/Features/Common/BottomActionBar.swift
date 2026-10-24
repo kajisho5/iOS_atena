@@ -38,12 +38,12 @@ extension View {
 
     /// Keyboard handling for forms: a "完了" button above the keyboard and interactive dismissal,
     /// so the keyboard never hides the field being edited or the confirm button in the top bar.
-    func formKeyboardSupport(onNext: (() -> Void)?, onDone: @escaping () -> Void) -> some View {
+    func formKeyboardSupport(showsNext: Bool, onNext: @escaping () -> Void, onDone: @escaping () -> Void) -> some View {
         self
             .scrollDismissesKeyboard(.interactively)
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
-                    if let onNext {
+                    if showsNext {
                         Button("common.keyboardNext", action: onNext)
                     }
                     Spacer()
