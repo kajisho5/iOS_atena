@@ -458,11 +458,27 @@ RECIPIENT = dict(
 # Screens (iPhone)
 # ---------------------------------------------------------------------------
 
+def bottom_bar(c: Canvas, t, buttons):
+    """iPhone bottom action bar above the tab bar. buttons: list of (label, icon, prominent, width)."""
+    top = H - 34 - 62 - 76
+    c.rect(0, top, W, 72, fill=t["bg"], op=0.94)
+    c.line(0, top, W, top, t["separator"], 0.6)
+    x = 16
+    for label, icon_name, prominent, width in buttons:
+        fill = t["accent"] if prominent else t["fill"]
+        fg = t["on_accent"] if prominent else t["accent"]
+        c.rect(x, top + 11, width, 50, fill=fill, rx=25)
+        tw = len(label) * 17
+        icon(c, icon_name, x + width / 2 - tw / 2 - 6, top + 36, 18, fg)
+        c.text(x + width / 2 + 12, top + 42, label, size=17, fill=fg, weight=600, anchor="middle")
+        x += width + 10
+
+
 def screen_groups(t) -> Canvas:
     c = Canvas()
     c.rect(0, 0, W, H, fill=t["bg"])
     status_bar(c, t)
-    nav_bar(c, t, large_title="宛先", right=[("icongroup", ["plus", "ellipsis"])])
+    nav_bar(c, t, large_title="宛先", right=[("icon", "ellipsis")])
     y = 172
     search_field(c, t, 16, y, W - 32, "氏名・住所で検索")
     y += 60
@@ -483,6 +499,7 @@ def screen_groups(t) -> Canvas:
         (row_text(t, "グループを追加", icon_name="plus", color=t["accent"]), 52),
     ])
     section_footer(c, t, 16, y + 24, "グループ単位で一括印刷できます。")
+    bottom_bar(c, t, [("宛先を追加", "plus", False, W - 32)])
     tab_bar(c, t, 0)
     home_indicator(c, t)
     return c
@@ -510,7 +527,7 @@ def screen_recipients(t) -> Canvas:
     c = Canvas()
     c.rect(0, 0, W, H, fill=t["bg"])
     status_bar(c, t)
-    nav_bar(c, t, left=[("icon", "chevron.left")], right=[("icongroup", ["printer", "plus", "ellipsis"])])
+    nav_bar(c, t, left=[("icon", "chevron.left")], right=[("icon", "ellipsis")])
     c.text(16, 146, "年賀状2026", size=34, fill=t["label"], weight=700)
     c.text(16, 170, "86件 ・ 未印刷 42件", size=15, fill=t["secondary"])
     search_field(c, t, 16, 186, W - 32, "氏名・住所で検索")
@@ -524,6 +541,7 @@ def screen_recipients(t) -> Canvas:
         (recipient_row(t, "山田 太郎", "様", "花子", "1040061", "東京都中央区見本町…", "printed"), 76),
     ]
     y = inset_group(c, t, 16, y, W - 32, rows)
+    bottom_bar(c, t, [("追加", "plus", False, 120), ("一括印刷", "printer", True, W - 32 - 130)])
     tab_bar(c, t, 0)
     home_indicator(c, t)
     return c
@@ -790,7 +808,7 @@ def screen_recipients_ax(t) -> Canvas:
     c = Canvas()
     c.rect(0, 0, W, H, fill=t["bg"])
     status_bar(c, t)
-    nav_bar(c, t, left=[("icon", "chevron.left")], right=[("icongroup", ["printer", "plus", "ellipsis"])])
+    nav_bar(c, t, left=[("icon", "chevron.left")], right=[("icon", "ellipsis")])
     c.text(16, 156, "年賀状", size=44, fill=t["label"], weight=700)
     c.text(16, 206, "2026", size=44, fill=t["label"], weight=700)
     y = 236
@@ -1006,7 +1024,7 @@ def main():
         "iPhone 16 / 393×852pt ・ 縦向き固定 ・ 標準文字サイズ（Large）",
         [
             (screen_groups(LIGHT), "S01 宛先（グループ）", "タブのルート画面。compact 幅ではサイドバーがこの一覧になる"),
-            (screen_recipients(LIGHT), "S02 宛先一覧", "ツールバー: 一括印刷 / 追加 / その他"),
+            (screen_recipients(LIGHT), "S02 宛先一覧", "下部: 追加 / 一括印刷（親指の届く位置）"),
             (screen_edit(LIGHT), "S04 宛先を編集", "シート ・ Form"),
             (screen_preview(LIGHT), "S07 印刷プレビュー", "用紙全体を表示 ・ 二重印刷の警告"),
             (screen_layout(LIGHT), "S09 レイアウト", "上: ライブプレビュー / 下: 設定"),
