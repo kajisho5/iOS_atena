@@ -172,7 +172,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "完了"
+            "value": "キーボードを閉じる"
           }
         }
       }
@@ -1823,6 +1823,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "この宛先を削除しますか？"
+          }
+        }
+      }
+    },
+    "recipients.freeRemaining %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料版：あと%lld件登録できます"
           }
         }
       }

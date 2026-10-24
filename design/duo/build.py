@@ -104,35 +104,44 @@ def tab_icon(kind, cx, cy, c, cut):
 
 def side_column(w, h, t, tools=(), tabs=True, active=0, camera=True):
     """Trailing column on the outer display and the inner landscape display:
-    camera (outer only) → status bar → toolbar → tab bar (bottom-aligned). Approximation."""
-    cx = w - SIDE / 2
+    camera (outer only) → status bar → toolbar → tab bar (bottom-aligned).
+
+    Toolbar and tab bar positions are measured on the Xcode 27.1 iPhone Duo simulator (app build):
+    column centre 48.5pt from the trailing edge; outer toolbar buttons 50pt round, first centre at
+    y = 198, 60pt apart; tab bar 49 × 164pt ending 23pt above the bottom edge. Camera and status bar
+    are drawn by the system and were not captured: their positions are an approximation."""
+    cx = w - 48.5
     p = []
     if camera:
         p.append(f'<rect x="{cx-15}" y="14" width="30" height="30" rx="15" fill="#000000"/>')
-        p.append(T(cx, 66, "9:41", 15, t["label"], 600, "middle"))
-        y = 126
+        p.append(T(cx, 74, "9:41", 15, t["label"], 600, "middle"))
+        battery_y = 88
+        y = 198
     else:
         p.append(T(cx, 34, "9:41", 15, t["label"], 600, "middle"))
-        y = 82
-    p.append(f'<rect x="{cx-12}" y="{y-34}" width="22" height="11" rx="3" fill="none" stroke="{t["label"]}" '
-             f'stroke-opacity="0.45"/><rect x="{cx-10}" y="{y-32}" width="16" height="7" rx="1.5" fill="{t["label"]}"/>')
+        battery_y = 48
+        y = 110  # inner display: not measured (the app had no symbol toolbar items there); approximation
+    p.append(f'<rect x="{cx-12}" y="{battery_y}" width="22" height="11" rx="3" fill="none" stroke="{t["label"]}" '
+             f'stroke-opacity="0.45"/><rect x="{cx-10}" y="{battery_y+2}" width="16" height="7" rx="1.5" fill="{t["label"]}"/>')
+    assert not tools or y - 25 - (battery_y + 11) >= 16  # keep the status bar clear of the toolbar
     for kind, color in tools:  # toolbar: back/close first, then the emphasized action, then the rest
         if kind == "checkmark":
-            p.append(f'<circle cx="{cx}" cy="{y}" r="22" fill="{t["accent"]}"/>' + sym(kind, cx, y, t["on_accent"], 2.6))
+            p.append(f'<circle cx="{cx}" cy="{y}" r="25" fill="{t["accent"]}"/>' + sym(kind, cx, y, t["on_accent"], 2.6))
         else:
-            p.append(glass_btn(cx, y, t) + sym(kind, cx, y, color or t["label"]))
-        y += 54
+            p.append(glass_btn(cx, y, t, r=25) + sym(kind, cx, y, color or t["label"]))
+        y += 60
     if tabs:
-        th = 3 * 62 + 12
-        ty = h - BOTTOM - th
-        p.append(f'<rect x="{cx-26}" y="{ty}" width="52" height="{th}" rx="26" fill="{t["glass"]}" '
+        tw, th = 49, 164
+        ty = h - 23 - th
+        p.append(f'<rect x="{cx-tw/2}" y="{ty}" width="{tw}" height="{th}" rx="{tw/2}" fill="{t["glass"]}" '
                  f'fill-opacity="{t["glass_op"]}" stroke="{t["glass_stroke"]}"/>')
+        step = th / 3
         for k, kind in enumerate(("person", "envelope", "gear")):
-            ky = ty + 6 + 62 * k + 31
+            ky = ty + step * k + step / 2
             on = k == active
             cut = mix(t["accent"], t["glass"], 0.14) if on else t["glass"]
             if on:
-                p.append(f'<rect x="{cx-22}" y="{ky-27}" width="44" height="54" rx="22" fill="{cut}"/>')
+                p.append(f'<rect x="{cx-20.5}" y="{ky-24}" width="41" height="48" rx="20.5" fill="{cut}"/>')
             p.append(tab_icon(kind, cx, ky, t["accent"] if on else t["label"], cut))
     return "".join(p)
 

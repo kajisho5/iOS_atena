@@ -95,7 +95,11 @@ struct RecipientDetailView: View {
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Button("common.edit") { addFlow.sheet = .editRecipient(recipient) }
+                // A symbol rather than a text button: on iPhone Duo, toolbar items move into the vertical
+                // column only when they are symbols (HIG "Designing for iPhone Duo"). The title stays for
+                // VoiceOver and the overflow menu.
+                Button("common.edit", systemImage: "pencil") { addFlow.sheet = .editRecipient(recipient) }
+                    .labelStyle(.iconOnly)
                     .keyboardShortcut("e", modifiers: .command)
             }
         }
