@@ -94,8 +94,9 @@ private final class BundleToken {}
                      view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
                 Shot(name: "duo-inner-preview", size: CGSize(width: 890, height: 626), regularWidth: true, scale: 3,
                      view: wrap(PrintPreviewView(request: printRequest))),
-                Shot(name: "duo-outer-list", size: CGSize(width: 466, height: 678), regularWidth: false, scale: 3,
-                     view: wrap(RootView(initialScope: .group(sample.group)))),
+                // Outer screen shows the print preview: in this harness the large title of a pushed list overlaps the back button.
+                Shot(name: "duo-outer-preview", size: CGSize(width: 466, height: 678), regularWidth: false, scale: 3,
+                     view: wrap(PrintPreviewView(request: printRequest))),
             ]
         } else {
             let csv = CSVImportSource(data: CSVWriter.data(from: SampleData.csvRows), fileName: "住所録.csv")

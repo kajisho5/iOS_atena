@@ -166,9 +166,9 @@ def main() -> None:
         duo = iphone(src / "screen-iphone-list-dark.png", 560, dark=True, tilt=-4) + iphone(src / "screen-iphone-preview-dark.png", 560, dark=True, tilt=4)
         pages["iphone-pair-dark"] = (2560, 1600, page(2560, 1600, duo, "ダークモードにも対応", "宛名面の紙色はそのままで見やすく", 76))
     # iPhone Duo (foldable): unfolded inner display + folded outer display.
-    if (src / "screen-duo-inner-recipients.png").exists() and (src / "screen-duo-outer-list.png").exists():
-        body = duo_open(src / "screen-duo-inner-recipients.png", 1500) + duo_closed(src / "screen-duo-outer-list.png", 520)
-        pages["iphone-duo"] = (2560, 1600, page(2560, 1600, body, "iPhone Duo の大きな画面にも", "開けば一覧と詳細を並べて、閉じればいつもの iPhone の画面で", 76))
+    if (src / "screen-duo-inner-recipients.png").exists() and (src / "screen-duo-outer-preview.png").exists():
+        body = duo_open(src / "screen-duo-inner-recipients.png", 1500) + duo_closed(src / "screen-duo-outer-preview.png", 520)
+        pages["iphone-duo"] = (2560, 1600, page(2560, 1600, body, "iPhone Duo の大きな画面にも", "開けば一覧と詳細を並べて、閉じても宛名面をすぐ確認", 76))
     if (src / "screen-duo-inner-preview.png").exists():
         pages["iphone-duo-preview"] = (2560, 1600, page(2560, 1600, duo_open(src / "screen-duo-inner-preview.png", 1700),
                                                         "開いて、宛名面をそのまま確認", "iPhone Duo の内側の画面で用紙全体を表示", 76))
