@@ -1,0 +1,28 @@
+{
+  "sourceLanguage": "ja",
+  "strings": {
+    "CFBundleDisplayName": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛名印刷"
+          }
+        }
+      }
+    },
+    "NSContactsUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛名印刷のために連絡先へアクセスします。連絡先の内容が外部に送信されることはありません"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

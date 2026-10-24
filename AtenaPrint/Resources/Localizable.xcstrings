@@ -1,0 +1,2602 @@
+{
+  "sourceLanguage": "ja",
+  "strings": {
+    "a11y.sheet %@ %@ %@ %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@、%2$@。宛先 %3$@ %4$@"
+          }
+        }
+      }
+    },
+    "a11y.sheet.overflow": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "警告: 枠からはみ出している文字があります"
+          }
+        }
+      }
+    },
+    "add.contacts": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連絡先から取り込む"
+          }
+        }
+      }
+    },
+    "add.csv": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSVから取り込む"
+          }
+        }
+      }
+    },
+    "add.csv.pro": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSVから取り込む（Pro）"
+          }
+        }
+      }
+    },
+    "add.manual": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "手入力で追加"
+          }
+        }
+      }
+    },
+    "add.menu": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先を追加"
+          }
+        }
+      }
+    },
+    "app.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛名印刷"
+          }
+        }
+      }
+    },
+    "badge.printed %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷済み %@"
+          }
+        }
+      }
+    },
+    "common.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "追加"
+          }
+        }
+      }
+    },
+    "common.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
+          }
+        }
+      }
+    },
+    "common.close": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "閉じる"
+          }
+        }
+      }
+    },
+    "common.delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
+          }
+        }
+      }
+    },
+    "common.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完了"
+          }
+        }
+      }
+    },
+    "common.edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集"
+          }
+        }
+      }
+    },
+    "common.more": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "その他"
+          }
+        }
+      }
+    },
+    "common.ok": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "common.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再試行"
+          }
+        }
+      }
+    },
+    "common.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
+          }
+        }
+      }
+    },
+    "contacts.result.duplicates %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同じ氏名と郵便番号の宛先がすでにあるため、%lld件は取り込みませんでした。"
+          }
+        }
+      }
+    },
+    "contacts.result.imported %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld件の宛先を取り込みました。"
+          }
+        }
+      }
+    },
+    "contacts.result.overLimit %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料版の上限に達したため、%lld件は取り込めませんでした。"
+          }
+        }
+      }
+    },
+    "contacts.result.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連絡先の取り込み"
+          }
+        }
+      }
+    },
+    "csv.column %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld列目"
+          }
+        }
+      }
+    },
+    "csv.column.unused": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使わない"
+          }
+        }
+      }
+    },
+    "csv.duplicates.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同じ氏名と郵便番号の宛先がすでにある行です。オンにすると取り込みます。"
+          }
+        }
+      }
+    },
+    "csv.duplicates.header": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重複の可能性がある行"
+          }
+        }
+      }
+    },
+    "csv.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ファイルに読み取れる行がありません。文字コードを切り替えるか、ファイルの内容をご確認ください。"
+          }
+        }
+      }
+    },
+    "csv.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データがありません"
+          }
+        }
+      }
+    },
+    "csv.encoding": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "文字コード"
+          }
+        }
+      }
+    },
+    "csv.encoding.shiftJIS": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shift_JIS（Excel）"
+          }
+        }
+      }
+    },
+    "csv.encoding.utf8": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UTF-8"
+          }
+        }
+      }
+    },
+    "csv.error.encoding": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この文字コードでは読み取れません。別の文字コードを選んでください。"
+          }
+        }
+      }
+    },
+    "csv.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSVを読み込めません"
+          }
+        }
+      }
+    },
+    "csv.error.tooLarge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ファイルが大きすぎます（5MBまで）。"
+          }
+        }
+      }
+    },
+    "csv.error.unreadable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ファイルを開けませんでした。"
+          }
+        }
+      }
+    },
+    "csv.export.fileName": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛名印刷_宛先一覧.csv"
+          }
+        }
+      }
+    },
+    "csv.file": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ファイル"
+          }
+        }
+      }
+    },
+    "csv.hasHeader": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1行目は見出し"
+          }
+        }
+      }
+    },
+    "csv.import %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld件を取り込む"
+          }
+        }
+      }
+    },
+    "csv.line %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld行目"
+          }
+        }
+      }
+    },
+    "csv.mapping.header": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "列の対応（アプリの項目 ← CSVの列）"
+          }
+        }
+      }
+    },
+    "csv.mapping.nameRequired": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「氏名」に対応する列を選んでください。"
+          }
+        }
+      }
+    },
+    "csv.mapping.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "列の対応を確認"
+          }
+        }
+      }
+    },
+    "csv.preview.header": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレビュー（先頭5件）"
+          }
+        }
+      }
+    },
+    "csv.result.imported %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld件を取り込みました"
+          }
+        }
+      }
+    },
+    "csv.result.skipped %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取り込まなかった行（%lld件）"
+          }
+        }
+      }
+    },
+    "csv.result.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取り込み結果"
+          }
+        }
+      }
+    },
+    "csv.result.warnings %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld件は郵便番号または住所に確認が必要です"
+          }
+        }
+      }
+    },
+    "csv.skip.duplicate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重複の可能性があるため取り込みませんでした"
+          }
+        }
+      }
+    },
+    "csv.skip.missingName": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "氏名が空のため取り込めませんでした"
+          }
+        }
+      }
+    },
+    "csv.summary %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld件中 %2$lld件を取り込みます"
+          }
+        }
+      }
+    },
+    "csv.target": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループ"
+          }
+        }
+      }
+    },
+    "csv.target.header": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取り込み先"
+          }
+        }
+      }
+    },
+    "csv.target.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループに入れない"
+          }
+        }
+      }
+    },
+    "csv.template.fileName": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛名印刷_テンプレート.csv"
+          }
+        }
+      }
+    },
+    "detail.address": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "住所"
+          }
+        }
+      }
+    },
+    "detail.history": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷履歴"
+          }
+        }
+      }
+    },
+    "detail.history.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "まだ印刷していません"
+          }
+        }
+      }
+    },
+    "detail.other": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "その他"
+          }
+        }
+      }
+    },
+    "editor.address1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "住所"
+          }
+        }
+      }
+    },
+    "editor.address1.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "東京都中央区見本町1-13-3"
+          }
+        }
+      }
+    },
+    "editor.address2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "建物名"
+          }
+        }
+      }
+    },
+    "editor.address2.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "マンション名・部屋番号"
+          }
+        }
+      }
+    },
+    "editor.discard.confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "変更を破棄"
+          }
+        }
+      }
+    },
+    "editor.discard.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "変更を破棄しますか？"
+          }
+        }
+      }
+    },
+    "editor.groups": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループ"
+          }
+        }
+      }
+    },
+    "editor.honorific": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "敬称"
+          }
+        }
+      }
+    },
+    "editor.honorific.custom": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "その他（自由入力）"
+          }
+        }
+      }
+    },
+    "editor.honorific.customField": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "敬称を入力"
+          }
+        }
+      }
+    },
+    "editor.jointName %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連名%lld"
+          }
+        }
+      }
+    },
+    "editor.jointNames": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連名"
+          }
+        }
+      }
+    },
+    "editor.jointNames.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連名を追加"
+          }
+        }
+      }
+    },
+    "editor.jointNames.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "配偶者やご家族など、同じ宛名面に並べて印刷する名前です。"
+          }
+        }
+      }
+    },
+    "editor.memo": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メモ"
+          }
+        }
+      }
+    },
+    "editor.memo.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "例: 喪中、転居予定"
+          }
+        }
+      }
+    },
+    "editor.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "氏名"
+          }
+        }
+      }
+    },
+    "editor.name.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "山田 太郎"
+          }
+        }
+      }
+    },
+    "editor.nameKana": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ふりがな"
+          }
+        }
+      }
+    },
+    "editor.nameKana.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "やまだ たろう（並び替えに使います）"
+          }
+        }
+      }
+    },
+    "editor.postalCode": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "郵便番号"
+          }
+        }
+      }
+    },
+    "editor.postalCode.invalid": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "郵便番号は7桁の数字で入力してください。"
+          }
+        }
+      }
+    },
+    "editor.section.address": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "住所"
+          }
+        }
+      }
+    },
+    "editor.section.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "氏名"
+          }
+        }
+      }
+    },
+    "editor.title.edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先を編集"
+          }
+        }
+      }
+    },
+    "editor.title.new": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先を追加"
+          }
+        }
+      }
+    },
+    "empty.filter.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "該当する宛先はありません"
+          }
+        }
+      }
+    },
+    "empty.group.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先を追加すると、このグループで一括印刷できます。"
+          }
+        }
+      }
+    },
+    "empty.group.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このグループに宛先はありません"
+          }
+        }
+      }
+    },
+    "empty.recipients.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先を登録すると、ここに一覧で表示されます。"
+          }
+        }
+      }
+    },
+    "empty.recipients.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先がありません"
+          }
+        }
+      }
+    },
+    "empty.unprinted.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未印刷の宛先はありません。"
+          }
+        }
+      }
+    },
+    "empty.unprinted.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべて印刷済みです"
+          }
+        }
+      }
+    },
+    "filter.all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべて"
+          }
+        }
+      }
+    },
+    "filter.printed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷済み"
+          }
+        }
+      }
+    },
+    "filter.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "表示"
+          }
+        }
+      }
+    },
+    "filter.unprinted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未印刷"
+          }
+        }
+      }
+    },
+    "font.gothic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ゴシック"
+          }
+        }
+      }
+    },
+    "font.maruGothic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "丸ゴシック"
+          }
+        }
+      }
+    },
+    "font.mincho": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "明朝"
+          }
+        }
+      }
+    },
+    "groups.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループを追加"
+          }
+        }
+      }
+    },
+    "groups.add.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しいグループ"
+          }
+        }
+      }
+    },
+    "groups.delete.confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループを削除"
+          }
+        }
+      }
+    },
+    "groups.delete.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループだけを削除します。宛先は削除されません。"
+          }
+        }
+      }
+    },
+    "groups.delete.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このグループを削除しますか？"
+          }
+        }
+      }
+    },
+    "groups.name.placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "例: 年賀状2026"
+          }
+        }
+      }
+    },
+    "groups.rename": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "名前を変更"
+          }
+        }
+      }
+    },
+    "groups.rename.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループ名を変更"
+          }
+        }
+      }
+    },
+    "layout.autoShrink": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "住所や氏名が長い場合は、文字を自動で縮小します。"
+          }
+        }
+      }
+    },
+    "layout.font": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "フォント"
+          }
+        }
+      }
+    },
+    "layout.kanjiDigits": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "数字を漢数字に変換"
+          }
+        }
+      }
+    },
+    "layout.kanjiDigits.verticalOnly": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "漢数字への変換は縦書きのときだけ使えます。"
+          }
+        }
+      }
+    },
+    "layout.overflow": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "文字が枠からはみ出しています"
+          }
+        }
+      }
+    },
+    "layout.paper": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用紙"
+          }
+        }
+      }
+    },
+    "layout.paper.kakugata2Note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "角形2号はA4より大きいため、対応するプリンタでのみ印刷できます。"
+          }
+        }
+      }
+    },
+    "layout.previewRecipient": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プレビューする宛先"
+          }
+        }
+      }
+    },
+    "layout.previewRecipient.first": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "先頭の宛先"
+          }
+        }
+      }
+    },
+    "layout.printsSender": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "差出人を印刷"
+          }
+        }
+      }
+    },
+    "layout.sender": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "差出人"
+          }
+        }
+      }
+    },
+    "layout.sender.register": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "差出人を登録"
+          }
+        }
+      }
+    },
+    "layout.writingMode": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "書き方"
+          }
+        }
+      }
+    },
+    "limit.message %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料版で登録できる宛先は%lld件までです。Pro（買い切り）で無制限になります。"
+          }
+        }
+      }
+    },
+    "limit.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先の登録数が上限です"
+          }
+        }
+      }
+    },
+    "offset.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷位置がずれる場合に調整します。プラスで下・右へ、マイナスで上・左へ移動します。用紙ごとに保存されます。"
+          }
+        }
+      }
+    },
+    "offset.horizontal": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "左右"
+          }
+        }
+      }
+    },
+    "offset.reset": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "0に戻す"
+          }
+        }
+      }
+    },
+    "offset.testPrint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "テスト印刷"
+          }
+        }
+      }
+    },
+    "offset.testPrint.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "見本の宛名と郵便番号枠の線を印刷します。はがきの赤い枠と重ねて、ずれを確認してください。"
+          }
+        }
+      }
+    },
+    "offset.vertical": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上下"
+          }
+        }
+      }
+    },
+    "paper.hagaki": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はがき"
+          }
+        }
+      }
+    },
+    "paper.kakugata2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "角形2号"
+          }
+        }
+      }
+    },
+    "paper.nagagata3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "長形3号"
+          }
+        }
+      }
+    },
+    "paper.nagagata4": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "長形4号"
+          }
+        }
+      }
+    },
+    "paper.yougata2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "洋形2号"
+          }
+        }
+      }
+    },
+    "print.action %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld件を印刷"
+          }
+        }
+      }
+    },
+    "print.batch": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一括印刷"
+          }
+        }
+      }
+    },
+    "print.batch.all %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全件（%lld件）"
+          }
+        }
+      }
+    },
+    "print.batch.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷する宛先"
+          }
+        }
+      }
+    },
+    "print.batch.unprinted %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未印刷のみ（%lld件）"
+          }
+        }
+      }
+    },
+    "print.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷する宛先がありません"
+          }
+        }
+      }
+    },
+    "print.jobName %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛名印刷 %@"
+          }
+        }
+      }
+    },
+    "print.offsetApplied %@ %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "位置調整 上下%1$@mm／左右%2$@mm"
+          }
+        }
+      }
+    },
+    "print.page %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld"
+          }
+        }
+      }
+    },
+    "print.page.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次の宛先"
+          }
+        }
+      }
+    },
+    "print.page.previous": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "前の宛先"
+          }
+        }
+      }
+    },
+    "print.pdf": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDFで書き出す"
+          }
+        }
+      }
+    },
+    "print.pdf.failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDFを書き出せませんでした"
+          }
+        }
+      }
+    },
+    "print.pdf.fileName %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛名_%@.pdf"
+          }
+        }
+      }
+    },
+    "print.pdf.pro": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDFで書き出す（Pro）"
+          }
+        }
+      }
+    },
+    "print.preview.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷プレビュー"
+          }
+        }
+      }
+    },
+    "print.result.sent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プリンタに送信し、印刷済みとして記録しました。"
+          }
+        }
+      }
+    },
+    "print.select": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択して印刷"
+          }
+        }
+      }
+    },
+    "print.select.all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべて選択"
+          }
+        }
+      }
+    },
+    "print.select.confirm %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld件をプレビュー"
+          }
+        }
+      }
+    },
+    "print.select.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択を解除"
+          }
+        }
+      }
+    },
+    "print.warning.printed %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@に印刷済みの宛先です"
+          }
+        }
+      }
+    },
+    "print.zoom.reset": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全体表示に戻す"
+          }
+        }
+      }
+    },
+    "recipients.delete.confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先を削除"
+          }
+        }
+      }
+    },
+    "recipients.delete.message %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「%@」と印刷履歴を削除します。この操作は取り消せません。"
+          }
+        }
+      }
+    },
+    "recipients.delete.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この宛先を削除しますか？"
+          }
+        }
+      }
+    },
+    "recipients.printThis": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この宛先を印刷"
+          }
+        }
+      }
+    },
+    "recipients.search.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "氏名・住所で検索"
+          }
+        }
+      }
+    },
+    "recipients.selectRecipient": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先を選択してください"
+          }
+        }
+      }
+    },
+    "recipients.selectScope": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループを選択してください"
+          }
+        }
+      }
+    },
+    "recipients.summary %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld件 ・ 未印刷 %2$lld件"
+          }
+        }
+      }
+    },
+    "sample.address1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "東京都中央区見本町1-13-3"
+          }
+        }
+      }
+    },
+    "sample.address2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サンプルハイツ203"
+          }
+        }
+      }
+    },
+    "sample.jointName": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "花子"
+          }
+        }
+      }
+    },
+    "sample.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "山田 太郎"
+          }
+        }
+      }
+    },
+    "senders.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "差出人を追加"
+          }
+        }
+      }
+    },
+    "senders.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛名面に印刷する自分の住所と氏名を登録します。自宅用・仕事用など複数登録できます。"
+          }
+        }
+      }
+    },
+    "senders.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "差出人がありません"
+          }
+        }
+      }
+    },
+    "senders.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "名前（例: 自宅）"
+          }
+        }
+      }
+    },
+    "senders.label.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "差出人を選ぶときの表示名です。印刷はされません。"
+          }
+        }
+      }
+    },
+    "senders.label.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自宅"
+          }
+        }
+      }
+    },
+    "senders.title.edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "差出人を編集"
+          }
+        }
+      }
+    },
+    "senders.title.new": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "差出人を追加"
+          }
+        }
+      }
+    },
+    "settings.about.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "広告は表示しません。宛先データはこの端末の中だけに保存され、外部に送信されることはありません。"
+          }
+        }
+      }
+    },
+    "settings.csvExport": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先をCSVで書き出す"
+          }
+        }
+      }
+    },
+    "settings.csvTemplate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSVテンプレートを書き出す"
+          }
+        }
+      }
+    },
+    "settings.data.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "書き出したCSVは、機種変更時のバックアップや、ほかの端末への取り込みに使えます。"
+          }
+        }
+      }
+    },
+    "settings.offset": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷位置の調整"
+          }
+        }
+      }
+    },
+    "settings.privacy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プライバシーポリシー"
+          }
+        }
+      }
+    },
+    "settings.pro": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro（買い切り）"
+          }
+        }
+      }
+    },
+    "settings.pro.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一度購入すると、同じApple Accountの端末で使えます。毎月・毎週の支払いは発生しません。"
+          }
+        }
+      }
+    },
+    "settings.pro.owned": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入済み"
+          }
+        }
+      }
+    },
+    "settings.resetRecords": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷記録をリセット…"
+          }
+        }
+      }
+    },
+    "settings.resetRecords.confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての印刷記録を削除"
+          }
+        }
+      }
+    },
+    "settings.resetRecords.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての宛先の「印刷済み」の記録を削除します。宛先は削除されません。"
+          }
+        }
+      }
+    },
+    "settings.resetRecords.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷記録をリセットしますか？"
+          }
+        }
+      }
+    },
+    "settings.section.about": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このアプリについて"
+          }
+        }
+      }
+    },
+    "settings.section.data": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データ"
+          }
+        }
+      }
+    },
+    "settings.section.print": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "差出人と印刷"
+          }
+        }
+      }
+    },
+    "settings.section.pro": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro"
+          }
+        }
+      }
+    },
+    "settings.senders": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "差出人プロフィール"
+          }
+        }
+      }
+    },
+    "settings.terms": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利用規約"
+          }
+        }
+      }
+    },
+    "settings.version": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バージョン"
+          }
+        }
+      }
+    },
+    "sidebar.all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての宛先"
+          }
+        }
+      }
+    },
+    "sidebar.groups": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループ"
+          }
+        }
+      }
+    },
+    "sidebar.groups.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "グループ単位で一括印刷できます。"
+          }
+        }
+      }
+    },
+    "sidebar.unprinted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未印刷"
+          }
+        }
+      }
+    },
+    "sort.created": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登録順"
+          }
+        }
+      }
+    },
+    "sort.postalCode": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "郵便番号順"
+          }
+        }
+      }
+    },
+    "sort.reading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ふりがな順"
+          }
+        }
+      }
+    },
+    "sort.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "並び順"
+          }
+        }
+      }
+    },
+    "store.buy %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@で購入"
+          }
+        }
+      }
+    },
+    "store.context.csv": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSV取り込みはProの機能です。"
+          }
+        }
+      }
+    },
+    "store.context.limit %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料版で登録できる宛先は%lld件までです。"
+          }
+        }
+      }
+    },
+    "store.context.pdf": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDF書き出しはProの機能です。印刷はこのまま無料でご利用いただけます。"
+          }
+        }
+      }
+    },
+    "store.error.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先データを開けませんでした。データは端末に残っています。アプリを最新版に更新してから、もう一度お試しください。"
+          }
+        }
+      }
+    },
+    "store.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "データを読み込めません"
+          }
+        }
+      }
+    },
+    "store.feature.csv": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSVで一括取り込み"
+          }
+        }
+      }
+    },
+    "store.feature.csv.detail": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excelなどの住所録から、まとめて登録できます"
+          }
+        }
+      }
+    },
+    "store.feature.pdf": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDFで書き出し"
+          }
+        }
+      }
+    },
+    "store.feature.pdf.detail": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛名面を保存・共有できます"
+          }
+        }
+      }
+    },
+    "store.feature.unlimited": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先を無制限に登録"
+          }
+        }
+      }
+    },
+    "store.feature.unlimited.detail %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料版は%lld件まで"
+          }
+        }
+      }
+    },
+    "store.learnMore": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Proについて"
+          }
+        }
+      }
+    },
+    "store.loadFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "価格を取得できませんでした。通信環境をご確認ください。"
+          }
+        }
+      }
+    },
+    "store.owned": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入済みです。ありがとうございます。"
+          }
+        }
+      }
+    },
+    "store.promise.freePrinting": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "印刷は無料版でも回数無制限・透かしなしでご利用いただけます。"
+          }
+        }
+      }
+    },
+    "store.promise.noAds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "広告は今後も入れません"
+          }
+        }
+      }
+    },
+    "store.promise.oneTime": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "これは買い切りです。毎月・毎週の支払いは発生しません"
+          }
+        }
+      }
+    },
+    "store.purchase.failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入を完了できませんでした。"
+          }
+        }
+      }
+    },
+    "store.purchase.pending": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入の承認を待っています。承認されると自動で有効になります。"
+          }
+        }
+      }
+    },
+    "store.purchase.success": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Proを購入しました。ありがとうございます。"
+          }
+        }
+      }
+    },
+    "store.restore": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入の復元"
+          }
+        }
+      }
+    },
+    "store.restore.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "復元できる購入が見つかりませんでした。"
+          }
+        }
+      }
+    },
+    "store.restore.success": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入を復元しました。"
+          }
+        }
+      }
+    },
+    "store.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一度の購入で、ずっと使えます。"
+          }
+        }
+      }
+    },
+    "store.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro（買い切り）"
+          }
+        }
+      }
+    },
+    "tab.layout": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "レイアウト"
+          }
+        }
+      }
+    },
+    "tab.recipients": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "宛先"
+          }
+        }
+      }
+    },
+    "tab.settings": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定"
+          }
+        }
+      }
+    },
+    "writing.horizontal": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "横書き"
+          }
+        }
+      }
+    },
+    "writing.vertical": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "縦書き"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

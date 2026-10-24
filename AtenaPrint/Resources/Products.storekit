@@ -1,0 +1,38 @@
+{
+  "identifier" : "5C3E4C7A-8B41-4F2E-9C1A-0F7D2B6E1A11",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "800",
+      "familyShareable" : true,
+      "internalID" : "6740000001",
+      "localizations" : [
+        {
+          "description" : "宛先無制限・CSV取り込み・PDF出力（買い切り）",
+          "displayName" : "Pro（買い切り）",
+          "locale" : "ja"
+        }
+      ],
+      "productID" : "com.example.AtenaPrint.pro",
+      "referenceName" : "Pro",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "ja",
+    "_storefront" : "JPN",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
