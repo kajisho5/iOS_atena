@@ -58,29 +58,16 @@ python3 tools/check_strings.py   # String Catalog とコードのキーの整合
 - Linux: `AtenaCore` のテストと、String Catalog のキー整合チェック
 - macOS（`macos-26` ランナー）: iOS シミュレータでのビルドとテスト。実フォントで描いた宛名面の PNG を `snapshots` という成果物に保存する
 
-### TestFlight への配信（GitHub Actions）
+### TestFlight への配信（runway）
 
-Runway のほかに、`.github/workflows/testflight.yml` からも TestFlight に配信できる。手動実行のみ（push では動かない）。App Store Connect API キーを使い、Xcode のクラウド署名で署名してアップロードする。
+`.github/workflows/testflight.yml` は、共通ワークフロー [kajisho5/runway](https://github.com/kajisho5/runway) の `apple-testflight.yml` を呼ぶだけの設定。署名・ビルド番号・アップロードは runway が行う（手順と Secrets は runway の README）。
 
-初回の設定:
+初回だけ:
 
-1. App Store Connect → ユーザとアクセス → 統合 → App Store Connect API（チームキー）で API キーを作る。アクセスは **Admin**（クラウド署名の配布用証明書は Admin 権限でないと使えないため）。`.p8` は作成直後に1回だけダウンロードできる。
-2. GitHub のリポジトリ → Settings → Secrets and variables → Actions → New repository secret で、次の4つを登録する。
+1. runway の `repos.txt` に `kajisho5/iOS_atena` を1行足す（保存すると sync-secrets が Secrets を配る）。
+2. App Store Connect に Bundle ID `com.seventhwell.AtenaPrint` のアプリ記録と、TestFlight の内部テストグループがあることを確認する。
 
-| 名前 | 値 |
-|---|---|
-| `ASC_KEY_ID` | API キーの「キーID」 |
-| `ASC_ISSUER_ID` | API キー一覧の上にある「Issuer ID」 |
-| `ASC_KEY_P8` | ダウンロードした `AuthKey_XXXXXXXXXX.p8` をテキストエディタで開いた全文（`-----BEGIN PRIVATE KEY-----` から `-----END PRIVATE KEY-----` まで） |
-| `APPLE_TEAM_ID` | Apple Developer → Membership details の Team ID（10文字） |
-
-配信のしかた:
-
-1. GitHub の Actions タブ → 左の「TestFlight」→ Run workflow。ブランチは `main` を選ぶ。
-2. `build_number` は空なら実行回数の番号になる。Runway などで同じバージョンにもっと大きいビルド番号を上げていた場合は、それより大きい数を入れる。
-3. 成功すると、App Store Connect の処理が終わったあと TestFlight にビルドが表示される。
-
-`.p8` ファイルはリポジトリにコミットしない（`.gitignore` で除外済み）。ワークフローは実行中だけ一時フォルダにキーを書き出し、最後に削除する。
+配信: Actions タブ → testflight → Run workflow（`v*` のタグを push しても動く）。Xcode 27.1（`xcode-27` ランナー）でビルドする。
 
 ## 操作のしかた（iPhone / iPad）
 
