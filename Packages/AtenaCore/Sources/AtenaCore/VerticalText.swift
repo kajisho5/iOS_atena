@@ -54,3 +54,15 @@ public enum VerticalTextNormalizer {
         return TextNormalization.halfWidthDigits(String(character)).first.map { $0.isASCII && $0.isNumber } ?? false
     }
 }
+
+/// Cell sizes used when setting vertical text one character per cell.
+public enum VerticalMetrics {
+    /// Advance of one character in em units: an ASCII space is a half-em gap, everything else a full cell.
+    public static func advance(of character: Character) -> Double {
+        character == " " ? 0.5 : 1.0
+    }
+
+    public static func advance(of text: String) -> Double {
+        text.reduce(0) { $0 + advance(of: $1) }
+    }
+}

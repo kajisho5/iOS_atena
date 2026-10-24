@@ -8,7 +8,7 @@ on:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -66,10 +66,35 @@ jobs:
             -project AtenaPrint.xcodeproj \
             -scheme AtenaPrint \
             -destination "id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath build/DerivedData \
             -resultBundlePath TestResults.xcresult \
             CODE_SIGNING_ALLOWED=NO > xcodebuild.log 2>&1
           status=$?
           grep -E "error:|warning: .*(isolat|Sendable|concurrency)|Test (Suite|Case|run)|✔|✘|\*\* " xcodebuild.log | sort -u | head -400
+          exit $status
+      - name: Screen snapshots on iPad
+        env:
+          TEST_RUNNER_SNAPSHOT_DIR: ${{ github.workspace }}/snapshots
+        run: |
+          IPAD=$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]
+          for runtime in sorted((r for r in devices if "iOS" in r), reverse=True):
+              for d in devices[runtime]:
+                  if d["name"].startswith("iPad") and d.get("isAvailable"):
+                      print(d["udid"]); sys.exit(0)
+          ')
+          xcrun simctl list devices | grep "$IPAD"
+          set +e
+          xcodebuild test-without-building \
+            -project AtenaPrint.xcodeproj \
+            -scheme AtenaPrint \
+            -destination "id=$IPAD" \
+            -derivedDataPath build/DerivedData \
+            -only-testing:AtenaPrintTests/ScreenSnapshotTests \
+            CODE_SIGNING_ALLOWED=NO > xcodebuild-ipad.log 2>&1
+          status=$?
+          grep -E "error:|Test (Suite|Case|run)|✔|✘|\*\* " xcodebuild-ipad.log | sort -u | head -100
           exit $status
       - name: Summarize errors
         if: failure()

@@ -1,3 +1,4 @@
+import Foundation
 import SwiftData
 
 /// First released schema. Model changes must add a new `VersionedSchema` and a migration stage
@@ -19,6 +20,10 @@ enum PersistenceController {
     /// Creates the container. The store lives in Application Support (included in device backups)
     /// and is never synced to CloudKit.
     static func makeContainer(inMemory: Bool = false) throws -> ModelContainer {
+        if !inMemory {
+            // Core Data does not create Application Support on first launch; create it up front.
+            try FileManager.default.createDirectory(at: .applicationSupportDirectory, withIntermediateDirectories: true)
+        }
         let schema = Schema(versionedSchema: SchemaV1.self)
         let configuration = ModelConfiguration(
             AppConstants.storeName,

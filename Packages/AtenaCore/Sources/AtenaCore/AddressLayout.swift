@@ -260,8 +260,8 @@ public struct AddressLayoutEngine {
         }
 
         // Name block, centered.
-        let mainText = normalizeName(content.name) + "　" + content.honorific
-        let jointTexts = content.jointNames.filter { !$0.isEmpty }.map { $0 + "　" + content.honorific }
+        let mainText = normalizeName(content.name) + " " + content.honorific
+        let jointTexts = content.jointNames.filter { !$0.isEmpty }.map { $0 + " " + content.honorific }
         let familyOffsetUnits = familyPrefixUnits(content.name, vertical: false)
         let maxUnits = max(advance(mainText, tracking: Self.nameTracking, vertical: false),
                            familyOffsetUnits + (jointTexts.map { advance($0, tracking: Self.nameTracking, vertical: false) }.max() ?? 0))
@@ -393,8 +393,8 @@ public struct AddressLayoutEngine {
     /// honorific sits at the same height.
     func nameColumns(name: String, jointNames: [String], honorific: String, top: Double, bottom: Double, areaWidth: Double,
                      maxSize: Double, minSize: Double) -> ColumnFit {
-        let mainText = normalizeName(name) + "　" + honorific
-        let joints = jointNames.filter { !$0.isEmpty }.map { $0 + "　" + honorific }
+        let mainText = normalizeName(name) + " " + honorific
+        let joints = jointNames.filter { !$0.isEmpty }.map { $0 + " " + honorific }
         let columnCount = Double(1 + joints.count)
         let mainUnits = advance(mainText, tracking: Self.nameTracking)
         let sizeForHeight = (bottom - top) / max(mainUnits, 1)
@@ -460,18 +460,18 @@ public struct AddressLayoutEngine {
         advance(text, tracking: tracking) * size
     }
 
-    /// "山田 太郎" → "山田　太郎" (ideographic space between family and given names).
+    /// "山田　太郎" → "山田 太郎". A single ASCII space, set as a half-em gap, separates family and given names.
     func normalizeName(_ name: String) -> String {
         TextNormalization.trimmed(name)
             .split(whereSeparator: { $0 == " " || $0 == "\u{3000}" })
-            .joined(separator: "\u{3000}")
+            .joined(separator: " ")
     }
 
     /// Width of "family name + space" in em units, used to align joint names under the given name.
     func familyPrefixUnits(_ name: String, vertical: Bool = true) -> Double {
         let parts = TextNormalization.trimmed(name).split(whereSeparator: { $0 == " " || $0 == "\u{3000}" })
         guard parts.count > 1, let family = parts.first else { return 0 }
-        return advance(String(family) + "\u{3000}", tracking: Self.nameTracking, vertical: vertical) + Self.nameTracking
+        return advance(String(family) + " ", tracking: Self.nameTracking, vertical: vertical) + Self.nameTracking
     }
 
     /// Splits `text` so that the head fits in `maxUnits`, preferring a break after an

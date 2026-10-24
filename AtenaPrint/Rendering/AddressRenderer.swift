@@ -105,6 +105,11 @@ nonisolated struct AddressRenderer: Sendable {
         let centerX = CGFloat(run.frame.midX)
         var cellTop = CGFloat(run.frame.y)
         for character in run.text {
+            let cell = size * CGFloat(VerticalMetrics.advance(of: character))
+            if character == " " {
+                cellTop += cell + CGFloat(run.tracking)
+                continue
+            }
             let line = makeLine(String(character), font: ctFont, color: color, tracking: 0)
             let width = CGFloat(CTLineGetTypographicBounds(line, nil, nil, nil))
             let cellCenterY = cellTop + size / 2
@@ -122,7 +127,7 @@ nonisolated struct AddressRenderer: Sendable {
                 draw(line, x: -width / 2, baseline: centerOffset, in: context)
                 context.restoreGState()
             }
-            cellTop += size + CGFloat(run.tracking)
+            cellTop += cell + CGFloat(run.tracking)
         }
     }
 

@@ -40,7 +40,7 @@ struct FixedWidthMeasurer: TextMeasuring {
     @Test func verticalNameColumnsAlignHonorifics() {
         let result = engine.layout(content, options: LayoutOptions(paper: .hagaki, writingMode: .vertical))
         let names = result.runs.filter { $0.role == .recipientName }
-        #expect(names.map(\.text) == ["山田　太郎　様", "花子　様"])
+        #expect(names.map(\.text) == ["山田 太郎 様", "花子 様"])
         #expect(abs(names[0].frame.maxY - names[1].frame.maxY) < 0.0001)
         #expect(names[1].frame.x < names[0].frame.x)
     }
