@@ -42,6 +42,7 @@ struct RecipientListView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.printRequestHandler) private var requestPrint
     @Environment(RecipientAddFlow.self) private var addFlow
+    @Environment(StoreService.self) private var store
     @Query(sort: [SortDescriptor(\Recipient.sortKey), SortDescriptor(\Recipient.createdAt)]) private var allRecipients: [Recipient]
 
     @State private var searchText = ""
@@ -93,6 +94,10 @@ struct RecipientListView: View {
         return result
     }
 
+    private var freeRemainingCount: Int {
+        FreeTier.remainingSlots(currentCount: allRecipients.count, isPro: false)
+    }
+
     private var unprintedInScope: [Recipient] {
         scopedRecipients.filter { !$0.isPrinted(in: group) }
     }
@@ -133,6 +138,11 @@ struct RecipientListView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("recipients.summary \(scopedRecipients.count) \(unprintedInScope.count)")
                             .foregroundStyle(Color.secondaryText)
+                        // Show the free limit before the user runs into it (HIG: make limits visible).
+                        if !store.isPro {
+                            Text("recipients.freeRemaining \(freeRemainingCount)")
+                                .foregroundStyle(Color.secondaryText)
+                        }
                         if scope != .unprinted {
                             Picker("filter.title", selection: $filter) {
                                 ForEach(PrintFilter.allCases) { filter in
