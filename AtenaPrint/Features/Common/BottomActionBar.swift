@@ -2,8 +2,11 @@ import SwiftUI
 
 /// Primary actions placed at the bottom of the screen, within thumb reach on iPhone.
 /// Used with `.safeAreaInset(edge: .bottom)` so content scrolls above it.
+/// In regular width the buttons hug their labels at the trailing edge, so they stay clear of
+/// the fold of iPhone Duo's inner display (Apple: keep interactive elements out of the curve region).
 struct BottomActionBar<Content: View>: View {
     @ViewBuilder let content: Content
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
         VStack(spacing: 10) {
@@ -12,8 +15,8 @@ struct BottomActionBar<Content: View>: View {
         .padding(.horizontal, 16)
         .padding(.top, 10)
         .padding(.bottom, 8)
-        .frame(maxWidth: 600)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: horizontalSizeClass == .regular ? nil : 600)
+        .frame(maxWidth: .infinity, alignment: horizontalSizeClass == .regular ? .trailing : .center)
         .background {
             Rectangle()
                 .fill(.bar)
@@ -23,11 +26,14 @@ struct BottomActionBar<Content: View>: View {
     }
 }
 
-/// Full-width prominent button used inside `BottomActionBar`.
+/// Prominent button label used inside `BottomActionBar`: full width in compact width, label-sized in regular width.
 struct PrimaryActionButtonStyle: ViewModifier {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
     func body(content: Content) -> some View {
         content
-            .frame(maxWidth: .infinity, minHeight: 44)
+            .padding(.horizontal, horizontalSizeClass == .regular ? 24 : 0)
+            .frame(maxWidth: horizontalSizeClass == .regular ? nil : .infinity, minHeight: 44)
     }
 }
 

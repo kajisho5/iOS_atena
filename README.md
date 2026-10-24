@@ -58,6 +58,17 @@ python3 tools/check_strings.py   # String Catalog とコードのキーの整合
 - Linux: `AtenaCore` のテストと、String Catalog のキー整合チェック
 - macOS（`macos-26` ランナー）: iOS シミュレータでのビルドとテスト。実フォントで描いた宛名面の PNG を `snapshots` という成果物に保存する
 
+### TestFlight への配信（runway）
+
+`.github/workflows/testflight.yml` は、共通ワークフロー [kajisho5/runway](https://github.com/kajisho5/runway) の `apple-testflight.yml` を呼ぶだけの設定。署名・ビルド番号・アップロードは runway が行う（手順と Secrets は runway の README）。
+
+初回だけ:
+
+1. runway の `repos.txt` に `kajisho5/iOS_atena` を1行足す（保存すると sync-secrets が Secrets を配る）。
+2. App Store Connect に Bundle ID `com.seventhwell.AtenaPrint` のアプリ記録と、TestFlight の内部テストグループがあることを確認する。
+
+配信: Actions タブ → testflight → Run workflow（`v*` のタグを push しても動く）。Xcode 27.1（`xcode-27` ランナー）でビルドする。
+
 ## 操作のしかた（iPhone / iPad）
 
 - iPhone では、主な操作（宛先を追加、一括印刷、この宛先を印刷、取り込む、印刷）を画面の下にまとめている。

@@ -1,0 +1,24 @@
+# TestFlight への配信は kajisho5/runway の共通ワークフローに任せる（templates/testflight.yml から作成）。
+# Secrets は runway の sync-secrets が配る（runway の repos.txt に kajisho5/iOS_atena を足す）。
+name: testflight
+
+on:
+  workflow_dispatch:      # GitHub の Actions タブ／iPhone の GitHub アプリから手動実行
+  push:
+    tags: ["v*"]          # v1.0.0 などのタグを push しても実行
+
+permissions:
+  contents: read
+
+jobs:
+  ios:
+    uses: kajisho5/runway/.github/workflows/apple-testflight.yml@main
+    with:
+      bundle_id: com.seventhwell.AtenaPrint
+      project: AtenaPrint.xcodeproj
+      scheme: AtenaPrint
+      # iOS 27.1 SDK でビルドすると iPhone Duo の画面全体を使うレイアウトになる（Apple の iPhone Duo の案内）。
+      # xcode-27 ランナー（プレビュー）に Xcode 27.1 が入っていることを CI で確認済み。
+      xcode: "27.1"
+      runner: xcode-27
+    secrets: inherit

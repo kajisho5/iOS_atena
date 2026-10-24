@@ -6,7 +6,8 @@
 | `mockups/iphone-1〜4.png` | iPhone 6.9インチ用（1290×2796）のスクリーンショット素材 |
 | `mockups/ipad-1〜2.png` | iPad 13インチ用（2752×2064、横向き）の素材 |
 | `mockups/mac-1.png` | Mac（Designed for iPad）のウインドウ表示のモック（2880×1800） |
-| `mockups/iphone-duo.png` / `iphone-duo-dark.png` | iPhone 2台並び（ライト / ダーク） |
+| `mockups/iphone-duo.png` / `iphone-duo-preview.png` / `iphone-duo-outer.png` | iPhone Duo（折りたたみ）。iPhone Duo シミュレータ（Xcode 27.1）で撮影。開いた状態は CI で duo-hinge を使ってシミュレータを開いて撮影 |
+| `mockups/iphone-pair.png` / `iphone-pair-dark.png` | iPhone 2台並び（ライト / ダーク） |
 | `screenshots/` | 元の画面キャプチャ（CI のシミュレータで撮影。架空のサンプルデータ） |
 
 ## 作り直し方

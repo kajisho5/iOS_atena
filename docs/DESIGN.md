@@ -5,6 +5,8 @@
 > 画面デザイン（Q9）: [`design/01-iphone-core-light.svg`](./design/01-iphone-core-light.svg) ・ [`design/02-iphone-states.svg`](./design/02-iphone-states.svg) ・ [`design/03-ipad-landscape.svg`](./design/03-ipad-landscape.svg)（生成スクリプト: `tools/gen_design_svgs.py`）
 >
 > v0.2 変更点: 画面の向き・iPad マルチタスク要件を追加（§4.3、S07/S09、§9、Q10）
+> v0.8 変更点: iPhone Duo を Apple の開発者向け案内に合わせて見直し（§13.12）
+> v0.7 変更点: iPhone Duo（折りたたみ）への対応方針と確認事項を追加（§13.12）
 > v0.6 変更点: 標準対応 §13.8〜13.11（キーボード・起動画面・下部の主要操作・シートの一貫性・iPad のポインタとキーボード）を追加
 > v0.5 変更点: CSV取り込みを無料版でも使えるようにした（宛先の合計10件まで）。購入前に取り込み結果を確認できるようにするため（ユーザー指示）
 > v0.3 変更点: Q1〜Q10 を全て A で確定（§11）。ふりがな欄を追加（Q5=A）。標準対応要件（§13）を追加。新規確認事項 Q11・Q12
@@ -512,3 +514,20 @@ iOS_atena/
 | キャンセル ／ 閉じる | Esc |
 | 前の宛先 ／ 次の宛先（印刷プレビュー） | ← ／ → |
 | 取り込む ／ プレビュー（確定） | Return（⌘Return） |
+
+### 13.12 iPhone Duo（折りたたみ）（v0.8）
+Apple の開発者向け案内に沿って対応する。出典: Tech Talk「Prepare your app for iPhone Duo」https://developer.apple.com/videos/play/tech-talks/111461/ 、「Design for iPhone Duo」https://developer.apple.com/videos/play/tech-talks/111466/ 、HIG「Designing for iPhone Duo」https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo
+
+| Apple の案内 | このアプリでの対応 |
+|---|---|
+| 外側の画面は横 compact、内側の画面は縦横 regular。レイアウトはサイズクラスで判断し、端末の種類（Idiom）や画面の向きで判断しない | `horizontalSizeClass` だけで切り替えている。`userInterfaceIdiom`・向き・`UIScreen.main` はアプリのコードで使っていない |
+| 内側の画面は、アプリが指定した対応向きを無視する。外側の画面は通常の iPhone と同じく対応向きに従う | iPhone は縦向き固定のまま（ユーザー指示）。内側の画面では横長の regular レイアウト（iPad と同じ分割表示）になる |
+| 折り目付近（カーブの部分）に操作できる部品を置かない。スクロールする内容は置いてよい。標準のシート・アラート・メニュー・ツールバーは自動で避ける | 標準部品を使う。独自の下部ボタン（`BottomActionBar`）は、幅 regular のときは画面全幅に伸ばさず右端にまとめ、折り目にかからないようにした |
+| 固定幅や特定の画面サイズに合わせた数値を使わない。レイアウトマージンと安全領域を使う | 固定幅は使っていない（用紙プレビューは表示領域に合わせて拡縮） |
+| iOS 27.1 SDK でビルドすると画面の端まで使い、ナビゲーションやツールバーのボタンは縦の帯に並ぶ。独自のバーは `ReservedRegion`（SwiftUI）で領域を確保できる | CI に Xcode 27.1 と iPhone Duo シミュレータで撮影するジョブを追加した。独自の下部バーへの `ReservedRegion` の適用は、シミュレータの撮影結果を見て判断する |
+| `UIScreen.main` は2画面の端末ではあいまいなので使わない | アプリでは未使用 |
+
+- シミュレータでの実測（Xcode 27.1、閉じた状態で起動）: 外側の画面 466×678 pt、@3x、幅 compact・高さ regular、安全領域は右 84 pt・下 34 pt。タブバーと戻るボタンは右側の縦の帯に移り、独自の下部バーは安全領域に従ってその左に収まった。
+- 画面キャプチャは iPhone Duo シミュレータの実際の画面サイズ・倍率・サイズクラスで撮る。Xcode 27.1 には開閉のコマンドがない。duoctl はランナー上で有効な画面を検出できず失敗した（4回）。そこで CI では tosbaha/duo-fold-control（MIT、https://github.com/tosbaha/duo-fold-control ）の duo-hinge でシミュレータを開いて内側の画面を撮る（撮影成功。内側の画面は 951×669 pt・@3x・縦横 regular、安全領域は右 84 pt・下 34 pt で、開いた状態でもタブは右側の縦の帯に並んだ。Device Hub と同じ開閉イベントを送る。非公開の仕組みを使うため Xcode の更新で動かなくなる可能性がある。CI 専用・コミット固定・アプリには含めない。ユーザー承認済み）。なお `devicectl` が報告したシミュレータの内側の画面は 2007×2853 px・@3x（横向き時 951×669 pt）で、以前に記載した公表値 1878×2670 px と一致しない（どちらが正しいかは未確認）。
+- TestFlight 配信ワークフローも Xcode 27.1（iOS 27.1 SDK）でビルドする。
+- **要確認（TestFlight の実機で）**: 開閉時のレイアウトの切り替え、半開き（本のように持つ・テーブルに置く）での折り目の回避、外側の画面で縦の帯に並ぶボタンと独自の下部バーの重なり。
