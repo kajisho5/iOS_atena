@@ -146,13 +146,25 @@ jobs:
           ')
           echo "udid=$UDID" >> "$GITHUB_OUTPUT"
           xcrun simctl list devices | grep "$UDID"
-      - name: Build and capture (folded, outer display)
+      # Xcode 27.1 has no supported command to fold or unfold the simulator (only Device Hub's hinge control).
+      # duoctl (MIT, https://github.com/skarol/duoctl) sends the same hinge event; it is used in CI only,
+      # pinned to a reviewed commit, and never shipped in the app. Like duoctl's CI example, the hinge is
+      # set right after a fresh boot, before xcodebuild runs.
+      - name: Fetch duoctl and boot the simulator
+        run: |
+          git init -q "$RUNNER_TEMP/duoctl"
+          git -C "$RUNNER_TEMP/duoctl" fetch -q --depth 1 https://github.com/skarol/duoctl efd5e3d62fd85f555057b429deafcc9c81123454
+          git -C "$RUNNER_TEMP/duoctl" checkout -q FETCH_HEAD
+          xcrun simctl boot "${{ steps.sim.outputs.udid }}"
+          xcrun simctl bootstatus "${{ steps.sim.outputs.udid }}" -b
+      - name: Build and capture (unfolded, inner display)
         env:
+          DUOCTL_UDID: ${{ steps.sim.outputs.udid }}
           TEST_RUNNER_SNAPSHOT_DIR: ${{ github.workspace }}/snapshots-duo
           TEST_RUNNER_SNAPSHOT_PROFILE: duo
         run: |
-          xcrun simctl boot "${{ steps.sim.outputs.udid }}" || true
-          xcrun simctl bootstatus "${{ steps.sim.outputs.udid }}"
+          "$RUNNER_TEMP/duoctl/bin/duoctl" open
+          "$RUNNER_TEMP/duoctl/bin/duoctl" state
           set +e
           xcodebuild test \
             -project AtenaPrint.xcodeproj \
@@ -165,23 +177,14 @@ jobs:
           grep -E "error:|warning: .*(deprecat|isolat|Sendable)|Test (Suite|Case|run)|✔|✘|\*\* " xcodebuild-duo.log | sort -u | head -200
           cat snapshots-duo/diagnostics-duo-*.txt 2>/dev/null
           exit $status
-      # Xcode 27.1 has no supported command to unfold the simulator (only Device Hub's hinge control).
-      # duoctl (MIT, https://github.com/skarol/duoctl) sends the same hinge event; it is used in CI only,
-      # pinned to a reviewed commit, and never shipped in the app.
-      - name: Unfold the simulator (duoctl)
+      - name: Capture (folded, outer display)
         env:
           DUOCTL_UDID: ${{ steps.sim.outputs.udid }}
-        run: |
-          git init -q "$RUNNER_TEMP/duoctl"
-          git -C "$RUNNER_TEMP/duoctl" fetch -q --depth 1 https://github.com/skarol/duoctl efd5e3d62fd85f555057b429deafcc9c81123454
-          git -C "$RUNNER_TEMP/duoctl" checkout -q FETCH_HEAD
-          "$RUNNER_TEMP/duoctl/bin/duoctl" open
-          "$RUNNER_TEMP/duoctl/bin/duoctl" state
-      - name: Capture (unfolded, inner display)
-        env:
           TEST_RUNNER_SNAPSHOT_DIR: ${{ github.workspace }}/snapshots-duo
           TEST_RUNNER_SNAPSHOT_PROFILE: duo
         run: |
+          xcrun simctl bootstatus "${{ steps.sim.outputs.udid }}" -b
+          "$RUNNER_TEMP/duoctl/bin/duoctl" close || echo "duoctl close failed; the simulator may already be folded"
           set +e
           xcodebuild test-without-building \
             -project AtenaPrint.xcodeproj \
@@ -189,10 +192,10 @@ jobs:
             -destination "id=${{ steps.sim.outputs.udid }}" \
             -derivedDataPath build/DerivedData \
             -only-testing:AtenaPrintTests/ScreenSnapshotTests \
-            CODE_SIGNING_ALLOWED=NO > xcodebuild-duo-inner.log 2>&1
+            CODE_SIGNING_ALLOWED=NO > xcodebuild-duo-outer.log 2>&1
           status=$?
-          grep -E "error:|Test (Suite|Case|run)|✔|✘|\*\* " xcodebuild-duo-inner.log | sort -u | head -100
-          cat snapshots-duo/diagnostics-duo-inner.txt 2>/dev/null
+          grep -E "error:|Test (Suite|Case|run)|✔|✘|\*\* " xcodebuild-duo-outer.log | sort -u | head -100
+          cat snapshots-duo/diagnostics-duo-*.txt 2>/dev/null
           ls snapshots-duo
           exit $status
       - name: Upload snapshots
