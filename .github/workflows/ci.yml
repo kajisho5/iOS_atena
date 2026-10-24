@@ -24,10 +24,11 @@ jobs:
         run: swift --version
       - name: Test AtenaCore
         run: swift test --package-path Packages/AtenaCore
-      - name: Check string catalog
+      - name: Check string catalog and project file list
         run: |
           apt-get update -qq && apt-get install -y -qq python3 > /dev/null
           python3 tools/check_strings.py
+          python3 tools/check_project.py
 
   ios:
     name: Build and test (iOS Simulator)
