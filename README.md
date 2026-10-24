@@ -93,7 +93,7 @@ python3 tools/check_strings.py   # String Catalog とコードのキーの整合
 
 1. App Store Connect でアプリを作成し、「アプリ内課金」で **非消耗型** を1つ作る。
    - 参照名: `Pro`
-   - 製品ID: `AppConstants.proProductID` と同じ値（初期値は `com.example.AtenaPrint.pro`）
+   - 製品ID: `AppConstants.proProductID` と同じ値（初期値は `com.seventhwell.AtenaPrint.pro`）
    - 価格: 800円。日本円の価格ポイントとして選べるかは、App Store Connect の価格設定画面で確認すること
    - 表示名・説明: 下の例を参照。「無料お試し」「期間限定」などの表現は使わない
 2. ファミリー共有を有効にする（設計上の決定事項 Q6）。
@@ -121,15 +121,15 @@ python3 tools/check_strings.py   # String Catalog とコードのキーの整合
 
 | 場所 | 項目 | 初期値 | 内容 |
 |---|---|---|---|
-| `AtenaPrint/App/AppConstants.swift` | `proProductID` | `com.example.AtenaPrint.pro` | App Store Connect の製品ID |
+| `AtenaPrint/App/AppConstants.swift` | `proProductID` | `com.seventhwell.AtenaPrint.pro` | App Store Connect の製品ID |
 | 〃 | `privacyPolicyURL` | `https://example.com/atena-print/privacy` | プライバシーポリシーの公開URL |
 | 〃 | `termsOfUseURL` | `https://example.com/atena-print/terms` | 利用規約の公開URL |
 | 〃 | `freeRecipientLimit` | `10` | 無料版の登録上限（`AtenaCore` の `FreeTier.recipientLimit` と一致させる。テストで確認している） |
 | 〃 | `reviewRequestThreshold` | `5` | この回数を超えて印刷が成功した後、1回だけレビューを依頼する |
 | 〃 | `storeName` | `AtenaPrint` | SwiftData のストア名。**リリース後は変更しない**（既存データが読めなくなる） |
-| `project.yml` | `PRODUCT_BUNDLE_IDENTIFIER` | `com.example.AtenaPrint` | バンドルID。変更後に `xcodegen generate` |
+| `project.yml` | `PRODUCT_BUNDLE_IDENTIFIER` | `com.seventhwell.AtenaPrint` | バンドルID。変更後に `xcodegen generate` |
 | 〃 | `DEVELOPMENT_TEAM` | 空 | 署名チーム（Xcode 上で設定してもよい） |
-| `AtenaPrint/Resources/Products.storekit` | `productID` | `com.example.AtenaPrint.pro` | ローカル課金テスト用。`proProductID` と一致させる |
+| `AtenaPrint/Resources/Products.storekit` | `productID` | `com.seventhwell.AtenaPrint.pro` | ローカル課金テスト用。`proProductID` と一致させる |
 
 秘密情報（APIキー、証明書、プロビジョニングプロファイル）はリポジトリに含めない。`.gitignore` で主な拡張子を除外している。
 

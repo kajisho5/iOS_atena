@@ -25,7 +25,7 @@
           "locale" : "ja_JP"
         }
       ],
-      "productID" : "com.example.AtenaPrint.pro",
+      "productID" : "com.seventhwell.AtenaPrint.pro",
       "referenceName" : "Pro",
       "type" : "NonConsumable"
     }

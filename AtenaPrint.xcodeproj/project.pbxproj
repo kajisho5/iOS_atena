@@ -519,7 +519,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.AtenaPrint;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seventhwell.AtenaPrint;
 				PRODUCT_NAME = AtenaPrint;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
@@ -541,7 +541,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.AtenaPrintTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seventhwell.AtenaPrintTests;
 				SDKROOT = iphoneos;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -696,7 +696,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.AtenaPrint;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seventhwell.AtenaPrint;
 				PRODUCT_NAME = AtenaPrint;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
@@ -718,7 +718,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.AtenaPrintTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seventhwell.AtenaPrintTests;
 				SDKROOT = iphoneos;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;

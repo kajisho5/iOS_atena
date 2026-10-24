@@ -2,7 +2,7 @@
 
 ## 前提（ユーザー確認済み）
 - 返答は日本語で行う。
-- Apple Developer Program には登録済み。
+- Apple Developer Program には登録済み。バンドルIDは `com.seventhwell.AtenaPrint`、課金の製品IDは `com.seventhwell.AtenaPrint.pro`。
 - 実機テストは TestFlight で行う。GitHub と連携した Runway から TestFlight に配信できる。
   - 実機確認が必要な項目は「TestFlight で確認」として扱い、「Mac で Xcode から実機に入れる」前提の提案はしない。
 

@@ -224,7 +224,7 @@ iOS_atena/
 | CSV取り込み | ○（宛先の合計10件まで。取り込み前の確認画面は全件表示） | ○（件数無制限） |
 | PDF出力 | × | ○ |
 
-- 商品: 非消耗型 1点、`AppConstants.proProductID`（既定 `com.example.atenaprint.pro` を README で差し替え指示）
+- 商品: 非消耗型 1点、`AppConstants.proProductID`（`com.seventhwell.AtenaPrint.pro`）
 - **Paywall を出すタイミング（能動操作のみ）**:
   - 11件目の宛先を保存しようとした時（保存ボタン押下時。入力中は出さない）
   - CSV取り込みの確認画面・結果画面で、無料版の上限を超えた行があるときに表示する「Proについて」ボタンを押した時（v0.5）

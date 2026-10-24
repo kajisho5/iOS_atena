@@ -1,6 +1,6 @@
 name: AtenaPrint
 options:
-  bundleIdPrefix: com.example
+  bundleIdPrefix: com.seventhwell
   developmentLanguage: ja
   deploymentTarget:
     iOS: "17.0"
@@ -53,7 +53,7 @@ targets:
         NSContactsUsageDescription: 宛名印刷のために連絡先へアクセスします。連絡先の内容が外部に送信されることはありません
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.AtenaPrint
+        PRODUCT_BUNDLE_IDENTIFIER: com.seventhwell.AtenaPrint
         PRODUCT_NAME: AtenaPrint
         TARGETED_DEVICE_FAMILY: "1,2"
         SUPPORTS_MACCATALYST: NO
@@ -78,7 +78,7 @@ targets:
       - target: AtenaPrint
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.AtenaPrintTests
+        PRODUCT_BUNDLE_IDENTIFIER: com.seventhwell.AtenaPrintTests
         GENERATE_INFOPLIST_FILE: YES
         SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
         SWIFT_APPROACHABLE_CONCURRENCY: YES

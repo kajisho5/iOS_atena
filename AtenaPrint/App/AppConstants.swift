@@ -3,7 +3,7 @@ import Foundation
 /// Values that must be replaced before release. See README "差し替えが必要な定数".
 enum AppConstants {
     /// Non-consumable in-app purchase product ID registered in App Store Connect.
-    static let proProductID = "com.example.AtenaPrint.pro"
+    static let proProductID = "com.seventhwell.AtenaPrint.pro"
 
     /// Public URL of the privacy policy.
     static let privacyPolicyURL = URL(string: "https://example.com/atena-print/privacy")!
