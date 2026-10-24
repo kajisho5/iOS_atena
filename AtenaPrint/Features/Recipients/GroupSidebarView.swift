@@ -5,6 +5,7 @@ struct GroupSidebarView: View {
     @Binding var selection: RecipientScope?
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Query(sort: \RecipientGroup.sortOrder) private var groups: [RecipientGroup]
     @Query private var recipients: [Recipient]
 
@@ -55,9 +56,18 @@ struct GroupSidebarView: View {
             }
         }
         .navigationTitle(Text("tab.recipients"))
+        .safeAreaInset(edge: .bottom) {
+            if horizontalSizeClass == .compact {
+                BottomActionBar {
+                    RecipientAddMenu(targetGroup: nil, style: .bar)
+                }
+            }
+        }
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                RecipientAddMenu(targetGroup: selection?.group)
+            if horizontalSizeClass != .compact {
+                ToolbarItem(placement: .primaryAction) {
+                    RecipientAddMenu(targetGroup: selection?.group)
+                }
             }
             ToolbarItem(placement: .secondaryAction) {
                 EditButton()

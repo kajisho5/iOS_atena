@@ -71,17 +71,36 @@ struct CSVImportView: View {
             .navigationTitle(result == nil ? Text("csv.mapping.title") : Text("csv.result.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if result == nil {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("common.cancel") { dismiss() }
-                    }
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("csv.import \(importCount)") { performImport() }
-                            .disabled(importCount == 0 || mapping[.name] == nil)
-                    }
-                } else {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("common.done") { dismiss() }
+                // Every sheet is dismissed from the top-leading corner.
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(result == nil ? LocalizedStringKey("common.cancel") : LocalizedStringKey("common.close")) { dismiss() }
+                        .keyboardShortcut(.cancelAction)
+                }
+            }
+            .safeAreaInset(edge: .bottom) {
+                // No text input on this screen, so the primary action sits at the bottom.
+                BottomActionBar {
+                    if result == nil {
+                        Button {
+                            performImport()
+                        } label: {
+                            Text("csv.import \(importCount)")
+                                .primaryActionLabel()
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        .disabled(importCount == 0 || mapping[.name] == nil)
+                        .keyboardShortcut(.defaultAction)
+                    } else {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("common.done")
+                                .primaryActionLabel()
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        .keyboardShortcut(.defaultAction)
                     }
                 }
             }

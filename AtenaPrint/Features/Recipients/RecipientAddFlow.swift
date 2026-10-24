@@ -143,17 +143,45 @@ private struct RecipientAddFlowModifier: ViewModifier {
 
 /// The "+" menu used in the sidebar and recipient list.
 struct RecipientAddMenu: View {
+    enum Style {
+        /// Icon in a navigation bar.
+        case toolbar
+        /// Labeled button in a bottom action bar.
+        case bar
+    }
+
     let targetGroup: RecipientGroup?
+    var style: Style = .toolbar
+    /// Only one visible instance should own the keyboard shortcuts.
+    var providesShortcuts = false
     @Environment(RecipientAddFlow.self) private var flow
     @Environment(StoreService.self) private var store
     @Query private var recipients: [Recipient]
 
     var body: some View {
+        switch style {
+        case .toolbar:
+            menu {
+                Label("add.menu", systemImage: "plus")
+            }
+        case .bar:
+            menu {
+                Label("add.menu", systemImage: "plus")
+                    .primaryActionLabel()
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+            .hoverEffect()
+        }
+    }
+
+    private func menu<MenuLabel: View>(@ViewBuilder label: () -> MenuLabel) -> some View {
         Menu {
             Button("add.manual", systemImage: "square.and.pencil") {
                 flow.targetGroup = targetGroup
                 flow.sheet = .newRecipient(group: targetGroup)
             }
+            .keyboardShortcut(providesShortcuts ? KeyboardShortcut("n", modifiers: .command) : nil)
             Button("add.contacts", systemImage: "person.crop.circle.badge.plus") {
                 flow.targetGroup = targetGroup
                 if FreeTier.remainingSlots(currentCount: recipients.count, isPro: store.isPro) == 0 {
@@ -167,8 +195,9 @@ struct RecipientAddMenu: View {
                 flow.targetGroup = targetGroup
                 flow.isImportingFile = true
             }
+            .keyboardShortcut(providesShortcuts ? KeyboardShortcut("i", modifiers: [.command, .shift]) : nil)
         } label: {
-            Label("add.menu", systemImage: "plus")
+            label()
         }
     }
 }

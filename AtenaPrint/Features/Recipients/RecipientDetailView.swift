@@ -72,14 +72,23 @@ struct RecipientDetailView: View {
                 }
             }
             Section {
+                Button("recipients.delete.confirm", role: .destructive) {
+                    isConfirmingDeletion = true
+                }
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
+            BottomActionBar {
                 Button {
                     requestPrint(PrintRequest(recipients: [recipient], group: group))
                 } label: {
                     Label("recipients.printThis", systemImage: "printer")
+                        .primaryActionLabel()
                 }
-                Button("recipients.delete.confirm", role: .destructive) {
-                    isConfirmingDeletion = true
-                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .keyboardShortcut("p", modifiers: .command)
+                .hoverEffect()
             }
         }
         .navigationTitle(Text(verbatim: recipient.name + " " + recipient.honorific))
@@ -87,6 +96,7 @@ struct RecipientDetailView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button("common.edit") { addFlow.sheet = .editRecipient(recipient) }
+                    .keyboardShortcut("e", modifiers: .command)
             }
         }
         .confirmationDialog("recipients.delete.title", isPresented: $isConfirmingDeletion, titleVisibility: .visible) {

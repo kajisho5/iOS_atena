@@ -121,6 +121,7 @@ struct PrintPreviewView: View {
                     } label: {
                         Label("common.close", systemImage: "xmark")
                     }
+                    .keyboardShortcut(.cancelAction)
                 }
                 ToolbarItem(placement: .principal) {
                     VStack(spacing: 0) {
@@ -204,6 +205,7 @@ struct PrintPreviewView: View {
                     .frame(minWidth: 44, minHeight: 44)
             }
             .disabled(index == 0)
+            .keyboardShortcut(.leftArrow, modifiers: [])
             Text("print.page \(index + 1) \(count)")
                 .font(.headline)
                 .monospacedDigit()
@@ -215,6 +217,7 @@ struct PrintPreviewView: View {
                     .frame(minWidth: 44, minHeight: 44)
             }
             .disabled(index >= count - 1)
+            .keyboardShortcut(.rightArrow, modifiers: [])
         }
         .buttonStyle(.bordered)
         .buttonBorderShape(.circle)
@@ -279,6 +282,8 @@ struct PrintPreviewView: View {
         .buttonStyle(.borderedProminent)
         .controlSize(.large)
         .disabled(isPrinting || pages.isEmpty)
+        .keyboardShortcut("p", modifiers: .command)
+        .hoverEffect()
     }
 
     @ViewBuilder
@@ -292,6 +297,8 @@ struct PrintPreviewView: View {
             }
             .buttonStyle(.bordered)
             .controlSize(.large)
+            .keyboardShortcut("e", modifiers: .command)
+            .hoverEffect()
         }
     }
 

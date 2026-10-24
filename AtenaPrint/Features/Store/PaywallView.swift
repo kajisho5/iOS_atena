@@ -65,6 +65,7 @@ struct PaywallView: View {
                     } label: {
                         Label("common.close", systemImage: "xmark")
                     }
+                    .keyboardShortcut(.cancelAction)
                 }
             }
             .task {

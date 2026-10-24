@@ -93,6 +93,8 @@ private final class BundleToken {}
             shots += [
                 Shot(name: "iphone-groups", size: portrait, view: wrap(RootView())),
                 Shot(name: "iphone-list", size: portrait, view: wrap(RootView(initialScope: .group(sample.group)))),
+                Shot(name: "iphone-detail", size: portrait,
+                     view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
                 Shot(name: "iphone-editor", size: portrait, view: wrap(RecipientEditorView(mode: .edit(sample.featured)))),
                 Shot(name: "iphone-preview", size: portrait, view: wrap(PrintPreviewView(request: printRequest))),
                 Shot(name: "iphone-layout", size: portrait, view: wrap(RootView(initialTab: .layout))),

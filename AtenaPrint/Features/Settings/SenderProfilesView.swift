@@ -88,27 +88,56 @@ struct SenderEditorView: View {
     @State private var address1 = ""
     @State private var address2 = ""
     @State private var didLoad = false
+    @FocusState private var focusedField: Field?
+
+    private enum Field: Hashable {
+        case label
+        case name
+        case jointName(Int)
+        case postalCode
+        case address1
+        case address2
+    }
+
+    private var fieldOrder: [Field] {
+        [.label, .name] + jointNames.indices.map { Field.jointName($0) } + [.postalCode, .address1, .address2]
+    }
+
+    private func focusNextField() {
+        guard let current = focusedField, let index = fieldOrder.firstIndex(of: current) else {
+            focusedField = nil
+            return
+        }
+        focusedField = fieldOrder.indices.contains(index + 1) ? fieldOrder[index + 1] : nil
+    }
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
                     TextField("senders.label", text: $label, prompt: Text("senders.label.prompt"))
+                        .focused($focusedField, equals: .label)
+                        .submitLabel(.next)
                 } footer: {
                     Text("senders.label.footer")
                 }
                 Section("editor.section.name") {
                     TextField("editor.name", text: $name, prompt: Text("editor.name.prompt"))
                         .textContentType(.name)
+                        .focused($focusedField, equals: .name)
+                        .submitLabel(.next)
                     ForEach(jointNames.indices, id: \.self) { index in
                         TextField("editor.jointName \(index + 1)", text: Binding(
                             get: { jointNames.indices.contains(index) ? jointNames[index] : "" },
                             set: { if jointNames.indices.contains(index) { jointNames[index] = $0 } }
                         ))
+                        .focused($focusedField, equals: .jointName(index))
+                        .submitLabel(.next)
                     }
                     .onDelete { jointNames.remove(atOffsets: $0) }
                     Button {
                         jointNames.append("")
+                        focusedField = .jointName(jointNames.count - 1)
                     } label: {
                         Label("editor.jointNames.add", systemImage: "plus")
                     }
@@ -117,20 +146,29 @@ struct SenderEditorView: View {
                     TextField("editor.postalCode", text: $postalCode, prompt: Text(verbatim: "1230045"))
                         .keyboardType(.numberPad)
                         .textContentType(.postalCode)
-                    TextField("editor.address1", text: $address1, prompt: Text("editor.address1.prompt"), axis: .vertical)
+                        .focused($focusedField, equals: .postalCode)
+                    TextField("editor.address1", text: $address1, prompt: Text("editor.address1.prompt"))
                         .textContentType(.fullStreetAddress)
-                    TextField("editor.address2", text: $address2, prompt: Text("editor.address2.prompt"), axis: .vertical)
+                        .focused($focusedField, equals: .address1)
+                        .submitLabel(.next)
+                    TextField("editor.address2", text: $address2, prompt: Text("editor.address2.prompt"))
+                        .focused($focusedField, equals: .address2)
+                        .submitLabel(.done)
                 }
             }
+            .onSubmit(focusNextField)
+            .formKeyboardSupport(onNext: focusedField == .address2 ? nil : focusNextField, onDone: { focusedField = nil })
             .navigationTitle(sender == nil ? Text("senders.title.new") : Text("senders.title.edit"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("common.cancel") { dismiss() }
+                        .keyboardShortcut(.cancelAction)
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("common.save") { save() }
                         .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                        .keyboardShortcut("s", modifiers: .command)
                 }
             }
             .onAppear(perform: load)

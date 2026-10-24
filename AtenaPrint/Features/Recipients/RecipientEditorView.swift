@@ -27,6 +27,30 @@ struct RecipientEditorView: View {
 
     private enum Field: Hashable {
         case name
+        case nameKana
+        case honorific
+        case jointName(Int)
+        case postalCode
+        case address1
+        case address2
+        case memo
+    }
+
+    /// Fields in the order Return / "次へ" moves through them.
+    private var fieldOrder: [Field] {
+        var order: [Field] = [.name, .nameKana]
+        if usesCustomHonorific { order.append(.honorific) }
+        order += draft.jointNames.indices.map { Field.jointName($0) }
+        order += [.postalCode, .address1, .address2, .memo]
+        return order
+    }
+
+    private func focusNextField() {
+        guard let current = focusedField, let index = fieldOrder.firstIndex(of: current) else {
+            focusedField = nil
+            return
+        }
+        focusedField = fieldOrder.indices.contains(index + 1) ? fieldOrder[index + 1] : nil
     }
 
     private var isNew: Bool {
@@ -52,7 +76,10 @@ struct RecipientEditorView: View {
                     TextField("editor.name", text: $draft.name, prompt: Text("editor.name.prompt"))
                         .textContentType(.name)
                         .focused($focusedField, equals: .name)
+                        .submitLabel(.next)
                     TextField("editor.nameKana", text: $draft.nameKana, prompt: Text("editor.nameKana.prompt"))
+                        .focused($focusedField, equals: .nameKana)
+                        .submitLabel(.next)
                     Picker("editor.honorific", selection: honorificChoice) {
                         ForEach(Honorific.presets, id: \.self) { preset in
                             Text(verbatim: preset).tag(Optional(preset))
@@ -61,18 +88,23 @@ struct RecipientEditorView: View {
                     }
                     if usesCustomHonorific {
                         TextField("editor.honorific.customField", text: $draft.honorific)
+                            .focused($focusedField, equals: .honorific)
+                            .submitLabel(.next)
                     }
                 }
 
                 Section {
                     ForEach(draft.jointNames.indices, id: \.self) { index in
                         TextField("editor.jointName \(index + 1)", text: jointNameBinding(index))
+                            .focused($focusedField, equals: .jointName(index))
+                            .submitLabel(.next)
                     }
                     .onDelete { offsets in
                         draft.jointNames.remove(atOffsets: offsets)
                     }
                     Button {
                         draft.jointNames.append("")
+                        focusedField = .jointName(draft.jointNames.count - 1)
                     } label: {
                         Label("editor.jointNames.add", systemImage: "plus")
                     }
@@ -86,9 +118,14 @@ struct RecipientEditorView: View {
                     TextField("editor.postalCode", text: $draft.postalCode, prompt: Text(verbatim: "1040061"))
                         .keyboardType(.numberPad)
                         .textContentType(.postalCode)
-                    TextField("editor.address1", text: $draft.address1, prompt: Text("editor.address1.prompt"), axis: .vertical)
+                        .focused($focusedField, equals: .postalCode)
+                    TextField("editor.address1", text: $draft.address1, prompt: Text("editor.address1.prompt"))
                         .textContentType(.fullStreetAddress)
-                    TextField("editor.address2", text: $draft.address2, prompt: Text("editor.address2.prompt"), axis: .vertical)
+                        .focused($focusedField, equals: .address1)
+                        .submitLabel(.next)
+                    TextField("editor.address2", text: $draft.address2, prompt: Text("editor.address2.prompt"))
+                        .focused($focusedField, equals: .address2)
+                        .submitLabel(.next)
                 } header: {
                     Text("editor.section.address")
                 } footer: {
@@ -100,6 +137,7 @@ struct RecipientEditorView: View {
 
                 Section("editor.memo") {
                     TextField("editor.memo", text: $draft.memo, prompt: Text("editor.memo.prompt"), axis: .vertical)
+                        .focused($focusedField, equals: .memo)
                 }
 
                 if !groups.isEmpty {
@@ -125,6 +163,8 @@ struct RecipientEditorView: View {
                     }
                 }
             }
+            .onSubmit(focusNextField)
+            .formKeyboardSupport(onNext: focusedField == .memo ? nil : focusNextField, onDone: { focusedField = nil })
             .navigationTitle(isNew ? Text("editor.title.new") : Text("editor.title.edit"))
             .navigationBarTitleDisplayMode(.inline)
             .interactiveDismissDisabled(hasChanges)
@@ -137,10 +177,13 @@ struct RecipientEditorView: View {
                             dismiss()
                         }
                     }
+                    .keyboardShortcut(.cancelAction)
                 }
+                // Kept in the top bar so the software keyboard never covers it.
                 ToolbarItem(placement: .confirmationAction) {
                     Button("common.save") { save() }
                         .disabled(!canSave)
+                        .keyboardShortcut("s", modifiers: .command)
                 }
             }
             .confirmationDialog("editor.discard.title", isPresented: $isConfirmingDiscard, titleVisibility: .visible) {

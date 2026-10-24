@@ -39,6 +39,7 @@ struct RecipientListView: View {
     @Binding var selection: Recipient?
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.printRequestHandler) private var requestPrint
     @Environment(RecipientAddFlow.self) private var addFlow
     @Query(sort: [SortDescriptor(\Recipient.sortKey), SortDescriptor(\Recipient.createdAt)]) private var allRecipients: [Recipient]
@@ -150,15 +151,26 @@ struct RecipientListView: View {
         .searchable(text: $searchText, prompt: Text("recipients.search.prompt"))
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.large)
+        .safeAreaInset(edge: .bottom) {
+            // iPhone: primary actions sit at the bottom, within thumb reach.
+            if horizontalSizeClass == .compact, !scopedRecipients.isEmpty {
+                BottomActionBar {
+                    HStack(spacing: 12) {
+                        RecipientAddMenu(targetGroup: group, style: .bar, providesShortcuts: true)
+                            .frame(maxWidth: 140)
+                        batchPrintButton(inBar: true)
+                            .buttonStyle(.borderedProminent)
+                            .controlSize(.large)
+                    }
+                }
+            }
+        }
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
-                Button {
-                    isChoosingBatchScope = true
-                } label: {
-                    Label("print.batch", systemImage: "printer")
+                if horizontalSizeClass != .compact {
+                    batchPrintButton(inBar: false)
+                    RecipientAddMenu(targetGroup: group, providesShortcuts: true)
                 }
-                .disabled(scopedRecipients.isEmpty)
-                RecipientAddMenu(targetGroup: group)
                 Menu {
                     Button("print.select", systemImage: "checklist") { isSelectingForPrint = true }
                         .disabled(scopedRecipients.isEmpty)
@@ -199,6 +211,22 @@ struct RecipientListView: View {
                 requestPrint(PrintRequest(recipients: chosen, group: group))
             }
         }
+    }
+
+    private func batchPrintButton(inBar: Bool) -> some View {
+        Button {
+            isChoosingBatchScope = true
+        } label: {
+            if inBar {
+                Label("print.batch", systemImage: "printer")
+                    .primaryActionLabel()
+            } else {
+                Label("print.batch", systemImage: "printer")
+            }
+        }
+        .disabled(scopedRecipients.isEmpty)
+        .keyboardShortcut("p", modifiers: [.command, .shift])
+        .hoverEffect()
     }
 
     @ViewBuilder

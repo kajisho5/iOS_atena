@@ -15,21 +15,30 @@ struct RecipientPrintSelectionView: View {
                 RecipientRowView(recipient: recipient, group: group)
             }
             .environment(\.editMode, .constant(.active))
+            .safeAreaInset(edge: .bottom) {
+                BottomActionBar {
+                    Button {
+                        let chosen = recipients.filter { selection.contains($0.id) }
+                        dismiss()
+                        onConfirm(chosen)
+                    } label: {
+                        Text("print.select.confirm \(selection.count)")
+                            .primaryActionLabel()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .disabled(selection.isEmpty)
+                    .keyboardShortcut(.defaultAction)
+                }
+            }
             .navigationTitle(Text("print.select"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("common.cancel") { dismiss() }
+                        .keyboardShortcut(.cancelAction)
                 }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("print.select.confirm \(selection.count)") {
-                        let chosen = recipients.filter { selection.contains($0.id) }
-                        dismiss()
-                        onConfirm(chosen)
-                    }
-                    .disabled(selection.isEmpty)
-                }
-                ToolbarItem(placement: .bottomBar) {
+                ToolbarItem(placement: .primaryAction) {
                     Button(selection.count == recipients.count ? LocalizedStringKey("print.select.none") : LocalizedStringKey("print.select.all")) {
                         if selection.count == recipients.count {
                             selection.removeAll()
