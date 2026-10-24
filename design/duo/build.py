@@ -110,7 +110,7 @@ def side_column(w, h, t, tools=(), tabs=True, active=0, camera=True):
     if camera:
         p.append(f'<rect x="{cx-15}" y="14" width="30" height="30" rx="15" fill="#000000"/>')
         p.append(T(cx, 66, "9:41", 15, t["label"], 600, "middle"))
-        y = 120
+        y = 126
     else:
         p.append(T(cx, 34, "9:41", 15, t["label"], 600, "middle"))
         y = 82
@@ -320,12 +320,15 @@ def outer_ax5(theme):
     b.append(T(20, 64, "年賀状", 60, t["label"], 700))
     b.append(T(20, 126, "2026", 60, t["label"], 700))
     b.append(T(20, 176, "5件・未印刷3件", 49, t["sec"]))
-    b.append(f'<rect x="16" y="196" width="{cw-24}" height="420" rx="22" fill="{t["cell"]}"/>')
-    lines = [("青木 健 様", 53, t["label"], 600), ("〒150-0001", 49, t["sec"], 400), ("東京都渋谷区", 49, t["sec"], 400),
-             ("見本町2-3-1", 49, t["sec"], 400)]
-    y = 252
-    for text, size, col, wt in lines:
-        b.append(T(32, y, text, size, col, wt, bg=t["cell"]))
+    b.append(T(20, 232, "無料版：あと5件", 49, t["sec"]))
+    b.append(f'<rect x="16" y="252" width="{cw-24}" height="420" rx="22" fill="{t["cell"]}"/>')
+    b.append(T(32, 308, "青木 健 様", 53, t["label"], 600, bg=t["cell"]))
+    pill = mix(t["success"], t["cell"], 0.14)
+    b.append(f'<rect x="32" y="324" width="236" height="44" rx="22" fill="{pill}"/>')
+    b.append(T(50, 357, "✓ 印刷済み 12/1", 28, t["success"], 600, bg=pill))
+    y = 420
+    for text in ("〒150-0001", "東京都渋谷区", "見本町2-3-1"):
+        b.append(T(32, y, text, 49, t["sec"], 400, bg=t["cell"]))
         y += 58
     bar_top = h - BOTTOM - 140
     b.append(f'<rect x="0" y="{bar_top}" width="{cw}" height="{140+BOTTOM}" fill="{t["bg"]}" fill-opacity="0.96"/>'
@@ -396,7 +399,6 @@ def outer_editor(theme):
         b.append(T(30, y + 48, val, 17, t["label"], 400, bg=f))
         if i == 2:
             b.append(f'<rect x="{30+17*len(val)*0.6:g}" y="{y+31}" width="2" height="22" fill="{t["accent"]}"/>')
-    b.append(T(20, 366, "下へスクロール：連名・敬称・建物名・メモ・グループ", 13, t["sec"], 400, bg=s))
     kb_top = h - 252
     acc = kb_top - 48
     b.append(f'<rect x="0" y="{acc}" width="{cw}" height="48" fill="{t["field"]}"/>')
