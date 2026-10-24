@@ -76,6 +76,7 @@ python3 tools/check_strings.py   # String Catalog とコードのキーの整合
    - 表示名・説明: 下の例を参照。「無料お試し」「期間限定」などの表現は使わない
 2. ファミリー共有を有効にする（設計上の決定事項 Q6）。
 3. ローカルで課金をテストするときは、スキームの Run → Options → StoreKit Configuration に `AtenaPrint/Resources/Products.storekit` を指定する（`project.yml` で設定済み）。製品IDを変えた場合は、このファイルの `productID` も合わせる。
+   - **要確認**: `Products.storekit` は Xcode なしで手書きしたファイル。CI のテスト（`SKTestSession`）では製品を読み込めなかった（製品一覧が空）。Xcode で開いて製品が表示されない場合は、File → New → File → StoreKit Configuration File で作り直し、非消耗型（製品ID・価格800・日本語の表示名）を追加して同じファイル名で保存する。
 
 表示名・説明の例:
 

@@ -109,7 +109,7 @@ def main() -> None:
         ("iphone-1", "screen-iphone-list.png", "年賀状の宛名を、まとめて印刷", "グループごとに未印刷だけを一括印刷"),
         ("iphone-2", "screen-iphone-preview.png", "郵便番号枠にぴったり縦書き", "連名・敬称もきれいにそろえて配置"),
         ("iphone-3", "screen-iphone-csv.png", "住所録はCSVで一括取り込み", "Excel の CSV（Shift_JIS）にも対応"),
-        ("iphone-4", "screen-iphone-paywall.png", "広告なし。サブスクなし。", "有料機能は買い切りの一回払いだけ"),
+        ("iphone-4", "screen-iphone-layout.png", "明朝・ゴシック、縦書き・横書き", "住所が長くても自動で改行・縮小"),
     ]
     for name, file, title, subtitle in iphone_shots:
         if (src / file).exists():
