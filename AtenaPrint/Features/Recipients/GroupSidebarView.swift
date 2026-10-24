@@ -59,7 +59,7 @@ struct GroupSidebarView: View {
         .safeAreaInset(edge: .bottom) {
             if horizontalSizeClass == .compact {
                 BottomActionBar {
-                    RecipientAddMenu(targetGroup: nil, style: .bar)
+                    RecipientAddMenu(targetGroup: nil, style: .bar, barTitle: "add.menu")
                 }
             }
         }

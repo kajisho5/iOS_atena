@@ -152,6 +152,8 @@ struct RecipientAddMenu: View {
 
     let targetGroup: RecipientGroup?
     var style: Style = .toolbar
+    /// Title in the bottom bar ("追加" next to another button, "宛先を追加" when alone).
+    var barTitle: LocalizedStringKey = "add.short"
     /// Only one visible instance should own the keyboard shortcuts.
     var providesShortcuts = false
     @Environment(RecipientAddFlow.self) private var flow
@@ -166,8 +168,9 @@ struct RecipientAddMenu: View {
             }
         case .bar:
             menu {
-                Label("add.menu", systemImage: "plus")
+                Label(barTitle, systemImage: "plus")
                     .primaryActionLabel()
+                    .accessibilityLabel(Text("add.menu"))
             }
             .buttonStyle(.bordered)
             .controlSize(.large)

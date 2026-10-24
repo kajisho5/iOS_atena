@@ -155,12 +155,21 @@ struct RecipientListView: View {
             // iPhone: primary actions sit at the bottom, within thumb reach.
             if horizontalSizeClass == .compact, !scopedRecipients.isEmpty {
                 BottomActionBar {
-                    HStack(spacing: 12) {
-                        RecipientAddMenu(targetGroup: group, style: .bar, providesShortcuts: true)
-                            .frame(maxWidth: 140)
-                        batchPrintButton(inBar: true)
-                            .buttonStyle(.borderedProminent)
-                            .controlSize(.large)
+                    // Side by side when the labels fit; stacked at large text sizes.
+                    ViewThatFits(in: .horizontal) {
+                        HStack(spacing: 12) {
+                            RecipientAddMenu(targetGroup: group, style: .bar, providesShortcuts: true)
+                                .fixedSize()
+                            batchPrintButton(inBar: true)
+                                .buttonStyle(.borderedProminent)
+                                .controlSize(.large)
+                        }
+                        VStack(spacing: 10) {
+                            batchPrintButton(inBar: true)
+                                .buttonStyle(.borderedProminent)
+                                .controlSize(.large)
+                            RecipientAddMenu(targetGroup: group, style: .bar, barTitle: "add.menu")
+                        }
                     }
                 }
             }
