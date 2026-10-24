@@ -1,5 +1,15 @@
 {
-  "identifier" : "5C3E4C7A-8B41-4F2E-9C1A-0F7D2B6E1A11",
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "ja_JP",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "5C3E4C7A",
   "nonRenewingSubscriptions" : [
 
   ],
@@ -12,7 +22,7 @@
         {
           "description" : "宛先無制限・CSV件数無制限・PDF出力（買い切り）",
           "displayName" : "Pro（買い切り）",
-          "locale" : "ja"
+          "locale" : "ja_JP"
         }
       ],
       "productID" : "com.example.AtenaPrint.pro",
@@ -22,7 +32,7 @@
   ],
   "settings" : {
     "_failTransactionsEnabled" : false,
-    "_locale" : "ja",
+    "_locale" : "ja_JP",
     "_storefront" : "JPN",
     "_storeKitErrors" : [
 
