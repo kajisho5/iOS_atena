@@ -25,7 +25,8 @@ permissions:
 jobs:
   upload:
     name: Archive and upload to TestFlight
-    runs-on: macos-26
+    # Built with the iOS 27.1 SDK so the app gets iPhone Duo's full-screen layout (Apple's iPhone Duo guidance).
+    runs-on: xcode-27
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
@@ -46,8 +47,9 @@ jobs:
           done
           exit $missing
 
-      - name: Tool versions
+      - name: Select Xcode 27.1
         run: |
+          sudo xcode-select -s /Applications/Xcode_27.1.app
           xcodebuild -version
           sw_vers
 

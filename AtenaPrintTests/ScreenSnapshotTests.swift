@@ -91,6 +91,17 @@ private final class BundleToken {}
                 Shot(name: "duo-\(display)-list", size: bounds, scale: scene.screen.scale, view: wrap(RootView(initialScope: .group(sample.group)))),
                 Shot(name: "duo-\(display)-preview", size: bounds, scale: scene.screen.scale, view: wrap(PrintPreviewView(request: printRequest))),
             ]
+            if display == "outer" {
+                // The simulator boots folded and simctl has no command to unfold it, so the inner display
+                // is approximated: Apple's 2670×1878 px at the outer display's measured scale, regular width.
+                let scale = scene.screen.scale
+                let inner = CGSize(width: 2670 / scale, height: 1878 / scale)
+                shots += [
+                    Shot(name: "duo-inner-recipients", size: inner, regularWidth: true, scale: scale,
+                         view: wrap(RootView(initialScope: .group(sample.group), initialRecipient: sample.featured))),
+                    Shot(name: "duo-inner-preview", size: inner, regularWidth: true, scale: scale, view: wrap(PrintPreviewView(request: printRequest))),
+                ]
+            }
         } else if isPad {
             shots += [
                 Shot(name: "ipad-landscape-recipients", size: landscape, regularWidth: true,
