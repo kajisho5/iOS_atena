@@ -146,8 +146,7 @@ jobs:
           ')
           echo "udid=$UDID" >> "$GITHUB_OUTPUT"
           xcrun simctl list devices | grep "$UDID"
-      # The simulator boots folded. Xcode 27.1 has no supported command to unfold it, so only the
-      # outer display is captured; the inner display is checked on device via TestFlight.
+      # The simulator boots folded: capture the outer display first.
       - name: Build and capture (folded, outer display)
         env:
           TEST_RUNNER_SNAPSHOT_DIR: ${{ github.workspace }}/snapshots-duo
@@ -164,6 +163,37 @@ jobs:
           status=$?
           grep -E "error:|warning: .*(deprecat|isolat|Sendable)|Test (Suite|Case|run)|✔|✘|\*\* " xcodebuild-duo.log | sort -u | head -200
           cat snapshots-duo/diagnostics-duo-*.txt 2>/dev/null
+          exit $status
+      # Xcode 27.1 has no supported command to unfold the simulator (only Device Hub's hinge control).
+      # duo-hinge from tosbaha/duo-fold-control (MIT) sends the same hinge event over the simulator's
+      # HID service and works on a headless simulator. CI only, pinned to a reviewed commit, never shipped.
+      - name: Unfold the simulator (duo-hinge)
+        run: |
+          git init -q "$RUNNER_TEMP/duo-fold-control"
+          git -C "$RUNNER_TEMP/duo-fold-control" fetch -q --depth 1 https://github.com/tosbaha/duo-fold-control 6207cc897648959c3c2213ac3a2dcf38f6f9eb41
+          git -C "$RUNNER_TEMP/duo-fold-control" checkout -q FETCH_HEAD
+          clang -fobjc-arc -framework Foundation -o "$RUNNER_TEMP/duo-hinge" "$RUNNER_TEMP/duo-fold-control/tools/duo-hinge.m"
+          xcrun simctl bootstatus "${{ steps.sim.outputs.udid }}" -b
+          DEVELOPER_DIR="$(xcode-select -p)" "$RUNNER_TEMP/duo-hinge" -d "${{ steps.sim.outputs.udid }}" flat
+          sleep 5
+      - name: Capture (unfolded, inner display)
+        env:
+          TEST_RUNNER_SNAPSHOT_DIR: ${{ github.workspace }}/snapshots-duo
+          TEST_RUNNER_SNAPSHOT_PROFILE: duo
+        run: |
+          set +e
+          xcodebuild test-without-building \
+            -project AtenaPrint.xcodeproj \
+            -scheme AtenaPrint \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath build/DerivedData \
+            -only-testing:AtenaPrintTests/ScreenSnapshotTests \
+            CODE_SIGNING_ALLOWED=NO > xcodebuild-duo-inner.log 2>&1
+          status=$?
+          grep -E "error:|Test (Suite|Case|run)|✔|✘|\*\* " xcodebuild-duo-inner.log | sort -u | head -100
+          cat snapshots-duo/diagnostics-duo-*.txt 2>/dev/null
+          ls snapshots-duo
+          [ -f snapshots-duo/screen-duo-inner-recipients.png ] || { echo "::error::inner display was not captured (simulator still folded?)"; status=1; }
           exit $status
       - name: Upload snapshots
         if: always()
