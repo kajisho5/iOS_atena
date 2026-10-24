@@ -105,7 +105,7 @@
   <text x="350" y="606" class="item">先頭5行・文字コード切替</text>
   <text x="350" y="624" class="item">重複候補・取り込み先グループ</text>
   <text x="336" y="644" class="item">③ 結果（成功 / スキップ / エラー行）</text>
-  <text x="336" y="670" class="labelPro">Pro 機能</text>
+  <text x="336" y="670" class="labelPro">無料版は宛先の合計10件まで</text>
 
   <!-- S07 -->
   <rect x="320" y="750" width="320" height="230" rx="12" class="card"/>
@@ -213,7 +213,7 @@
   <path class="edge" d="M330,440 C300,460 290,500 272,520"/>
   <text x="252" y="458" class="label">連絡先から</text>
   <path class="edge" d="M450,440 L450,498"/>
-  <text x="458" y="476" class="label">CSVから（購入済）</text>
+  <text x="458" y="476" class="label">CSVから</text>
 
   <!-- to preview -->
   <path class="edge" d="M50,380 L28,402 L28,860 Q28,880 48,880 L318,880"/>
@@ -233,7 +233,7 @@
 
   <!-- Paywall edges -->
   <path class="edgePro" d="M450,690 C520,720 900,720 1058,780"/>
-  <text x="760" y="712" class="labelPro">CSVから（未購入）</text>
+  <text x="760" y="712" class="labelPro">上限超過時の「Proについて」</text>
   <path class="edgePro" d="M640,915 L1058,915"/>
   <text x="950" y="910" class="labelPro">PDF（未購入）</text>
   <path class="edgePro" d="M860,560 C960,600 1000,680 1058,740"/>

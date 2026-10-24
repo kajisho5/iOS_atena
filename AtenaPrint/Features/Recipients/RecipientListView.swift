@@ -245,7 +245,6 @@ struct RecipientListView: View {
 private struct EmptyAddActions: View {
     let group: RecipientGroup?
     @Environment(RecipientAddFlow.self) private var flow
-    @Environment(StoreService.self) private var store
 
     var body: some View {
         VStack(spacing: 12) {
@@ -259,15 +258,9 @@ private struct EmptyAddActions: View {
                 flow.isPickingContacts = true
             }
             .buttonStyle(.bordered)
-            Button {
+            Button("add.csv") {
                 flow.targetGroup = group
-                if store.isPro {
-                    flow.isImportingFile = true
-                } else {
-                    flow.sheet = .paywall(.csvImport)
-                }
-            } label: {
-                Text(store.isPro ? LocalizedStringKey("add.csv") : LocalizedStringKey("add.csv.pro"))
+                flow.isImportingFile = true
             }
             .buttonStyle(.bordered)
         }

@@ -68,7 +68,7 @@ struct PaywallView: View {
     private var contextMessage: LocalizedStringKey? {
         switch reason {
         case .recipientLimit: "store.context.limit \(AppConstants.freeRecipientLimit)"
-        case .csvImport: "store.context.csv"
+        case .csvImport: "store.context.csv \(AppConstants.freeRecipientLimit)"
         case .pdfExport: "store.context.pdf"
         case .settings: nil
         }
@@ -95,7 +95,7 @@ struct PaywallView: View {
     private var features: some View {
         VStack(alignment: .leading, spacing: 16) {
             FeatureRow(systemImage: "person.2.fill", title: "store.feature.unlimited", detail: "store.feature.unlimited.detail \(AppConstants.freeRecipientLimit)")
-            FeatureRow(systemImage: "doc.text.fill", title: "store.feature.csv", detail: "store.feature.csv.detail")
+            FeatureRow(systemImage: "doc.text.fill", title: "store.feature.csv", detail: "store.feature.csv.detail \(AppConstants.freeRecipientLimit)")
             FeatureRow(systemImage: "square.and.arrow.up.fill", title: "store.feature.pdf", detail: "store.feature.pdf.detail")
         }
         .padding(16)

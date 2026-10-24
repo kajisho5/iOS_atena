@@ -45,17 +45,6 @@
         }
       }
     },
-    "add.csv.pro": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "CSVから取り込む（Pro）"
-          }
-        }
-      }
-    },
     "add.manual": {
       "extractionState": "manual",
       "localizations": {
@@ -441,6 +430,28 @@
         }
       }
     },
+    "csv.limit.footer %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料版でもCSV取り込みを使えます（宛先は合計%lld件まで）。取り込む前に、列の対応と内容をここで確認できます。"
+          }
+        }
+      }
+    },
+    "csv.limit.notice %lld %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料版で登録できる宛先は合計%1$lld件までのため、今回は%2$lld件を取り込みます。残りの%3$lld件はProで取り込めます。"
+          }
+        }
+      }
+    },
     "csv.line %lld": {
       "extractionState": "manual",
       "localizations": {
@@ -503,6 +514,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld件を取り込みました"
+          }
+        }
+      }
+    },
+    "csv.result.overLimit %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料版の上限のため、%lld件は取り込みませんでした"
+          }
+        }
+      }
+    },
+    "csv.result.overLimit.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro（買い切り）にすると、同じファイルをもう一度選ぶだけで残りの行も取り込めます。取り込み済みの行は重複として自動で除外されます。"
           }
         }
       }
@@ -2267,13 +2300,13 @@
         }
       }
     },
-    "store.context.csv": {
+    "store.context.csv %lld": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "CSV取り込みはProの機能です。"
+            "value": "無料版で登録できる宛先は合計%lld件までです。CSVの残りの行も取り込むにはProが必要です。"
           }
         }
       }
@@ -2328,18 +2361,18 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "CSVで一括取り込み"
+            "value": "CSVで件数無制限に一括取り込み"
           }
         }
       }
     },
-    "store.feature.csv.detail": {
+    "store.feature.csv.detail %lld": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Excelなどの住所録から、まとめて登録できます"
+            "value": "無料版でも合計%lld件までお試しで取り込めます"
           }
         }
       }

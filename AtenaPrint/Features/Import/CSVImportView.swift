@@ -3,13 +3,17 @@ import SwiftData
 import SwiftUI
 
 /// CSV import: column mapping review → import → result.
+/// Available in the free version as well, limited by the free recipient count, so people can
+/// check how their file is read before deciding to buy Pro.
 struct CSVImportView: View {
     let source: CSVImportSource
     let initialGroup: RecipientGroup?
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Environment(StoreService.self) private var store
     @Query(sort: \RecipientGroup.sortOrder) private var groups: [RecipientGroup]
+    @Query private var existingRecipients: [Recipient]
 
     @State private var encoding: CSVEncoding = .utf8
     @State private var rows: [[String]] = []
@@ -20,10 +24,13 @@ struct CSVImportView: View {
     @State private var targetGroupID: PersistentIdentifier?
     @State private var result: ImportResult?
     @State private var didLoad = false
+    @State private var isShowingPaywall = false
 
     struct ImportResult {
         let imported: Int
         let skipped: [ImportCandidate]
+        /// Rows not imported because the free recipient limit was reached.
+        let overLimit: [ImportCandidate]
         let warnings: Int
     }
 
@@ -35,8 +42,21 @@ struct CSVImportView: View {
         hasHeader ? (rows.first ?? []) : []
     }
 
+    private var importable: [ImportCandidate] {
+        candidates.filter { $0.isIncluded && $0.status != .missingName }
+    }
+
     private var includedCount: Int {
-        candidates.filter(\.isIncluded).count
+        importable.count
+    }
+
+    /// Rows that will actually be imported now (the free version stops at the recipient limit).
+    private var importCount: Int {
+        min(includedCount, FreeTier.remainingSlots(currentCount: existingRecipients.count, isPro: store.isPro))
+    }
+
+    private var isLimitedByFreeTier: Bool {
+        importCount < includedCount
     }
 
     var body: some View {
@@ -56,8 +76,8 @@ struct CSVImportView: View {
                         Button("common.cancel") { dismiss() }
                     }
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("csv.import \(includedCount)") { performImport() }
-                            .disabled(includedCount == 0 || mapping[.name] == nil)
+                        Button("csv.import \(importCount)") { performImport() }
+                            .disabled(importCount == 0 || mapping[.name] == nil)
                     }
                 } else {
                     ToolbarItem(placement: .confirmationAction) {
@@ -66,6 +86,9 @@ struct CSVImportView: View {
                 }
             }
             .interactiveDismissDisabled(result == nil && includedCount > 0)
+            .sheet(isPresented: $isShowingPaywall) {
+                PaywallView(reason: .csvImport)
+            }
             .onAppear(perform: load)
         }
     }
@@ -153,9 +176,22 @@ struct CSVImportView: View {
 
                 Section {
                     Label {
-                        Text("csv.summary \(candidates.count) \(includedCount)")
+                        Text("csv.summary \(candidates.count) \(importCount)")
                     } icon: {
                         Image(systemName: "info.circle")
+                    }
+                    if isLimitedByFreeTier {
+                        Label {
+                            Text("csv.limit.notice \(AppConstants.freeRecipientLimit) \(importCount) \(includedCount - importCount)")
+                        } icon: {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                        }
+                        .foregroundStyle(Color.warningText)
+                        Button("store.learnMore") { isShowingPaywall = true }
+                    }
+                } footer: {
+                    if !store.isPro {
+                        Text("csv.limit.footer \(AppConstants.freeRecipientLimit)")
                     }
                 }
             } else if !decodeFailed {
@@ -233,9 +269,11 @@ struct CSVImportView: View {
 
     private func performImport() {
         let group = groups.first { $0.persistentModelID == targetGroupID }
+        let limit = importCount
+        let rows = importable
         var imported = 0
         var warnings = 0
-        for candidate in candidates where candidate.isIncluded && candidate.status != .missingName {
+        for candidate in rows.prefix(limit) {
             let recipient = Recipient(draft: candidate.draft)
             modelContext.insert(recipient)
             if let group {
@@ -245,7 +283,8 @@ struct CSVImportView: View {
             if !candidate.warnings.isEmpty { warnings += 1 }
         }
         try? modelContext.save()
-        result = ImportResult(imported: imported, skipped: candidates.filter { !$0.isIncluded || $0.status == .missingName }, warnings: warnings)
+        result = ImportResult(imported: imported, skipped: candidates.filter { !$0.isIncluded || $0.status == .missingName },
+                              overLimit: Array(rows.dropFirst(limit)), warnings: warnings)
     }
 
     private func resultView(_ result: ImportResult) -> some View {
@@ -256,6 +295,15 @@ struct CSVImportView: View {
                 if result.warnings > 0 {
                     Label("csv.result.warnings \(result.warnings)", systemImage: "exclamationmark.triangle.fill")
                         .foregroundStyle(Color.warningText)
+                }
+            }
+            if !result.overLimit.isEmpty {
+                Section {
+                    Label("csv.result.overLimit \(result.overLimit.count)", systemImage: "exclamationmark.triangle.fill")
+                        .foregroundStyle(Color.warningText)
+                    Button("store.learnMore") { isShowingPaywall = true }
+                } footer: {
+                    Text("csv.result.overLimit.footer")
                 }
             }
             if !result.skipped.isEmpty {

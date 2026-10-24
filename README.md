@@ -62,6 +62,13 @@ python3 tools/check_strings.py   # String Catalog とコードのキーの整合
 
 課金は StoreKit 2 の**非消耗型 1点のみ**。サブスクリプションは作らない。
 
+| 機能 | 無料版 | Pro（買い切り） |
+|---|---|---|
+| 宛先の登録 | 10件まで | 無制限 |
+| 印刷（AirPrint） | 無制限・透かしなし | 同左 |
+| CSV取り込み | 使える（宛先の合計10件まで。取り込み前の確認画面は全件表示） | 件数無制限 |
+| PDF出力 | × | ○ |
+
 1. App Store Connect でアプリを作成し、「アプリ内課金」で **非消耗型** を1つ作る。
    - 参照名: `Pro`
    - 製品ID: `AppConstants.proProductID` と同じ値（初期値は `com.example.AtenaPrint.pro`）
@@ -75,7 +82,7 @@ python3 tools/check_strings.py   # String Catalog とコードのキーの整合
 | 項目 | 内容 |
 |---|---|
 | 表示名 | Pro（買い切り） |
-| 説明 | 宛先無制限・CSV取り込み・PDF出力（買い切り） |
+| 説明 | 宛先無制限・CSV件数無制限・PDF出力（買い切り） |
 
 アプリ側の仕様:
 
@@ -83,7 +90,7 @@ python3 tools/check_strings.py   # String Catalog とコードのキーの整合
 - 「購入の復元」（`AppStore.sync()`）は課金画面と設定画面の両方にある。
 - 課金画面は、ユーザーが操作したときだけ開く。開くのは次の4つの場面で、印刷中に割り込むことはない。
   - 11件目の宛先を保存しようとしたとき
-  - 「CSVから取り込む」を押したとき
+  - CSV取り込みで無料版の上限を超えた行があり、「Proについて」を押したとき
   - 「PDFで書き出す」を押したとき
   - 設定の「Pro」を押したとき
 

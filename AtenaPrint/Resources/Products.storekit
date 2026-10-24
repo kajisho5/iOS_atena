@@ -10,7 +10,7 @@
       "internalID" : "6740000001",
       "localizations" : [
         {
-          "description" : "宛先無制限・CSV取り込み・PDF出力（買い切り）",
+          "description" : "宛先無制限・CSV件数無制限・PDF出力（買い切り）",
           "displayName" : "Pro（買い切り）",
           "locale" : "ja"
         }

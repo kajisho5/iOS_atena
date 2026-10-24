@@ -162,15 +162,10 @@ struct RecipientAddMenu: View {
                     flow.isPickingContacts = true
                 }
             }
-            Button {
+            // Free users can import too (up to the free recipient limit) to check the result before buying.
+            Button("add.csv", systemImage: "doc.text") {
                 flow.targetGroup = targetGroup
-                if store.isPro {
-                    flow.isImportingFile = true
-                } else {
-                    flow.sheet = .paywall(.csvImport)
-                }
-            } label: {
-                Label(store.isPro ? LocalizedStringKey("add.csv") : LocalizedStringKey("add.csv.pro"), systemImage: "doc.text")
+                flow.isImportingFile = true
             }
         } label: {
             Label("add.menu", systemImage: "plus")

@@ -25,7 +25,7 @@ KEY = re.compile(r"^(%s)\.[A-Za-z0-9]+(\.[A-Za-z0-9]+)*( .*)?$" % "|".join(PREFI
 INTERP = re.compile(r"\\\((.*?)\)")
 
 # Interpolations whose value is an integer (rendered as %lld); everything else becomes %@.
-INT_HINTS = ("count", "index", "imported", "duplicates", "overLimit", "Limit", "warnings", ".id", "includedCount", "id)")
+INT_HINTS = ("count", "Count", "index", "imported", "duplicates", "overLimit", "Limit", "warnings", ".id", "includedCount", "id)")
 
 
 def placeholder(expr: str) -> str:
