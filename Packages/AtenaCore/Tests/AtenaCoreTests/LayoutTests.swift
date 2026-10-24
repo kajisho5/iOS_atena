@@ -45,6 +45,25 @@ struct FixedWidthMeasurer: TextMeasuring {
         #expect(names[1].frame.x < names[0].frame.x)
     }
 
+    @Test func longJointNameStaysOnSheetAndAlignsHonorifics() {
+        let shortMain = AddressContent(name: "林 太", jointNames: ["アレクサンドラ"], honorific: "様", postalCode: "104-0061",
+                                       address1: "東京都中央区見本町1-13-3")
+        let result = engine.layout(shortMain, options: LayoutOptions(paper: .hagaki, writingMode: .vertical))
+        let names = result.runs.filter { $0.role == .recipientName }
+        #expect(names.count == 2)
+        // Below the postal-code boxes (top 12 mm + 8 mm) and on the sheet.
+        #expect(names.allSatisfy { $0.frame.y >= 20 }, "\(names.map(\.frame))")
+        #expect(abs(names[0].frame.maxY - names[1].frame.maxY) < 0.0001)
+    }
+
+    @Test func manySenderNamesStayInsideTheLeftMargin() {
+        let crowded = SenderContent(name: "田中 一郎", jointNames: ["花子", "次郎", "三郎", "四郎"], postalCode: "1230045",
+                                    address1: "東京都見本区見本町2-5", address2: "見本マンション101号室")
+        let result = engine.layout(content, options: LayoutOptions(paper: .hagaki, writingMode: .vertical, sender: crowded))
+        let senderRuns = result.runs.filter { $0.role == .senderName || $0.role == .senderAddress }
+        #expect(senderRuns.allSatisfy { $0.frame.x >= 6 - 0.001 }, "\(senderRuns.map(\.frame))")
+    }
+
     @Test func verticalAddressUsesKanjiNumeralsAndVerticalHyphen() {
         let result = engine.layout(content, options: LayoutOptions(paper: .hagaki, writingMode: .vertical, convertDigitsToKanji: true))
         let address = result.runs.filter { $0.role == .recipientAddress }.map(\.text)

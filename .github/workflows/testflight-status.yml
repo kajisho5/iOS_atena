@@ -1,0 +1,34 @@
+# TestFlight の処理状態と内部テストグループを確認する（flight-deck スキルのひな形から作成）。
+# 内部グループが無ければ作り、管理者をテスターに追加して招待を送る。秘密情報やメールアドレスは出力しない。
+name: testflight-status
+
+on:
+  workflow_dispatch:
+  push:
+    # Also runs when these files change on a branch, so it can be used before the workflow reaches main.
+    paths: [tools/asc_status.py, tools/asc_internal_group.py, .github/workflows/testflight-status.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - run: pip install --quiet pyjwt cryptography
+      - name: Ensure the internal TestFlight group
+        run: python3 tools/asc_internal_group.py
+        env:
+          BUNDLE_ID: com.seventhwell.AtenaPrint
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8_BASE64: ${{ secrets.ASC_KEY_P8_BASE64 }}
+      - name: Show build state
+        run: python3 tools/asc_status.py
+        env:
+          BUNDLE_ID: com.seventhwell.AtenaPrint
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8_BASE64: ${{ secrets.ASC_KEY_P8_BASE64 }}

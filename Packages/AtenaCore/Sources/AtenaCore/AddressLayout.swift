@@ -205,13 +205,22 @@ public struct AddressLayoutEngine {
         let address = fitColumns(lines: lines, top: top, bottom: bottom, indentEm: 1, maxSize: 3.6 * k, minSize: 2.4 * k, maxColumns: 3)
         let nameText = [sender.name] + sender.jointNames
         let names = nameText.filter { !$0.isEmpty }.map { normalizeName($0) }
-        let nameFit = fitUniform(texts: names, length: bottom - (top + 6 * kv), maxSize: 4.8 * k, minSize: 3.0 * k, tracking: Self.nameTracking)
+        var nameFit = fitUniform(texts: names, length: bottom - (top + 6 * kv), maxSize: 4.8 * k, minSize: 3.0 * k, tracking: Self.nameTracking)
+        let addressWidths = Double(address.columns.count) * address.size * Self.columnPitch
+        // Many sender names (joint names) must still fit between the left margin and `maxRight`:
+        // shrink the names to the width that is left, and report an overflow below the minimum size.
+        if !names.isEmpty {
+            let widthCap = max(0.5 * k, (maxRight - left - addressWidths) / (Double(names.count) * 1.35))
+            if nameFit.size > widthCap {
+                if widthCap < 3.0 * k { nameFit.overflow = true }
+                nameFit.size = widthCap
+            }
+        }
 
         if address.overflow { result.overflowingRoles.insert(.senderAddress) }
         if nameFit.overflow { result.overflowingRoles.insert(.senderName) }
 
         // Columns right-to-left: address, then names; the whole block is anchored at `left`.
-        let addressWidths = Double(address.columns.count) * address.size * Self.columnPitch
         let nameWidths = Double(names.count) * nameFit.size * 1.35
         var x = min(left + addressWidths + nameWidths, maxRight) - address.size
         for column in address.columns {
@@ -396,8 +405,10 @@ public struct AddressLayoutEngine {
         let mainText = normalizeName(name) + " " + honorific
         let joints = jointNames.filter { !$0.isEmpty }.map { $0 + " " + honorific }
         let columnCount = Double(1 + joints.count)
-        let mainUnits = advance(mainText, tracking: Self.nameTracking)
-        let sizeForHeight = (bottom - top) / max(mainUnits, 1)
+        // Size for the longest column: joint columns end at the same height as the main one, so a long
+        // joint name would otherwise run off the top of the sheet.
+        let longestUnits = ([mainText] + joints).map { advance($0, tracking: Self.nameTracking) }.max() ?? 0
+        let sizeForHeight = (bottom - top) / max(longestUnits, 1)
         let pitchFactor = 1 + Self.nameTracking + 0.15
         let sizeForWidth = areaWidth / (1 + pitchFactor * (columnCount - 1))
         var size = min(maxSize, sizeForHeight, sizeForWidth)
@@ -406,13 +417,14 @@ public struct AddressLayoutEngine {
             size = minSize
             overflow = true
         }
-        // Center the main column vertically within the area.
+        // Center the longest column vertically; every column ends (with its honorific) at the same height.
         let mainLength = columnLength(mainText, size: size, tracking: Self.nameTracking)
-        let mainTop = top + max(0, (bottom - top - mainLength) / 2)
-        var columns = [Column(text: mainText, top: mainTop, length: mainLength)]
-        for joint in joints {
-            let length = columnLength(joint, size: size, tracking: Self.nameTracking)
-            columns.append(Column(text: joint, top: mainTop + mainLength - length, length: length))
+        let jointLengths = joints.map { columnLength($0, size: size, tracking: Self.nameTracking) }
+        let longest = ([mainLength] + jointLengths).max() ?? mainLength
+        let baseline = top + max(0, (bottom - top - longest) / 2) + longest
+        var columns = [Column(text: mainText, top: baseline - mainLength, length: mainLength)]
+        for (joint, length) in zip(joints, jointLengths) {
+            columns.append(Column(text: joint, top: baseline - length, length: length))
         }
         return ColumnFit(size: size, columns: columns, overflow: overflow)
     }
