@@ -14,6 +14,7 @@ struct PaywallView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(StoreService.self) private var store
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var message: LocalizedStringKey?
 
     var body: some View {
@@ -29,6 +30,10 @@ struct PaywallView: View {
                     }
                     features
                     promises
+                    if dynamicTypeSize.isAccessibilitySize {
+                        // At accessibility sizes a pinned bar would cover most of the screen.
+                        purchaseArea
+                    }
                     if store.isPro {
                         Label("store.owned", systemImage: "checkmark.seal.fill")
                             .font(.headline)
@@ -41,7 +46,17 @@ struct PaywallView: View {
             }
             .background(Color(.systemGroupedBackground))
             .safeAreaInset(edge: .bottom) {
-                purchaseArea
+                if !dynamicTypeSize.isAccessibilitySize {
+                    purchaseArea
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity)
+                        .background {
+                            Color(.systemGroupedBackground)
+                                .overlay(alignment: .top) { Divider() }
+                                .ignoresSafeArea()
+                        }
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -155,6 +170,8 @@ struct PaywallView: View {
                     Text("store.loadFailed")
                         .font(.subheadline)
                         .foregroundStyle(Color.secondaryText)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
                     Button("common.retry") {
                         Task { await store.loadProduct() }
                     }
@@ -166,17 +183,19 @@ struct PaywallView: View {
             }
             Button("store.restore") { restore() }
                 .frame(minHeight: 44)
-            HStack(spacing: 16) {
-                Link("settings.terms", destination: AppConstants.termsOfUseURL)
-                Link("settings.privacy", destination: AppConstants.privacyPolicyURL)
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 16) {
+                    Link("settings.terms", destination: AppConstants.termsOfUseURL)
+                    Link("settings.privacy", destination: AppConstants.privacyPolicyURL)
+                }
+                VStack(spacing: 8) {
+                    Link("settings.terms", destination: AppConstants.termsOfUseURL)
+                    Link("settings.privacy", destination: AppConstants.privacyPolicyURL)
+                }
             }
             .font(.footnote)
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 12)
         .frame(maxWidth: 560)
-        .frame(maxWidth: .infinity)
-        .background(.bar)
     }
 
     private func purchase() {

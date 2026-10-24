@@ -25,13 +25,15 @@ private final class BundleToken {}
         guard let directory = ProcessInfo.processInfo.environment["SNAPSHOT_DIR"] else { return }
         try FileManager.default.createDirectory(atPath: directory, withIntermediateDirectories: true)
 
+        var session: SKTestSession?
         if let url = Bundle(for: BundleToken.self).url(forResource: "Products", withExtension: "storekit") {
-            let session = try SKTestSession(contentsOf: url)
-            session.disableDialogs = true
-            session.clearTransactions()
+            session = try SKTestSession(contentsOf: url)
+            session?.disableDialogs = true
+            session?.clearTransactions()
         }
         let store = StoreService()
         await store.loadProduct()
+        print("snapshot: storekit session=\(session != nil) product=\(store.product?.displayPrice ?? "nil") state=\(store.loadState)")
 
         let defaults = try #require(UserDefaults(suiteName: "snapshots-\(UUID().uuidString)"))
         let layoutStore = LayoutStore(defaults: defaults)
@@ -115,8 +117,8 @@ private final class BundleToken {}
         }
         let format = UIGraphicsImageRendererFormat()
         format.scale = 2
-        let image = UIGraphicsImageRenderer(bounds: window.bounds, format: format).image { context in
-            window.layer.render(in: context.cgContext)
+        let image = UIGraphicsImageRenderer(bounds: window.bounds, format: format).image { _ in
+            _ = window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
         }
         window.isHidden = true
         window.rootViewController = nil
@@ -135,10 +137,10 @@ enum SampleData {
 
     static let csvRows: [[String]] = [
         ["名前", "〒", "住所", "建物名", "連名", "備考"],
-        ["青木 健", "150-0001", "東京都渋谷区見本町2-3-1", "", "", ""],
-        ["伊藤 美咲", "220-0012", "神奈川県横浜市西区見本台4-5-6", "見本タワー1205", "", ""],
-        ["株式会社見本商事", "530-0001", "大阪府大阪市北区見本通1-1-1", "見本ビル8階", "", ""],
-        ["佐藤 一郎", "460-0008", "愛知県名古屋市中区見本町3-2", "", "", "喪中（2026）"],
+        ["加藤 浩二", "060-0001", "北海道札幌市中央区見本通西2-5", "", "", ""],
+        ["木村 さくら", "810-0001", "福岡県福岡市中央区見本1-2-3", "見本レジデンス502", "", ""],
+        ["小林 誠", "730-0011", "広島県広島市中区見本町4-1", "", "由美", ""],
+        ["清水 恵", "900-0001", "沖縄県那覇市見本2-8-1", "", "", "転居予定"],
         ["山田 太郎", "104-0061", "東京都中央区見本町1-13-3", "サンプルハイツ203", "花子", ""],
     ]
 

@@ -9,6 +9,7 @@ struct PrintPreviewView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.modelContext) private var modelContext
     @Environment(LayoutStore.self) private var layoutStore
     @Environment(StoreService.self) private var store
@@ -81,6 +82,18 @@ struct PrintPreviewView: View {
                         }
                         .frame(width: 320)
                         .background(Color(.systemGroupedBackground))
+                    }
+                } else if dynamicTypeSize.isAccessibilitySize {
+                    // Large text: scroll everything and keep the sheet at a readable height.
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            warnings(pages[index])
+                            sheetArea(pages[index])
+                                .frame(height: 460)
+                            pageControls(count: pages.count, index: index)
+                            actionButtons(pages: pages)
+                        }
+                        .padding()
                     }
                 } else {
                     VStack(spacing: 0) {
@@ -335,6 +348,7 @@ private struct WarningBanner: View {
     var body: some View {
         Label {
             title.fontWeight(.semibold)
+                .fixedSize(horizontal: false, vertical: true)
         } icon: {
             Image(systemName: systemImage)
         }
